@@ -5,7 +5,7 @@ import Link from "next/link";
 const Navbar = () => {
     return (
         <>
-            <div className="w-full h-20 bg-gray-700 bg-opacity-25 backdrop-blur-[20px] sticky top-0">
+            <div className="w-full h-20 bg-gray-700 bg-opacity-25 backdrop-blur-[10px] sticky top-0">
                 <div className="container mx-auto px-4 h-full">
                     <div className="flex justify-between items-center h-full">
                         <ul className="hidden md:flex gap-x-6 text-white">
