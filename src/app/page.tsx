@@ -111,20 +111,15 @@ export default function Home() {
       </div>
     </main>
   */
-  <main>
-    <navbar>
-      <ul>
-        <li>
-          <a href="https://github.com/Kacper-Januszewski">github</a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/kacper-januszewski/">linkedIn</a>
-        </li>
-      </ul>
-    </navbar>
-    <div>
-      <p>This site is in construction</p>
-    </div>
-  </main>
+      <>
+        <div className="container mx-auto px-4">
+          <h1>Hello world</h1>
+          <p>This is a content to make our page longer</p>
+          <div className="w-full h-screen bg-black"></div>
+          <p>
+            Lorem Ipsum is simply dummy text ...
+          </p>
+        </div>
+      </>
   );
 }
