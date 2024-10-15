@@ -112,6 +112,16 @@ export default function Home() {
     </main>
   */
   <main>
+    <navbar>
+      <ul>
+        <li>
+          <a href="https://github.com/Kacper-Januszewski">github</a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/kacper-januszewski/">linkedIn</a>
+        </li>
+      </ul>
+    </navbar>
     <div>
       <p>This site is in construction</p>
     </div>
