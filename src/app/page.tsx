@@ -113,11 +113,11 @@ export default function Home() {
   */
       <>
         <div className="container mx-auto px-4">
-          <h1>Hello world</h1>
-          <p>This is a content to make our page longer</p>
+          <h1>Hi, I'm Kacper</h1>
+          <p>This is my portfolio website</p>
           <div className="w-full h-screen bg-black"></div>
           <p>
-            Lorem Ipsum is simply dummy text ...
+            CTA
           </p>
         </div>
       </>
