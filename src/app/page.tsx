@@ -113,7 +113,7 @@ export default function Home() {
   */
       <>
         <div className="container mx-auto px-4">
-          <h1>Hi, I'm Kacper</h1>
+          <h1>Hi, I&apos;m Kacper</h1>
           <p>This is my portfolio website</p>
           <div className="w-full h-screen bg-black"></div>
           <p>
