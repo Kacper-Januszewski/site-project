@@ -111,13 +111,13 @@ export default function Home() {
       </div>
     </main>
   */
-      <main>
+      <main className="bg-black h-screen text-white">
         <div className="container mx-auto px-4">
-          <h1>Hi, I&apos;m Kacper</h1>
-          <p>This is my portfolio website</p>
-          <div className="w-full h-screen bg-black"></div>
+          <h1>
+              Hello!, My name is <span>Kacper Januszewski</span> and I&apos;m a <span>Web Developer</span>
+          </h1>
           <p>
-            CTA
+            You scrolled this far? Contact me!
           </p>
         </div>
       </main>
