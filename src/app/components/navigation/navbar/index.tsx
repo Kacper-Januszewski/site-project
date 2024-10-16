@@ -8,7 +8,7 @@ const Navbar = () => {
             <div className="w-full h-[50px] bg-black bg-opacity-25 backdrop-blur-[5px] sticky top-0">
                 <div className="container mx-auto px-4 h-full">
                     <div className="flex justify-center items-center h-full">
-                        <ul className="flex gap-x-6 md:gap-x-[250px] text-white">
+                        <ul className="flex gap-x-[100px] md:gap-x-[200px] text-white font-sans">
                             <li>
                                 <Link legacyBehavior={true} href="" passHref>
                                     <a>Home</a>
