@@ -111,7 +111,7 @@ export default function Home() {
       </div>
     </main>
   */
-      <>
+      <main>
         <div className="container mx-auto px-4">
           <h1>Hi, I&apos;m Kacper</h1>
           <p>This is my portfolio website</p>
@@ -120,6 +120,6 @@ export default function Home() {
             CTA
           </p>
         </div>
-      </>
+      </main>
   );
 }
