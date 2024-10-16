@@ -10,13 +10,18 @@ const Navbar = () => {
                     <div className="flex justify-center items-center h-full">
                         <ul className="flex gap-x-6 md:gap-x-[250px] text-white">
                             <li>
-                                <Link legacyBehavior={true} href="https://github.com/Kacper-Januszewski" passHref>
-                                    <a>GitHub</a>
+                                <Link legacyBehavior={true} href="" passHref>
+                                    <a>Home</a>
                                 </Link>
                             </li>
                             <li>
-                                <Link legacyBehavior={true} href="https://www.linkedin.com/in/kacper-januszewski/" passHref>
-                                    <a>LinkedIn</a>
+                                <Link legacyBehavior={true} href="" passHref>
+                                    <a>Work</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link legacyBehavior={true} href="" passHref>
+                                    <a>Contact</a>
                                 </Link>
                             </li>
                         </ul>

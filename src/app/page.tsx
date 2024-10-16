@@ -111,11 +111,12 @@ export default function Home() {
       </div>
     </main>
   */
-      <main className="bg-black h-screen text-white">
+      <main className="h-screen text-white">
         <div className="container mx-auto px-4">
           <h1>
               Hello!, My name is <span>Kacper Januszewski</span> and I&apos;m a <span>Web Developer</span>
           </h1>
+            <div className="h-[2000px] bg-gray-700"></div>
           <p>
             You scrolled this far? Contact me!
           </p>
