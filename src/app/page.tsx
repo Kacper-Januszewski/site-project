@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Cta from "@/app/components/cta/form";
 
 export default function Home() {
   return (
@@ -112,14 +113,18 @@ export default function Home() {
     </main>
   */
       <main className="h-screen text-white">
-        <div className="container mx-auto px-4">
-          <h1>
-              Hello! My name is <span>Kacper Januszewski</span> and I&apos;m a <span>Web Developer</span>
-          </h1>
-            <div className="h-[2000px] bg-gray-700"></div>
-          <p>
-            You scrolled this far? Contact me!
-          </p>
+        <div className="container mx-auto px-4 font-sans">
+            <section id="home" className="pt-[100px]">
+              <h1 className="text-xl text-center leading-[50px]">
+                  Hello! My name is <br /><span className="font-bold text-5xl">Kacper Januszewski</span> <br />and I&apos;m a <br /><span className="font-medium text-4xl">Web Developer</span>
+              </h1>
+            </section>
+            <div className="pt-[200px] pb-[200px]">
+            <div id="work" className="h-[1000px] bg-gray-900">portfolio section</div>
+            </div>
+                <section id="contact" className="text-center text-xl">
+                    <Cta />
+                </section>
         </div>
       </main>
   );
