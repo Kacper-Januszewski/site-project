@@ -1,7 +1,7 @@
 "use client";
 import Form from "./form";
 
-const Form = () => {
+const Cta = () => {
     return (
         <>
             <Form />
@@ -9,4 +9,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default Cta;

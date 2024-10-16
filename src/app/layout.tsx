@@ -1,5 +1,4 @@
 import Navigation from "./components/navigation/navbar"
-import Cta from "./components/cta/form"
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
