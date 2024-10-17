@@ -2,7 +2,7 @@ import Cta from "@/app/components/cta/form";
 
 export default function Home() {
   return (
-      <main className="h-screen text-white">
+      <main className="h-full text-white">
         <div className="container mx-auto px-4 font-sans">
             <section id="home" className="pt-[100px]">
               <h1 className="text-xl text-center leading-[50px]">
@@ -10,7 +10,7 @@ export default function Home() {
               </h1>
             </section>
             <div className="pt-[200px] pb-[200px]">
-            <div id="work" className="h-[1000px] bg-gray-900">portfolio section</div>
+            <div id="work" className="h-[1000px] bg-black pt-[400px]">portfolio section</div>
             </div>
                 <section id="contact" className="text-center text-xl">
                     <Cta />
