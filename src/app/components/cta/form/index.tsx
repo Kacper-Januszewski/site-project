@@ -65,7 +65,6 @@ const Form: FC = () => {
                             rows={4}
                             className="h-20 rounded p-2 mb-4 border border-white bg-black"
                             id="message"
-                            type="text"
                             aria-label="message"
                             placeholder="Message"
                             {...register('message', {required: true})}
