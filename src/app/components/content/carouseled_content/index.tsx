@@ -1,10 +1,10 @@
 "use client";
-import BootstrapCarousel from '/carousel';
+import Carousel from '/carousel';
 
 const Carouseled_Box = () => {
     return (
         <div>
-            <BootstrapCarousel />
+            <Carousel />
         </div>
 );
 };
