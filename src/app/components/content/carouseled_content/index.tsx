@@ -1,5 +1,5 @@
 "use client";
-import Carousel from '/carousel';
+import Carousel from './carousel';
 
 const Carouseled_Box = () => {
     return (
