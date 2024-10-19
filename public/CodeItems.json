@@ -1,0 +1,24 @@
+{
+  "items": {
+    "bootstrap": [
+      {
+        "id": 1,
+        "title": "Project1",
+        "body": "My first project",
+        "imageUrl": "/content_boxes/code_part/code_img_test.png"
+      },
+      {
+        "id": 2,
+        "title": "Project2",
+        "body": "My second project",
+        "imageUrl": "/content_boxes/code_part/code_img_test2.png"
+      },
+      {
+        "id": 3,
+        "title": "Project3",
+        "body": "My third project",
+        "imageUrl": "/content_boxes/code_part/code_img_test3.png"
+      }
+    ]
+  }
+}

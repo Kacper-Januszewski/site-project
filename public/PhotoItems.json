@@ -1,0 +1,24 @@
+{
+  "items": {
+    "bootstrap": [
+      {
+        "id": 1,
+        "title": "Photo1",
+        "body": "This is the first photo",
+        "imageUrl": "/content_boxes/photo_part/photo_img_test.png"
+      },
+      {
+        "id": 2,
+        "title": "Photo2",
+        "body": "My second photo",
+        "imageUrl": "/content_boxes/code_part/photo_img_test2.png"
+      },
+      {
+        "id": 3,
+        "title": "Photo3",
+        "body": "This photo is my third photo that I made",
+        "imageUrl": "/content_boxes/code_part/photo_img_test3.png"
+      }
+    ]
+  }
+}

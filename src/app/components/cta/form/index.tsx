@@ -29,7 +29,7 @@ const Form: FC = () => {
                 <div className="container flex justify-center gap-x-16 h-10 mb-6">
                     <Link href="https://github.com/Kacper-Januszewski">
                     <Image
-                        src="/github-mark-white.svg"
+                        src="/icons/github-mark-white.svg"
                         alt="Github Logo"
                         width={40}
                         height={40}
@@ -39,7 +39,7 @@ const Form: FC = () => {
                     </Link>
                     <Link href="https://www.linkedin.com/in/kacper-januszewski/">
                     <img
-                        src="/LI-In-Bug.png"
+                        src="/icons/LI-In-Bug.png"
                         alt="LinkedIn Logo"
                         width={50}
                         height={40}
