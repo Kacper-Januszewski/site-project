@@ -8,8 +8,8 @@ interface CarouselItem {
     imageUrl: string;
 }
 
-const Carousel = () => {
-    const [items, setItems] = useState([]);
+const Carousel: React.FC = () => {
+    const [items, setItems] = useState<CarouselItem[]>([]);
     const [index, setIndex] = useState(0);
 
     const handleNext = () => {
