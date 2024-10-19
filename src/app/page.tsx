@@ -1,6 +1,6 @@
 import Cta from "@/app/components/cta/form";
 import Content_box from "@/app/components/content/content_box";
-import BootstrapCarousel from "@/app/components/content/carouseled_content/carousel";
+import Carousel from "@/app/components/content/carouseled_content/carousel";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
               </h1>
             </section>
             <div className="pt-[200px] pb-[200px]">
-                <div id="work" className="h-[1000px] bg-black pt-[400px]"><BootstrapCarousel />{/*also could be Content_box*/}</div>
+                <div id="work" className="h-[1000px] bg-black pt-[400px]"><Carousel />{/*also could be Content_box*/}</div>
             </div>
                 <section id="contact" className="text-center text-xl">
                     <Cta />
