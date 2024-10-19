@@ -1,6 +1,13 @@
 'use client';
 import React, { useEffect, useState} from "react";
 
+interface CarouselItem {
+    id: number;
+    title: string;
+    body: string;
+    imageUrl: string;
+}
+
 const Carousel = () => {
     const [items, setItems] = useState([]);
     const [index, setIndex] = useState(0);
