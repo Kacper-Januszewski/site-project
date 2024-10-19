@@ -16,8 +16,8 @@ export async function POST(request: NextRequest) {
             port: 465,
             secure: true
 
-            If you want to use a different email provider other than gmail, you need to provide these manually.
-            Or you can go use these well known services and their settings at
+            If we want to use a different email provider other than gmail, we need to provide these manually.
+            Or we can go use these well known services and their settings at
             https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
 
             */
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         from: process.env.MY_EMAIL,
         to: process.env.MY_EMAIL,
         // cc: email, (for sending copy to sender)
-        subject: `Message from ${name} (${email})`,
+        subject: `Message from ${email}`,
         text: message,
     }
 
