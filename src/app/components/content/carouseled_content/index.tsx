@@ -4,7 +4,7 @@ import Carousel from './carousel';
 const Carouseled_Box = () => {
     return (
         <div>
-            <Carousel />
+            <Carousel filename=''/>
         </div>
 );
 };
