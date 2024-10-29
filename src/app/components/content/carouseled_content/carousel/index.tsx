@@ -8,7 +8,11 @@ interface CarouselItem {
     imageUrl: string;
 }
 
-const Carousel: React.FC = () => {
+interface DynamicJSONInput {
+    filename: string;
+}
+
+const Carousel: React.FC<DynamicJSONInput> = ({filename}) => {
     const [items, setItems] = useState<CarouselItem[]>([]);
     const [index, setIndex] = useState(0);
 
@@ -22,17 +26,17 @@ const Carousel: React.FC = () => {
 
     useEffect(() => {
         const fetchItems = async () => {
-            const response = await fetch('/CodeItems.json');
+            const response = await fetch(`/${filename}`);
             const data = await response.json();
             setItems(data.items.bootstrap);
 
         };
 
         fetchItems();
-    }, []);
+    }, [filename]);
 
     return (
-        <div className="relative w-full max-w-md mx-auto">
+        <div className="relative w-full max-w-md h-fit">
             <div className="overflow-hidden rounded-lg">
                 <img src={items[index]?.imageUrl} alt="slides" className="w-full h-64 object-cover" />
                 <div className="p-4 bg-white shadow-lg">
