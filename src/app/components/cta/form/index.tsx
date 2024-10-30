@@ -53,7 +53,7 @@ const Form: FC = () => {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <input
-                            className='rounded p-2 mb-4 border border-white bg-black'
+                            className='rounded p-2 mb-4 border border-white bg-black focus:outline-none'
                             id='email'
                             type='email'
                             aria-label='email address'
@@ -63,7 +63,7 @@ const Form: FC = () => {
 
                         <textarea
                             rows={4}
-                            className="h-20 rounded p-2 mb-4 border border-white bg-black"
+                            className="h-20 rounded p-2 mb-4 border border-white bg-black focus:outline-none"
                             id="message"
                             aria-label="message"
                             placeholder="Message"
