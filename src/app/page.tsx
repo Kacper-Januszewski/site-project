@@ -20,10 +20,10 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="flex flex-wrap h-fit pt-[400px] gap-x-36 justify-center pb-[400px]">
-                    <div className="order-2 lg:order-1">
+                    <div className="order-2 md:order-1">
                         <p className='text-center w-auto max-w-[448px] mx-auto'>Aesthetic experience is something that I take very seriously. I have finished a filmmaking highschool where I learned photography and design, both of which are proving useful even after I changed my industry career path.</p>
                     </div>
-                    <div className="order-1 lg:order2">
+                    <div className="order-1 md:order2">
                         <Carousel filename={'PhotoItems.json'}/>
                     </div>
                 </div>
