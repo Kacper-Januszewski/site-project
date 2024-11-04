@@ -39,7 +39,7 @@ const Carousel: React.FC<DynamicJSONInput> = ({filename}) => {
         <div className="relative w-full max-w-md h-fit">
             <div className="overflow-hidden rounded-lg">
                 <img src={items[index]?.imageUrl} alt="slides" className="w-full h-64 object-cover" />
-                <div className="p-4 bg-white shadow-lg">
+                <div className="p-4 bg-gray-900 shadow-lg">
                     <h3 className="text-xl font-semibold">{items[index]?.title}</h3>
                     <p className="text-gray-600">{items[index]?.body}</p>
                 </div>
