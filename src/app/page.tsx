@@ -1,9 +1,9 @@
-
+import Header from './components/header_section'
 export default function Home() {
   return (
       <main>
           <div>
-              Kacper Januszewski <br /> Web developer
+              <Header />
           </div>
           <div>
               <div>
