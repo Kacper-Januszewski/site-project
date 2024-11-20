@@ -1,4 +1,6 @@
 import Header from './components/header_section'
+import Hero from './components/hero_section/hero'
+import Footer from "./components/footer_section/footer";
 export default function Home() {
   return (
       <main>
@@ -6,6 +8,7 @@ export default function Home() {
               <Header />
           </div>
           <div>
+              <Hero />
               <div>
                   My work
                   <div>
@@ -24,29 +27,7 @@ export default function Home() {
               </div>
           </div>
           <div>
-              <div>
-                  <div>
-                      © 2024 Kacper Januszewski
-                  </div>
-                  <div>
-                      <div>
-                          My work
-                      </div>
-                      <div>
-                          logo <br/>
-                          logo
-                      </div>
-                  </div>
-                  <div>
-                      <div>
-                          Get in touch!
-                      </div>
-                      <div>
-                          logo <br/>
-                          logo
-                      </div>
-                  </div>
-              </div>
+            <Footer />
           </div>
       </main>
   );
