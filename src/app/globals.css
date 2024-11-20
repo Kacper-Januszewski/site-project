@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body {
-    @apply bg-black;
+    @apply bg-white;
     scroll-behavior: smooth;
     font-family: Inter sans-serif;
 }
