@@ -3,21 +3,39 @@
     "bootstrap": [
       {
         "id": 1,
-        "title": "Project1",
-        "body": "My first project",
-        "imageUrl": "/content_boxes/code_part/code_img_test.png"
+        "title": "Github",
+        "description": "My github profile",
+        "url": "https://github.com/Kacper-Januszewski"
       },
       {
         "id": 2,
-        "title": "Project2",
-        "body": "My second project",
-        "imageUrl": "/content_boxes/code_part/code_img_test2.png"
+        "title": "Live sites",
+        "body": "List of my web components",
+        "imageUrl": "https://kacper-januszewski/projects"
       },
       {
         "id": 3,
-        "title": "Project3",
-        "body": "My third project",
-        "imageUrl": "/content_boxes/code_part/code_img_test3.png"
+        "title": "Aesthetic",
+        "body": "My behance profile",
+        "imageUrl": "https://www.behance.net/kacperjanusze3/projects"
+      },
+      {
+        "id": 4,
+        "title": "LinkedIn",
+        "body": "My LinkedIn profile",
+        "imageUrl": "https://www.linkedin.com/in/kacper-januszewski/"
+      },
+      {
+        "id": 5,
+        "title": "Github",
+        "body": "My github repositories",
+        "imageUrl": "https://github.com/Kacper-Januszewski?tab=repositories"
+      },
+      {
+        "id": 6,
+        "title": "Email",
+        "body": "Send me a message on email",
+        "imageUrl": "mailto:januszewskidev@gmail.com"
       }
     ]
   }
