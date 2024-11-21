@@ -3,8 +3,8 @@ import React from 'react';
 const Header = () => {
     return (
         <>
-            <div className="lg:text-6xl md:text-5xl sm:text-3xl font-semibold lg:leading-10 md:leading-8 sm:leading-5 px-10 mx-10">
-                Kacper Januszewski<br /><span className="lg:text-4xl md:text-3xl sm:text-xl font-extralight"> Web Developer  </span>
+            <div className="text-2xl font-medium leading-4 p-2 m-2 md:text-6xl md:font-semibold md:leading-10 md:px-10 md:mx-10">
+                Kacper Januszewski<br /><span className="text-sm font-extralight md:text-4xl md:font-extralight"> Web Developer  </span>
             </div>
         </>
     );

@@ -4,17 +4,17 @@ import Image from "next/image";
 const Footer = () => {
     return (
         <>
-            <div className="h-[1px] w-full bg-button-gray" />
-            <div className="flex flex-row justify-between items-center mt-8">
+            <div className="md:h-[1px] md:w-full bg-button-gray" />
+            <div className="md:flex md:flex-row md:justify-between md:items-center md:mt-8">
                 <div>
-                    <p className="text-copyright-gray text-xs mr-[40px]">© 2024 Kacper Januszewski</p>
+                    <p className="text-copyright-gray md:text-xs md:mr-[40px]">© 2024 Kacper Januszewski</p>
                 </div>
-                <div className="flex flex-row gap-x-10">
-                    <div className="flex flex-col gap-y-3 items-center">
+                <div className="md:flex md:flex-row md:gap-x-10">
+                    <div className="md:flex md:flex-col md:gap-y-3 md:items-center">
                         <div>
                             My work
                         </div>
-                        <div className="flex flex-row gap-x-7">
+                        <div className="md:flex md:flex-row md:gap-x-7">
                             <a href="https://github.com/Kacper-Januszewski">
                                 <Image src='/icons/github-mark.svg' alt="github icon" width="20" height="20"/>
                             </a>
@@ -23,11 +23,11 @@ const Footer = () => {
                             </a>
                             </div>
                     </div>
-                    <div className="flex flex-col gap-y-3 items-center">
+                    <div className="md:flex md:flex-col md:gap-y-3 md:items-center">
                         <div>
                             Get in touch!
                         </div>
-                        <div className="flex flex-row gap-x-7">
+                        <div className="md:flex md:flex-row md:gap-x-7">
                             <a href="mailto:januszewskidev@gmail.com">
                                 <Image src='/icons/unnamed.png' alt="gmail icon" width="20" height="20"/>
                             </a>
@@ -38,7 +38,7 @@ const Footer = () => {
                     </div>
                 </div>
                 {/*definitely fix that to be relative later*/}
-                <div className="w-[204px]"></div>
+                <div className="md:w-[204px]"></div>
             </div>
         </>
     );

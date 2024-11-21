@@ -3,8 +3,8 @@ import Hero from './components/hero_section/hero'
 import Footer from "./components/footer_section/footer";
 export default function Home() {
   return (
-      <main className="lg:mx-[17vw] md:mx-[10vw] mt-20 mb-1">
-          <div className="mx-[3vw]">
+      <main className="mx-10 mt-10 mb-1 md:mx-[17vw] md:mt-20 md:mb-1">
+          <div className="mb-16 md:mx-[3vw]">
               <Header />
           </div>
           <div>
