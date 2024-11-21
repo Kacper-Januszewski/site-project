@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 const HeroButton = () => {
     return (
         <>
-                <Button className="bg-button-gray rounded px-20 py-1 text-2xl">Button</Button>
+                <Button className="bg-button-gray rounded m-1 px-20 py-1 text-2xl">Button</Button>
         </>
     );
 };

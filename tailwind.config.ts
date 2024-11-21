@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         'card-gray': '#D9D9D9',
         'button-gray': '#B7B7B7',
+        'copyright-gray': '#8C8C8C',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
