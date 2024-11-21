@@ -6,7 +6,7 @@ const Footer = () => {
         <>
             <div className="h-[0.5px] w-full md:h-[1px] md:w-full bg-button-gray" />
             <div className="flex flex-col items-center md:flex md:flex-row md:justify-between md:items-center md:mt-8">
-                    <p className="p-1 m-1 text-xs order-2 text-copyright-gray md:order-1 md:text-xs md:mr-[40px]">© 2024 Kacper Januszewski</p>
+                    <p className="p-1 m-1 text-[0.5rem] order-2 text-copyright-gray md:order-1 md:text-xs md:mr-[40px]">© 2024 Kacper Januszewski</p>
                 <div className="order-1 md:order-2 md:flex md:flex-row md:gap-x-10">
                     <div className="p-2 m-2 flex flex-col items-center md:flex md:flex-col md:gap-y-3 md:items-center">
                         <div>
