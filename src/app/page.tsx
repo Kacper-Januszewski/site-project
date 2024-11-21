@@ -9,22 +9,6 @@ export default function Home() {
           </div>
           <div>
               <Hero />
-              {/*<div>*/}
-              {/*    My work*/}
-              {/*    <div>*/}
-              {/*        Github <br />*/}
-              {/*        Live sites <br />*/}
-              {/*        Aesthetic <br />*/}
-              {/*    </div>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-              {/*    Contact me*/}
-              {/*    <div>*/}
-              {/*        LinkedIn <br />*/}
-              {/*        Github <br />*/}
-              {/*        Email <br />*/}
-              {/*    </div>*/}
-              {/*</div>*/}
           </div>
           <div>
             <Footer />
