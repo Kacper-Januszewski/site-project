@@ -10,10 +10,9 @@ interface ButtonData {
 
 interface ButtonProps {
     id: number;
-    title: string;
 }
 
-const HeroButton: React.FC<ButtonProps> = ({title}) => {
+const HeroButton: React.FC<ButtonProps> = ({id}) => {
     const [item, setItem] = useState<ButtonData | null>(null);
     useEffect(() => {
 
@@ -22,7 +21,7 @@ const HeroButton: React.FC<ButtonProps> = ({title}) => {
                 const response = await fetch(`/CodeItems.json`);
                 const data = await response.json();
                 const loadedItems: ButtonData[] = data.items.bootstrap;
-                const foundItem = loadedItems.find((it) => it.title === title);
+                const foundItem = loadedItems.find((it) => it.id === id);
                 setItem(foundItem || null);
             } catch (error) {
                 console.error("Error fetching items: ",error);
@@ -30,7 +29,7 @@ const HeroButton: React.FC<ButtonProps> = ({title}) => {
         };
 
         fetchItems();
-    }, [title]);
+    }, [id]);
 
     if(!item){
         return <p className="min-w-44 max-w-44 bg-button-gray rounded m-0.5 px-12 py-1 md:m-1 md:px-20 md:py-1 md:text-2xl md:min-w-72 md:max-w-72">Loading...</p>;
