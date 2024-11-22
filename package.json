@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@material-tailwind/html": "^2.3.2",
+    "@material-tailwind/react": "^2.1.10",
     "@types/nodemailer": "^6.4.16",
-    "next": "^14.2.15",
+    "next": "^15.0.3",
     "nodemailer": "^6.9.15",
     "photoswipe": "^5.4.4",
     "photoswipe-react": "^0.2.0",
