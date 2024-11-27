@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-disabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 vector-feature-night-mode-enabled skin-theme-clientpref-day vector-toc-not-available" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Editing Heapsort - Wikipedia</title>
+<script>(function(){var className="client-js vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-disabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 vector-feature-night-mode-enabled skin-theme-clientpref-day vector-toc-not-available";var cookie=document.cookie.match(/(?:^|; )enwikimwclientpreferences=([^;]+)/);if(cookie){cookie[1].split('%2C').forEach(function(pref){className=className.replace(new RegExp('(^| )'+pref.replace(/-clientpref-\w+$|[^\w-]+/g,'')+'-clientpref-\\w+( |$)'),'$1'+pref+'$2');});}document.documentElement.className=className;}());RLCONF={"wgBreakFrames":true,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":
+"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"75180578-569d-4744-9511-d8d2484a34b1","wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Heapsort","wgTitle":"Heapsort","wgCurRevisionId":1252306023,"wgRevisionId":0,"wgArticleId":13995,"wgIsArticle":false,"wgIsRedirect":false,"wgAction":"edit","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgPageViewLanguage":"en","wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Heapsort","wgRelevantArticleId":13995,"wgIsProbablyEditable":true,"wgRelevantPageIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgNoticeProject":"wikipedia","wgCiteReferencePreviewsActive":false,"wgFlaggedRevsParams":{"tags":{"status":{"levels":1}}},"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgPopupsFlags":0,"wgVisualEditor":{
+"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"watchlist":true,"tagline":false,"nearby":true},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":50000,"wgEditMessage":"editing","wgEditSubmitButtonLabelPublish":true,"wgCentralAuthMobileDomain":false,"wgULSPosition":"interlanguage","wgULSisCompactLinksEnabled":false,"wgVector2022LanguageInHeader":true,"wgULSisLanguageSelectorEmpty":false,"wgCheckUserClientHintsHeadersJsApi":["brands","architecture","bitness","fullVersionList","mobile","model","platform","platformVersion"],"GEHomepageSuggestedEditsEnableTopics":true,"wgGETopicsMatchModeEnabled":false,"wgGEStructuredTaskRejectionReasonTextInputEnabled":false,"wgGELevelingUpEnabledForUser":false};RLSTATE={"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","ext.wikiEditor.styles":"ready",
+"mediawiki.action.edit.styles":"ready","mediawiki.editfont.styles":"ready","mediawiki.interface.helpers.styles":"ready","oojs-ui-core.styles":"ready","oojs-ui.styles.indicators":"ready","mediawiki.widgets.styles":"ready","oojs-ui-core.icons":"ready","skins.vector.search.codex.styles":"ready","skins.vector.styles":"ready","skins.vector.icons":"ready","mediawiki.codex.messagebox.styles":"ready","ext.charinsert.styles":"ready","ext.wikimediamessages.styles":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.uls.interlanguage":"ready","ext.wikimediaBadges":"ready"};RLPAGEMODULES=["ext.cite.wikiEditor","ext.wikiEditor","ext.wikiEditor.realtimepreview","ext.CodeMirror.WikiEditor","ext.TemplateWizard","ext.disambiguator","ext.TwoColConflict.JSCheck","mediawiki.action.edit","mediawiki.action.edit.editWarning","wikibase.client.action.edit.collapsibleFooter","mediawiki.action.edit.collapsibleFooter","site","mediawiki.page.ready","skins.vector.js","ext.centralNotice.geoIP",
+"ext.charinsert","ext.gadget.ReferenceTooltips","ext.gadget.charinsert","ext.gadget.extra-toolbar-buttons","ext.gadget.refToolbar","ext.gadget.switcher","ext.urlShortener.toolbar","ext.centralauth.centralautologin","ext.popups","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.echo.centralauth","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.uls.interface","ext.cx.eventlogging.campaigns","ext.checkUser.clientHints","ext.growthExperiments.SuggestedEditSession","wikibase.sidebar.tracking"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.impl(function(){return["user.options@12s5i",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});
+}];});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.charinsert.styles%7Cext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cext.wikimediamessages.styles%7Cmediawiki.action.edit.styles%7Cmediawiki.codex.messagebox.styles%7Cmediawiki.editfont.styles%7Cmediawiki.interface.helpers.styles%7Cmediawiki.widgets.styles%7Coojs-ui-core.icons%2Cstyles%7Coojs-ui.styles.indicators%7Cskins.vector.icons%2Cstyles%7Cskins.vector.search.codex.styles&amp;only=styles&amp;skin=vector-2022">
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.wikiEditor.styles&amp;only=styles&amp;skin=vector-2022">
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector-2022"></script>
+<meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector-2022">
+<meta name="generator" content="MediaWiki 1.44.0-wmf.4">
+<meta name="referrer" content="origin">
+<meta name="referrer" content="origin-when-cross-origin">
+<meta name="robots" content="noindex,nofollow,max-image-preview:standard">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="917">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="611">
+<meta property="og:image:width" content="640">
+<meta property="og:image:height" content="489">
+<meta name="viewport" content="width=1120">
+<meta property="og:title" content="Editing Heapsort - Wikipedia">
+<meta property="og:type" content="website">
+<link rel="alternate" media="only screen and (max-width: 640px)" href="//en.m.wikipedia.org/wiki/Heapsort">
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=Heapsort&amp;action=edit">
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png">
+<link rel="icon" href="/static/favicon/wikipedia.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="/w/rest.php/v1/search" title="Wikipedia (en)">
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd">
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Heapsort">
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">
+<link rel="alternate" type="application/atom+xml" title="Wikipedia Atom feed" href="/w/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="dns-prefetch" href="//login.wikimedia.org">
+</head>
+<body class="skin--responsive skin-vector skin-vector-search-vue mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-Heapsort rootpage-Heapsort skin-vector-2022 action-edit"><a class="mw-jump-link" href="#bodyContent">Jump to content</a>
+<div class="vector-header-container">
+	<header class="vector-header mw-header">
+		<div class="vector-header-start">
+			<nav class="vector-main-menu-landmark" aria-label="Site">
+				
+<div id="vector-main-menu-dropdown" class="vector-dropdown vector-main-menu-dropdown vector-button-flush-left vector-button-flush-right"  >
+	<input type="checkbox" id="vector-main-menu-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-main-menu-dropdown" class="vector-dropdown-checkbox "  aria-label="Main menu"  >
+	<label id="vector-main-menu-dropdown-label" for="vector-main-menu-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-menu mw-ui-icon-wikimedia-menu"></span>
+
+<span class="vector-dropdown-label-text">Main menu</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+				<div id="vector-main-menu-unpinned-container" class="vector-unpinned-container">
+		
+<div id="vector-main-menu" class="vector-main-menu vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-main-menu-pinnable-header vector-pinnable-header-unpinned"
+	data-feature-name="main-menu-pinned"
+	data-pinnable-element-id="vector-main-menu"
+	data-pinned-container-id="vector-main-menu-pinned-container"
+	data-unpinned-container-id="vector-main-menu-unpinned-container"
+>
+	<div class="vector-pinnable-header-label">Main menu</div>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-main-menu.pin">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-main-menu.unpin">hide</button>
+</div>
+
+	
+<div id="p-navigation" class="vector-menu mw-portlet mw-portlet-navigation"  >
+	<div class="vector-menu-heading">
+		Navigation
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z"><span>Main page</span></a></li><li id="n-contents" class="mw-list-item"><a href="/wiki/Wikipedia:Contents" title="Guides to browsing Wikipedia"><span>Contents</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/Portal:Current_events" title="Articles related to current events"><span>Current events</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" title="Visit a randomly selected article [x]" accesskey="x"><span>Random article</span></a></li><li id="n-aboutsite" class="mw-list-item"><a href="/wiki/Wikipedia:About" title="Learn about Wikipedia and how it works"><span>About Wikipedia</span></a></li><li id="n-contactpage" class="mw-list-item"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia"><span>Contact us</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+	
+	
+<div id="p-interaction" class="vector-menu mw-portlet mw-portlet-interaction"  >
+	<div class="vector-menu-heading">
+		Contribute
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="n-help" class="mw-list-item"><a href="/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia"><span>Help</span></a></li><li id="n-introduction" class="mw-list-item"><a href="/wiki/Help:Introduction" title="Learn how to edit Wikipedia"><span>Learn to edit</span></a></li><li id="n-portal" class="mw-list-item"><a href="/wiki/Wikipedia:Community_portal" title="The hub for editors"><span>Community portal</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" title="A list of recent changes to Wikipedia [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_upload_wizard" title="Add images or other media for use on Wikipedia"><span>Upload file</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+</div>
+
+				</div>
+
+	</div>
+</div>
+
+		</nav>
+			
+<a href="/wiki/Main_Page" class="mw-logo">
+	<img class="mw-logo-icon" src="/static/images/icons/wikipedia.png" alt="" aria-hidden="true" height="50" width="50">
+	<span class="mw-logo-container skin-invert">
+		<img class="mw-logo-wordmark" alt="Wikipedia" src="/static/images/mobile/copyright/wikipedia-wordmark-en.svg" style="width: 7.5em; height: 1.125em;">
+		<img class="mw-logo-tagline" alt="The Free Encyclopedia" src="/static/images/mobile/copyright/wikipedia-tagline-en.svg" width="117" height="13" style="width: 7.3125em; height: 0.8125em;">
+	</span>
+</a>
+
+		</div>
+		<div class="vector-header-end">
+			
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-collapses vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<a href="/wiki/Special:Search" class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only search-toggle" title="Search Wikipedia [f]" accesskey="f"><span class="vector-icon mw-ui-icon-search mw-ui-icon-wikimedia-search"></span>
+
+<span>Search</span>
+	</a>
+	<div class="vector-typeahead-search-container">
+		<div class="cdx-typeahead-search cdx-typeahead-search--show-thumbnail cdx-typeahead-search--auto-expand-width">
+			<form action="/w/index.php" id="searchform" class="cdx-search-input cdx-search-input--has-end-button">
+				<div id="simpleSearch" class="cdx-search-input__input-wrapper"  data-search-loc="header-moved">
+					<div class="cdx-text-input cdx-text-input--has-start-icon">
+						<input
+							class="cdx-text-input__input"
+							 type="search" name="search" placeholder="Search Wikipedia" aria-label="Search Wikipedia" autocapitalize="sentences" title="Search Wikipedia [f]" accesskey="f" id="searchInput"
+							>
+						<span class="cdx-text-input__icon cdx-text-input__start-icon"></span>
+					</div>
+					<input type="hidden" name="title" value="Special:Search">
+				</div>
+				<button class="cdx-button cdx-search-input__end-button">Search</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+			<nav class="vector-user-links vector-user-links-wide" aria-label="Personal tools">
+	<div class="vector-user-links-main">
+	
+<div id="p-vector-user-menu-preferences" class="vector-menu mw-portlet emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+	
+<div id="p-vector-user-menu-userpage" class="vector-menu mw-portlet emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+	<nav class="vector-appearance-landmark" aria-label="Appearance">
+		
+<div id="vector-appearance-dropdown" class="vector-dropdown "  title="Change the appearance of the page&#039;s font size, width, and color" >
+	<input type="checkbox" id="vector-appearance-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-appearance-dropdown" class="vector-dropdown-checkbox "  aria-label="Appearance"  >
+	<label id="vector-appearance-dropdown-label" for="vector-appearance-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-appearance mw-ui-icon-wikimedia-appearance"></span>
+
+<span class="vector-dropdown-label-text">Appearance</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+			<div id="vector-appearance-unpinned-container" class="vector-unpinned-container">
+				
+			</div>
+		
+	</div>
+</div>
+
+	</nav>
+	
+<div id="p-vector-user-menu-notifications" class="vector-menu mw-portlet emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+	
+<div id="p-vector-user-menu-overflow" class="vector-menu mw-portlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			<li id="pt-sitesupport-2" class="user-links-collapsible-item mw-list-item user-links-collapsible-item"><a data-mw="interface" href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" class=""><span>Donate</span></a>
+</li>
+<li id="pt-createaccount-2" class="user-links-collapsible-item mw-list-item user-links-collapsible-item"><a data-mw="interface" href="/w/index.php?title=Special:CreateAccount&amp;returnto=Heapsort&amp;returntoquery=action%3Dedit" title="You are encouraged to create an account and log in; however, it is not mandatory" class=""><span>Create account</span></a>
+</li>
+<li id="pt-login-2" class="user-links-collapsible-item mw-list-item user-links-collapsible-item"><a data-mw="interface" href="/w/index.php?title=Special:UserLogin&amp;returnto=Heapsort&amp;returntoquery=action%3Dedit" title="You&#039;re encouraged to log in; however, it&#039;s not mandatory. [o]" accesskey="o" class=""><span>Log in</span></a>
+</li>
+
+			
+		</ul>
+		
+	</div>
+</div>
+
+	</div>
+	
+<div id="vector-user-links-dropdown" class="vector-dropdown vector-user-menu vector-button-flush-right vector-user-menu-logged-out"  title="Log in and more options" >
+	<input type="checkbox" id="vector-user-links-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-user-links-dropdown" class="vector-dropdown-checkbox "  aria-label="Personal tools"  >
+	<label id="vector-user-links-dropdown-label" for="vector-user-links-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only " aria-hidden="true"  ><span class="vector-icon mw-ui-icon-ellipsis mw-ui-icon-wikimedia-ellipsis"></span>
+
+<span class="vector-dropdown-label-text">Personal tools</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+		
+<div id="p-personal" class="vector-menu mw-portlet mw-portlet-personal user-links-collapsible-item"  title="User menu" >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="pt-sitesupport" class="user-links-collapsible-item mw-list-item"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en"><span>Donate</span></a></li><li id="pt-createaccount" class="user-links-collapsible-item mw-list-item"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Heapsort&amp;returntoquery=action%3Dedit" title="You are encouraged to create an account and log in; however, it is not mandatory"><span class="vector-icon mw-ui-icon-userAdd mw-ui-icon-wikimedia-userAdd"></span> <span>Create account</span></a></li><li id="pt-login" class="user-links-collapsible-item mw-list-item"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Heapsort&amp;returntoquery=action%3Dedit" title="You&#039;re encouraged to log in; however, it&#039;s not mandatory. [o]" accesskey="o"><span class="vector-icon mw-ui-icon-logIn mw-ui-icon-wikimedia-logIn"></span> <span>Log in</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+<div id="p-user-menu-anon-editor" class="vector-menu mw-portlet mw-portlet-user-menu-anon-editor"  >
+	<div class="vector-menu-heading">
+		Pages for logged out editors <a href="/wiki/Help:Introduction" aria-label="Learn more about editing"><span>learn more</span></a>
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y"><span>Contributions</span></a></li><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n"><span>Talk</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+	
+	</div>
+</div>
+
+</nav>
+
+		</div>
+	</header>
+</div>
+<div class="mw-page-container">
+	<div class="mw-page-container-inner">
+		<div class="vector-sitenotice-container">
+			<div id="siteNotice"><!-- CentralNotice --></div>
+		</div>
+		<div class="vector-column-start">
+			<div class="vector-main-menu-container">
+		<div id="mw-navigation">
+			<nav id="mw-panel" class="vector-main-menu-landmark" aria-label="Site">
+				<div id="vector-main-menu-pinned-container" class="vector-pinned-container">
+				
+				</div>
+		</nav>
+		</div>
+	</div>
+</div>
+		<div class="mw-content-container">
+			<main id="content" class="mw-body">
+				<header class="mw-body-header vector-page-titlebar">
+					<h1 id="firstHeading" class="firstHeading mw-first-heading">Editing <span id="firstHeadingTitle">Heapsort</span></h1>
+							
+<div id="p-lang-btn" class="vector-dropdown mw-portlet mw-portlet-lang"  >
+	<input type="checkbox" id="p-lang-btn-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-p-lang-btn" class="vector-dropdown-checkbox mw-interlanguage-selector" aria-label="This article exist only in this language. Add the article for other languages"   >
+	<label id="p-lang-btn-label" for="p-lang-btn-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--action-progressive mw-portlet-lang-heading-0" aria-hidden="true"  ><span class="vector-icon mw-ui-icon-language-progressive mw-ui-icon-wikimedia-language-progressive"></span>
+
+<span class="vector-dropdown-label-text">Add languages</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+		<div class="vector-menu-content">
+			
+			<ul class="vector-menu-content-list">
+				
+				
+			</ul>
+			<div class="after-portlet after-portlet-lang"><span class="uls-after-portlet-link"></span></div>
+		</div>
+
+	</div>
+</div>
+</header>
+				<div class="vector-page-toolbar">
+					<div class="vector-page-toolbar-container">
+						<div id="left-navigation">
+							<nav aria-label="Namespaces">
+								
+<div id="p-associated-pages" class="vector-menu vector-menu-tabs mw-portlet mw-portlet-associated-pages"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="ca-nstab-main" class="selected vector-tab-noicon mw-list-item"><a href="/wiki/Heapsort" title="View the content page [c]" accesskey="c"><span>Article</span></a></li><li id="ca-talk" class="vector-tab-noicon mw-list-item"><a href="/wiki/Talk:Heapsort" rel="discussion" title="Discuss improvements to the content page [t]" accesskey="t"><span>Talk</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+								
+<div id="vector-variants-dropdown" class="vector-dropdown emptyPortlet"  >
+	<input type="checkbox" id="vector-variants-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-variants-dropdown" class="vector-dropdown-checkbox " aria-label="Change language variant"   >
+	<label id="vector-variants-dropdown-label" for="vector-variants-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet" aria-hidden="true"  ><span class="vector-dropdown-label-text">English</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+					
+<div id="p-variants" class="vector-menu mw-portlet mw-portlet-variants emptyPortlet"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			
+		</ul>
+		
+	</div>
+</div>
+
+				
+	</div>
+</div>
+
+							</nav>
+						</div>
+						<div id="right-navigation" class="vector-collapsible">
+							<nav aria-label="Views">
+								
+<div id="p-views" class="vector-menu vector-menu-tabs mw-portlet mw-portlet-views"  >
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="ca-view" class="vector-tab-noicon mw-list-item"><a href="/wiki/Heapsort"><span>Read</span></a></li><li id="ca-edit" class="selected vector-tab-noicon mw-list-item"><a href="/w/index.php?title=Heapsort&amp;action=edit" title="Edit this page"><span>Edit</span></a></li><li id="ca-history" class="vector-tab-noicon mw-list-item"><a href="/w/index.php?title=Heapsort&amp;action=history" title="Past revisions of this page [h]" accesskey="h"><span>View history</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+							</nav>
+				
+							<nav class="vector-page-tools-landmark" aria-label="Page tools">
+								
+<div id="vector-page-tools-dropdown" class="vector-dropdown vector-page-tools-dropdown"  >
+	<input type="checkbox" id="vector-page-tools-dropdown-checkbox" role="button" aria-haspopup="true" data-event-name="ui.dropdown-vector-page-tools-dropdown" class="vector-dropdown-checkbox "  aria-label="Tools"  >
+	<label id="vector-page-tools-dropdown-label" for="vector-page-tools-dropdown-checkbox" class="vector-dropdown-label cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet" aria-hidden="true"  ><span class="vector-dropdown-label-text">Tools</span>
+	</label>
+	<div class="vector-dropdown-content">
+
+
+									<div id="vector-page-tools-unpinned-container" class="vector-unpinned-container">
+						
+<div id="vector-page-tools" class="vector-page-tools vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-page-tools-pinnable-header vector-pinnable-header-unpinned"
+	data-feature-name="page-tools-pinned"
+	data-pinnable-element-id="vector-page-tools"
+	data-pinned-container-id="vector-page-tools-pinned-container"
+	data-unpinned-container-id="vector-page-tools-unpinned-container"
+>
+	<div class="vector-pinnable-header-label">Tools</div>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-page-tools.pin">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-page-tools.unpin">hide</button>
+</div>
+
+	
+<div id="p-cactions" class="vector-menu mw-portlet mw-portlet-cactions emptyPortlet vector-has-collapsible-items"  title="More options" >
+	<div class="vector-menu-heading">
+		Actions
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="ca-more-view" class="vector-more-collapsible-item mw-list-item"><a href="/wiki/Heapsort"><span>Read</span></a></li><li id="ca-more-edit" class="selected vector-more-collapsible-item mw-list-item"><a href="/w/index.php?title=Heapsort&amp;action=edit" title="Edit this page [e]" accesskey="e"><span>Edit</span></a></li><li id="ca-more-history" class="vector-more-collapsible-item mw-list-item"><a href="/w/index.php?title=Heapsort&amp;action=history"><span>View history</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+<div id="p-tb" class="vector-menu mw-portlet mw-portlet-tb"  >
+	<div class="vector-menu-heading">
+		General
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Heapsort" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j"><span>What links here</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Heapsort" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k"><span>Related changes</span></a></li><li id="t-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u"><span>Upload file</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=Heapsort&amp;action=info" title="More information about this page"><span>Page information</span></a></li><li id="t-urlshortener" class="mw-list-item"><a href="/w/index.php?title=Special:UrlShortener&amp;url=https%3A%2F%2Fen.wikipedia.org%2Fw%2Findex.php%3Ftitle%3DHeapsort%26action%3Dedit"><span>Get shortened URL</span></a></li><li id="t-urlshortener-qrcode" class="mw-list-item"><a href="/w/index.php?title=Special:QrCode&amp;url=https%3A%2F%2Fen.wikipedia.org%2Fw%2Findex.php%3Ftitle%3DHeapsort%26action%3Dedit"><span>Download QR code</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+<div id="p-wikibase-otherprojects" class="vector-menu mw-portlet mw-portlet-wikibase-otherprojects"  >
+	<div class="vector-menu-heading">
+		In other projects
+	</div>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list">
+			
+			<li id="t-wikibase" class="wb-otherproject-link wb-otherproject-wikibase-dataitem mw-list-item"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q474095" title="Structured data on this page hosted by Wikidata [g]" accesskey="g"><span>Wikidata item</span></a></li>
+		</ul>
+		
+	</div>
+</div>
+
+</div>
+
+									</div>
+				
+	</div>
+</div>
+
+							</nav>
+						</div>
+					</div>
+				</div>
+				<div class="vector-column-end">
+					<div class="vector-sticky-pinned-container">
+						<nav class="vector-page-tools-landmark" aria-label="Page tools">
+							<div id="vector-page-tools-pinned-container" class="vector-pinned-container">
+				
+							</div>
+		</nav>
+						<nav class="vector-appearance-landmark" aria-label="Appearance">
+							<div id="vector-appearance-pinned-container" class="vector-pinned-container">
+				<div id="vector-appearance" class="vector-appearance vector-pinnable-element">
+	<div
+	class="vector-pinnable-header vector-appearance-pinnable-header vector-pinnable-header-pinned"
+	data-feature-name="appearance-pinned"
+	data-pinnable-element-id="vector-appearance"
+	data-pinned-container-id="vector-appearance-pinned-container"
+	data-unpinned-container-id="vector-appearance-unpinned-container"
+>
+	<div class="vector-pinnable-header-label">Appearance</div>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-pin-button" data-event-name="pinnable-header.vector-appearance.pin">move to sidebar</button>
+	<button class="vector-pinnable-header-toggle-button vector-pinnable-header-unpin-button" data-event-name="pinnable-header.vector-appearance.unpin">hide</button>
+</div>
+
+
+</div>
+
+							</div>
+		</nav>
+					</div>
+				</div>
+				<div id="bodyContent" class="vector-body" aria-labelledby="firstHeading" data-mw-ve-target-container>
+					<div class="vector-body-before-content">
+							<div class="mw-indicators">
+		</div>
+
+						
+					</div>
+					<div id="contentSub"><div id="mw-content-subtitle"></div></div>
+					
+					
+					<div id="mw-content-text" class="mw-body-content"><div class="mw-editnotice-notext"><div class="editnotice-link editnotice-redlink sysop-show templateeditor-show extendedmover-show" style="clear: both; float: right; margin: 0px 0.8em; padding: 0; line-height: 1em; display: none;"> <small><a href="/w/index.php?title=Template:Editnotices/Page/Heapsort&amp;action=edit&amp;redlink=1" class="new" title="Template:Editnotices/Page/Heapsort (page does not exist)">Page notice</a></small> </div></div><div class="cdx-message cdx-message--block cdx-message--warning mw-anon-edit-warning"><span class="cdx-message__icon"></span><div class="cdx-message__content"><figure class="mw-halign-left" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/d/de/AnonEditWarning.svg/9px-AnonEditWarning.svg.png" decoding="async" width="9" height="20" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/en/thumb/d/de/AnonEditWarning.svg/13px-AnonEditWarning.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/d/de/AnonEditWarning.svg/18px-AnonEditWarning.svg.png 2x" data-file-width="9" data-file-height="20" /></span><figcaption></figcaption></figure><div style="text-align: center;"><span style="color:#d33; font-weight:bold;">You are not logged in.</span> Your <a href="/wiki/IP_address" title="IP address">IP address</a> will be publicly visible if you make any edits. If you <span class="plainlinks"><b><a class="external text" href="https://en.wikipedia.org/w/index.php?title=Special:UserLogin&amp;returnto=Heapsort">log in</a></b> or <b><a class="external text" href="https://en.wikipedia.org/w/index.php?title=Special:CreateAccount&amp;campaign=anoneditwarning&amp;returnto=Heapsort">create an account</a></b></span>, your edits will be attributed to a username, among <a href="/wiki/Wikipedia:Why_create_an_account%3F" title="Wikipedia:Why create an account?">other benefits</a>.</div></div></div><div class='editpage-head-copywarn'>
+<div class="center"><span typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/en/thumb/1/1d/Information_icon4.svg/20px-Information_icon4.svg.png" decoding="async" width="20" height="20" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/en/thumb/1/1d/Information_icon4.svg/30px-Information_icon4.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/1/1d/Information_icon4.svg/40px-Information_icon4.svg.png 2x" data-file-width="620" data-file-height="620" /></span></span> Content that <a href="/wiki/Wikipedia:Copyright_violations" title="Wikipedia:Copyright violations">violates any copyrights</a> will be deleted. Encyclopedic content must be <a href="/wiki/Wikipedia:Verifiability" title="Wikipedia:Verifiability">verifiable</a> through <a href="/wiki/Help:Introduction_to_referencing_with_Wiki_Markup/1" title="Help:Introduction to referencing with Wiki Markup/1">citations to reliable sources</a>.</div>
+</div><div id="wikiPreview" class="ontop" style="display: none;"></div><form class="mw-editform" id="editform" name="editform" method="post" action="/w/index.php?title=Heapsort&amp;action=submit" enctype="multipart/form-data" data-mw-editform-type="initial"><input type="hidden" value="ℳ𝒲♥𝓊𝓃𝒾𝒸ℴ𝒹ℯ" name="wpUnicodeCheck"><div id="antispam-container" style="display: none;"><label for="wpAntispam">Anti-spam check.
+Do <strong>not</strong> fill this in!</label><input name="wpAntispam" id="wpAntispam"></div><input id="wikieditorUsed" type="hidden" name="wikieditorUsed"><input id="editingStatsId" type="hidden" value="170b30f23091568a920d346d61343c54" name="editingStatsId"><input type="hidden" name="wpSection"><input type="hidden" value="20241127192605" name="wpStarttime"><input type="hidden" value="20241020192913" name="wpEdittime"><input type="hidden" value="1252306023" name="editRevId"><input id="wpScrolltop" type="hidden" name="wpScrolltop"><input type="hidden" value="d41d8cd98f00b204e9800998ecf8427e" name="wpAutoSummary"><input type="hidden" value="0" name="oldid"><input type="hidden" value="1252306023" name="parentRevId"><input type="hidden" value="text/x-wiki" name="format"><input type="hidden" value="wikitext" name="model"><textarea aria-label="Wikitext source editor" tabindex="1" accesskey="," id="wpTextbox1" cols="80" rows="25" style="" class="mw-editfont-monospace" lang="en" dir="ltr" name="wpTextbox1">{{Short description|A sorting algorithm which uses the heap data structure}}
+{{Use dmy dates|date=March 2022}}
+{{Infobox Algorithm|class=[[Sorting algorithm]]
+|image=[[File:Sorting heapsort anim.gif]]
+|caption=A run of heapsort sorting an array of randomly permuted values. In the first stage of the algorithm the array elements are reordered to satisfy the [[Heap (data structure)|heap property]]. Before the actual sorting takes place, the heap tree structure is shown briefly for illustration.
+|data=[[Array data structure|Array]]
+|time=&lt;math>O(n\log n)&lt;/math>
+|average-time=&lt;math>O(n\log n)&lt;/math>
+|best-time=&lt;math>O(n\log n)&lt;/math> (distinct keys)&lt;ref>{{cite journal
+ |journal=Journal of Algorithms
+ |volume=20 |number=11
+ |pages=205–217
+ |year=1996
+ |title=On the Best Case of Heapsort
+ |first1=B. |last1=Bollobás
+ |first2=T. I. |last2=Fenner
+ |first3=A. M. |last3=Frieze
+ |doi=10.1006/jagm.1996.0011 |url=https://www.math.cmu.edu/~af1p/Texfiles/Best.pdf
+}}&lt;/ref>&lt;ref>{{cite tech report
+ |title=The Best Case of Heapsort
+ |institution=Princeton University
+ |number=TR-293-90
+ |last1=Sedgewick |first1=Robert |authorlink1=Robert Sedgewick (computer scientist)
+ |last2=Schaffer |first2=Russel W.
+ |date=October 1990
+ |url=https://www.cs.princeton.edu/research/techreps/TR-293-90
+}}&lt;/ref>&lt;br />or &lt;math>O(n)&lt;/math> (equal keys)
+|space=&lt;math>O(n)&lt;/math> total &lt;math>O(1)&lt;/math> auxiliary
+}}
+In [[computer science]], '''heapsort''' is a [[comparison sort|comparison-based]] [[sorting algorithm]] which can be thought of as "an implementation of [[selection sort]] using the right [[data structure]]."&lt;ref>{{cite book |first=Steven |last=Skiena |author-link=Steven Skiena |title=The Algorithm Design Manual |edition=3rd |publisher=Springer |year=2008 |page=116 |chapter=Searching and Sorting |isbn=978-3-030-54255-9 |quote=The name typically given to this algorithm, ''heapsort'', obscures the fact that the algorithm is nothing but an implementation of selection sort using the right data structure. |doi=10.1007/978-3-030-54256-6_4}}&lt;!--DOI for chapter-->&lt;/ref> Like selection sort, heapsort divides its input into a sorted and an unsorted region, and it iteratively shrinks the unsorted region by extracting the largest element from it and inserting it into the sorted region. Unlike selection sort, heapsort does not waste time with a linear-time scan of the unsorted region; rather, heap sort maintains the unsorted region in a [[heap (data structure)|heap data structure]] to efficiently find the largest element in each step.
+
+Although somewhat slower in practice on most machines than a well-implemented [[quicksort]], it has the advantages of very simple implementation and a more favorable worst-case {{math|[[big O notation|''O''(''n'' log ''n'')]]}} runtime.  Most real-world quicksort variants include an implementation of heapsort as a fallback should they detect that quicksort is becoming degenerate. Heapsort is an [[in-place algorithm]], but it is not a [[stable sort]].
+
+Heapsort was invented by [[J. W. J. Williams]] in 1964.&lt;ref>{{harvnb|Williams|1964}}&lt;/ref> The paper also introduced the [[binary heap]] as a useful data structure in its own right.&lt;ref name="brass">{{cite book |first=Peter |last=Brass |title=Advanced Data Structures |publisher=Cambridge University Press |year=2008 |isbn=978-0-521-88037-4 |page=209}}&lt;/ref> In the same year, [[Robert W. Floyd]] published an improved version that could sort an array in-place, continuing his earlier research into the [[treesort]] algorithm.&lt;ref name="brass"/>
+
+== Overview ==
+The heapsort algorithm can be divided into two phases: heap construction, and heap extraction.
+
+The heap is an [[implicit data structure]] which takes no space beyond the array of objects to be sorted; the array is interpreted as a [[complete binary tree#Types of binary trees|complete binary tree]] where each array element is a node and each node's parent and child links are defined by simple arithmetic on the array indexes. For a zero-based array, the root node is stored at index 0, and the nodes linked to node {{code|i}} are &lt;pre>
+  iLeftChild(i)  = 2⋅i + 1
+  iRightChild(i) = 2⋅i + 2
+  iParent(i)     = floor((i−1) / 2)
+&lt;/pre> where the [[floor function]] rounds down to the preceding integer.  For a more detailed explanation, see {{section link|Binary heap|Heap implementation}}.
+
+This binary tree is a max-heap when each node is greater than or equal to both of its children.  Equivalently, each node is less than or equal to its parent.  This rule, applied throughout the tree, results in the maximum node being located at the root of the tree.
+
+In the first phase, a heap is built out of the data (see {{section link|Binary heap|Building a heap}}).
+
+In the second phase, the heap is converted to a sorted array by repeatedly removing the largest element from the heap (the root of the heap), and placing it at the end of the array. The heap is updated after each removal to maintain the heap property. Once all objects have been removed from the heap, the result is a sorted array.
+
+Heapsort is normally performed in place. During the first phase, the array is divided into an unsorted prefix and a heap-ordered suffix (initially empty).  Each step shrinks the prefix and expands the suffix.  When the prefix is empty, this phase is complete.  During the second phase, the array is divided into a heap-ordered prefix and a sorted suffix (initially empty).  Each step shrinks the prefix and expands the suffix.  When the prefix is empty, the array is sorted.
+
+== Algorithm ==
+The heapsort algorithm begins by rearranging the array into a binary max-heap. The algorithm then repeatedly swaps the root of the heap (the greatest element remaining in the heap) with its last element, which is then declared to be part of the sorted suffix.  Then the heap, which was damaged by replacing the root, is repaired so that the greatest element is again at the root. This repeats until only one value remains in the heap.
+
+The steps are:
+# Call the {{code|heapify()}} function on the array. This builds a heap from an array in {{math|''O''(''n'')}} operations.
+# Swap the first element of the array (the largest element in the heap) with the final element of the heap.  Decrease the considered range of the heap by one.
+# Call the {{code|siftDown()}} function on the array to move the new first element to its correct place in the heap.
+# Go back to step (2) until the remaining array is a single element.
+The {{code|heapify()}} operation is run once, and is {{math|''O''(''n'')}} in performance. The {{code|siftDown()}} function is called {{mvar|n}} times and requires {{math|''O''(log ''n'')}} work each time, due to its traversal starting from the root node.  Therefore, the performance of this algorithm is {{math|1=''O''(''n'' + ''n'' log ''n'') = ''O''(''n'' log ''n'')}}.
+
+The heart of the algorithm is the {{code|siftDown()}} function.  This constructs binary heaps out of smaller heaps, and may be thought of in two equivalent ways:
+* given two binary heaps, and a shared parent node which is not part of either heap, merge them into a single larger binary heap; or
+* given a "damaged" binary heap, where the max-heap property (no child is greater than its parent) holds everywhere ''except'' possibly between the root node and its children, repair it to produce an undamaged heap.
+
+To establish the max-heap property at the root, up to three nodes must be compared (the root and its two children), and the greatest must be made the root.  This is most easily done by finding the greatest child, then comparing that child to the root.  There are three cases:
+# If there are no children (the two original heaps are empty), the heap property trivially holds, and no further action is required.
+# If root is greater than or equal to the greatest child, the heap property holds and likewise, no further action is required.
+# If the root is less than the greatest child, exchange the two nodes.  The heap property now holds at the newly promoted node (it is greater than or equal to both of its children, and in fact greater than any descendant), but may be violated between the newly demoted ex-root and its new children.  To correct this, repeat the {{code|siftDown()}} operation on the subtree rooted at the newly demoted ex-root.
+
+The number of iterations in any one {{code|siftdown()}} call is bounded by the height of the tree, which is {{math|1={{floor|log{{sub|2}} ''n''}} = ''O''(log ''n'')}}.
+
+=== Pseudocode ===
+
+The following is a simple way to implement the algorithm in [[pseudocode]]. Arrays are [[Comparison of programming languages (array)|zero-based]] and {{code|swap}} is used to exchange two elements of the array. Movement 'down' means from the root towards the leaves, or from lower indices to higher. Note that during the sort, the largest element is at the root of the heap at {{code|a[0]}}, while at the end of the sort, the largest element is in {{code|a[end]}}.
+
+ '''procedure''' heapsort(a, count) '''is'''
+     '''input:''' an unordered array ''a'' of length ''count''
+  
+     ''(Build the heap in array a so that largest value is at the root)''
+     heapify(a, count)
+ 
+     ''(The following loop maintains the [[Loop invariant|invariants]] that a[0:end−1] is a heap, and''
+     ''every element a[end:count−1] beyond end is greater than everything before it,''
+     ''i.e. a[end:count−1] is in sorted order.)''
+     end ← count
+     '''while''' end > 1 '''do'''
+         ''(the heap size is reduced by one)''
+         end ← end − 1
+         ''(a[0] is the root and largest value. The swap moves it in front of the sorted elements.)''
+         swap(a[end], a[0])
+         ''(the swap ruined the heap property, so restore it)''
+         siftDown(a, 0, end)
+
+The sorting routine uses two subroutines, {{code|heapify}} and {{code|siftDown}}. The former is the common in-place heap construction routine, while the latter is a common subroutine for implementing {{code|heapify}}.
+ 
+ ''(Put elements of 'a' in heap order, in-place)''
+ '''procedure''' heapify(a, count) '''is'''
+     ''(start is initialized to the first leaf node)''
+     ''(the last element in a 0-based array is at index count-1; find the parent of that element)''
+     start ← iParent(count-1) + 1
+     
+     '''while''' start > 0 '''do'''
+         ''(go to the last non-heap node)''
+         start ← start − 1
+         ''(sift down the node at index 'start' to the proper place such that all nodes below''
+         '' the start index are in heap order)''
+         siftDown(a, start, count)
+     ''(after sifting down the root all nodes/elements are in heap order)''
+     
+ ''(Repair the heap whose root element is at index 'start', assuming the heaps rooted at its children are valid)''
+ '''procedure''' siftDown(a, root, end) '''is'''
+     '''while''' iLeftChild(root) &lt; end '''do'''    ''(While the root has at least one child)''
+         child ← iLeftChild(root)       ''(Left child of root)''
+         ''(If there is a right child and that child is greater)''
+         '''if''' child+1 &lt; end '''and''' a[child] &lt; a[child+1] '''then'''
+             child ← child + 1
+     
+         '''if''' a[root] &lt; a[child] '''then'''
+             swap(a[root], a[child])
+             root ← child         ''(repeat to continue sifting down the child now)''
+         '''else'''
+             ''(The root holds the largest element. Since we may assume the heaps rooted''
+             '' at the children are valid, this means that we are done.)''
+             '''return'''
+
+The {{code|heapify}} procedure operates by building small heaps and repeatedly merging them using {{code|siftDown}}.  It starts with the leaves, observing that the they are trivial but valid heaps by themselves, and then adds parents.  Starting with element {{math|''n''/2}} and working backwards, each internal node is made the root of a valid heap by sifting down. The last step is sifting down the first element, after which the entire array obeys the heap property.
+
+To see that this takes {{math|''O''(''n'')}} time, count the worst-case number of {{code|siftDown}} iterations.  The last half of the array requires zero iterations, the preceding quarter requires at most one iteration, the eighth before that requires at most two iterations, the sixteenth before that requires at most three, and so on.
+
+Looked at a different way, if we assume every {{code|siftDown}} call requires the maximum number of iterations, the first half of the array requires one iteration, the first quarter requires one more (total 2), the first eighth requires yet another (total 3), and so on.
+
+This totals {{math|1=''n''/2 + ''n''/4 + ''n''/8 + ⋯ = n⋅(1/2 + 1/4 + 1/8 + ⋯)}}, where the infinite sum is a well-known [[geometric series]] whose sum is {{math|1}}, thus the product is simply {{mvar|n}}.
+
+The above is an approximation.  The exact worst-case number of comparisons during the heap-construction phase of heapsort is known to be equal to {{math|2''n'' − 2''s''&lt;sub>2&lt;/sub>(''n'') − ''e''&lt;sub>2&lt;/sub>(''n'')}}, where {{math|''s''&lt;sub>2&lt;/sub>(''n'')}} is the [[Hamming weight|number of 1 bits]] in the binary representation of {{mvar|n}} and {{math|''e''&lt;sub>2&lt;/sub>(''n'')}} is the [[Find first set|number of trailing 0 bits]].&lt;ref>{{cite journal
+ | last1 = Suchenek | first1 = Marek A.
+ | title = Elementary Yet Precise Worst-Case Analysis of Floyd's Heap-Construction Program
+ | doi = 10.3233/FI-2012-751
+ | pages = 75–92
+ | journal = [[Fundamenta Informaticae]]
+ | volume = 120
+ | issue = 1
+ | year = 2012}}&lt;/ref>&lt;ref>{{cite arXiv
+	| last = Suchenek | first = Marek A.
+	| title = A Complete Worst-Case Analysis of Heapsort with Experimental Verification of Its Results, A manuscript
+	| date = 2015-04-07
+	| eprint = 1504.01459
+	| class = cs.DS
+}}&lt;/ref>
+
+=== Standard implementation ===
+Although it is convenient to think of the two phases separately, most implementations combine the two, allowing a single instance of {{code|siftDown}}to be [[Inline expansion|expanded inline]].&lt;ref>{{harvnb|Knuth|1997}}&lt;/ref>{{rp|Algorithm H}}  Two variables (here, {{code|start}} and {{code|end}}) keep track of the bounds of the heap area.  The portion of the array before {{code|start}} is unsorted, while the portion beginning at {{code|end}} is sorted.  Heap construction decreases {{code|start}} until it is zero, after which heap extraction decreases {{code|end}} until it is 1 and the array is entirely sorted.
+
+ '''procedure''' heapsort(a, count) '''is'''
+     '''input:''' an unordered array ''a'' of length ''count''
+     
+     start ← floor(count/2)
+     end ← count
+     '''while''' end > 1 '''do'''
+         '''if''' start > 0 '''then'''    ''(Heap construction)''
+             start ← start − 1
+         '''else'''                 ''(Heap extraction)''
+             end ← end − 1
+             swap(a[end], a[0])
+    
+         ''(The following is siftDown(a, start, end))''
+         root ← start
+         '''while''' iLeftChild(root) &lt; end '''do'''
+             child ← iLeftChild(root)
+             ''(If there is a right child and that child is greater)''
+             '''if''' child+1 &lt; end '''and''' a[child] &lt; a[child+1] '''then'''
+                 child ← child + 1
+     
+             '''if''' a[root] &lt; a[child] '''then'''
+                 swap(a[root], a[child])
+                 root ← child         ''(repeat to continue sifting down the child now)''
+             '''else'''
+                 '''break'''                ''(return to outer loop)''
+
+== Variations ==
+=== Williams' heap construction ===
+{{see also|Binary heap#Building a heap}}
+The description above uses Floyd's improved heap-construction algorithm, which operates in {{math|''O''(''n'')}} time and uses the same {{code|siftDown}} primitive as the heap-extraction phase.  Although this algorithm, being both faster and simpler to program, is used by all practical heapsort implementations, Williams' original algorithm may be easier to understand, and is needed to implement a more general binary heap [[priority queue]].
+
+Rather than merging many small heaps, Williams' algorithm maintains one single heap at the front of the array and repeatedly appends an additional element using a {{code|siftUp}} primitive.  Being at the end of the array, the new element is a leaf and has no children to worry about, but may violate the heap property by being greater than its parent.  In this case, exchange it with its parent and repeat the test until the parent is greater or there is no parent (we have reached the root).  In pseudocode, this is:
+  
+  '''procedure''' siftUp(a, end) '''is'''
+      '''input:''' ''a is the array, which heap-ordered up to end-1.''
+             ''end is the node to sift up.''
+      '''while''' end > 0
+          parent := iParent(end)
+          '''if''' a[parent] &lt; a[end] '''then''' ''(out of max-heap order)''
+              swap(a[parent], a[end])
+              end := parent          ''(continue sifting up)''
+          '''else'''
+              '''return'''
+     
+  '''procedure''' heapify(a, count) '''is'''
+      ''(start with a trivial single-element heap)''
+      end := 1
+      
+      '''while''' end &lt; count
+          ''(sift up the node at index end to the proper place such that''
+          '' all nodes above the end index are in heap order)''
+          siftUp(a, end)
+          end := end + 1
+      ''(after sifting up the last node all nodes are in heap order)''
+
+[[File:Binary heap bottomup vs topdown.svg|thumb|right|Difference in time complexity between the "siftDown" version and the "siftUp" version.]]
+To understand why this algorithm can take asymptotically more time to build a heap ({{math|''O''(''n'' log ''n'')}} vs. {{math|''O''(''n'')}} worst case), note that in Floyd's algorithm, almost all the calls to {{code|siftDown}} operations apply to very ''small'' heaps.  Half the heaps are height-1 trivial heaps and can be skipped entirely, half of the remainder are height-2, and so on.  Only two calls are on heaps of size {{math|''n''/2}}, and only one {{code|siftDown}} operation is done on the full {{mvar|n}}-element heap.  The overall average {{code|siftDown}} operation takes {{math|''O''(1)}} time.
+
+In contrast, Williams' algorithm most of the calls to {{code|siftUp}} are made on ''large'' heaps of height {{math|''O''(log ''n'')}}.  Half of the calls are made with a heap size of {{math|''n''/2}} or more, three-quarters are made with a heap size of {{math|''n''/4}} or more, and so on.  Although the ''average'' number of steps is similar to Floyd's technique, {{r|Bojesen00|p=3}} pre-sorted input will cause the worst case: each added node is sifted up to the root, so the average call to {{code|siftUp}} will require approximately {{math|1=(log{{sub|2}}''n'' − 1)/2 + (log{{sub|2}}''n'' − 2)/4  + (log{{sub|2}}''n'' − 3)/8 + ⋯}} {{math|1== log{{sub|2}}''n'' − (1 + 1/2 + 1/4 + ⋯)}} {{math|1== log{{sub|2}}''n'' − 2}} iterations.
+
+Because it is dominated by the second heap-extraction phase, the heapsort algorithm itself has {{math|''O''(''n'' log ''n'')}} time complexity using either version of heapify.
+
+=== Bottom-up heapsort ===
+Bottom-up heapsort is a variant which reduces the number of comparisons required by a significant factor. While ordinary "top-down" heapsort requires {{math|2''n'' log&lt;sub>2&lt;/sub> ''n'' + ''O''(''n'')}} comparisons worst-case and on average,{{r|Wegener}} the bottom-up variant requires {{math|''n'' log&lt;sub>2&lt;/sub>''n'' + ''O''(1)}} comparisons on average,{{r|Wegener}} and {{math|1.5''n'' log&lt;sub>2&lt;/sub>''n'' + ''O''(''n'')}} in the worst case.{{r|fleischer}}
+
+If comparisons are cheap (e.g. integer keys) then the difference is unimportant,{{r|Melhorn}} as top-down heapsort compares values that have already been loaded from memory. If, however, comparisons require a [[function call]] or other complex logic, then bottom-up heapsort is advantageous.
+
+This is accomplished by using a more elaborate {{code|siftDown}} procedure. The change improves the linear-time heap-building phase slightly,{{r|McDiarmid}} but is more significant in the second phase. Like top-down heapsort, each iteration of the second phase extracts the top of the heap, {{code|a[0]}}, and fills the gap it leaves with {{code|a[end]}}, then sifts this latter element down the heap. But this element came from the lowest level of the heap, meaning it is one of the smallest elements in the heap, so the sift-down will likely take many steps to move it back down.&lt;ref name=MacKay05>{{cite web
+ |title=Heapsort, Quicksort, and Entropy
+ |first=David J. C. |last=MacKay |author-link=David J. C. MacKay
+ |date=December 2005
+ |url=https://inference.org.uk/mackay/sorting/sorting.html
+ |access-date=2021-02-12
+}}&lt;/ref> In top-down heapsort, each step of {{code|siftDown}} requires two comparisons, to find the minimum of three elements: the new node and its two children.
+
+Bottom-up heapsort conceptually replaces the root with a value of −∞ and sifts it down using only one comparison per level (since no child can possibly be less than −∞) until the leaves are reached, then replaces the −∞ with the correct value and sifts it ''up'' (again, using one comparison per level) until the correct position is found.
+
+This places the root in the same location as top-down {{code|siftDown}}, but fewer comparisons are required to find that location.  For any single {{code|siftDown}} operation, the bottom-up technique is advantageous if the number of downward movements is at least {{frac|2|3}} of the height of the tree (when the number of comparisons is {{frac|4|3}} times the height for both techniques), and it turns out that this is more than true on average, even for worst-case inputs.&lt;ref name="fleischer">{{cite journal |last=Fleischer |first=Rudolf |title=A tight lower bound for the worst case of Bottom-Up-Heapsort |journal=Algorithmica |volume=11 |issue=2 |date=February 1994 |pages=104–115 |doi=10.1007/bf01182770 |url=http://staff.gutech.edu.om/~rudolf/Paper/buh_algorithmica94.pdf |hdl=11858/00-001M-0000-0014-7B02-C|s2cid=21075180 |hdl-access=free }} Also available as {{cite tech report |last=Fleischer |first=Rudolf |title=A tight lower bound for the worst case of Bottom-Up-Heapsort |date=April 1991 |institution=[[Max Planck Institute for Informatics|MPI-INF]] |number=MPI-I-91-104 |url=http://pubman.mpdl.mpg.de/pubman/item/escidoc:1834997:3/component/escidoc:2463941/MPI-I-94-104.pdf}}&lt;/ref>
+
+A naïve implementation of this conceptual algorithm would cause some redundant data copying, as the sift-up portion undoes part of the sifting down.  A practical implementation searches downward for a leaf where −∞ ''would'' be placed, then upward for where the root ''should'' be placed.  Finally, the upward traversal continues to the root's starting position, performing no more comparisons but exchanging nodes to complete the necessary rearrangement.  This optimized form performs the same number of exchanges as top-down {{code|siftDown}}.
+
+Because it goes all the way to the bottom and then comes back up, it is called '''heapsort with bounce''' by some authors.&lt;ref>{{cite book |first1=Bernard |last1=Moret |author-link1=Bernard Moret |first2=Henry D. |last2=Shapiro |title=Algorithms from P to NP Volume 1: Design and Efficiency |chapter=8.6 Heapsort |page=528 |publisher=Benjamin/Cummings |year=1991 |isbn=0-8053-8008-6 |quote=For lack of a better name we call this enhanced program 'heapsort with bounce.{{'-}}}}&lt;/ref>
+
+ '''function''' leafSearch(a, i, end) '''is'''
+     j ← i
+     '''while''' iRightChild(j) &lt; end '''do'''
+         ''(Determine which of j's two children is the greater)''
+         '''if''' a[iRightChild(j)] > a[iLeftChild(j)] '''then'''
+             j ← iRightChild(j)
+         '''else'''
+             j ← iLeftChild(j)
+     ''(At the last level, there might be only one child)''
+     '''if''' iLeftChild(j) &lt; end '''then'''
+         j ← iLeftChild(j)
+     '''return''' j
+
+The return value of the &lt;code>leafSearch&lt;/code> is used in the modified &lt;code>siftDown&lt;/code> routine:&lt;ref name="fleischer"/>
+
+ '''procedure''' siftDown(a, i, end) '''is'''
+     j ← leafSearch(a, i, end)
+     '''while''' a[i] > a[j] '''do'''
+         j ← iParent(j)
+     '''while''' j > i '''do'''
+         swap(a[i], a[j])
+         j ← iParent(j)
+
+Bottom-up heapsort was announced as beating quicksort (with median-of-three pivot selection) on arrays of size ≥16000.{{refn|name=Wegener|{{cite journal |last=Wegener |first=Ingo |author-link=Ingo Wegener |title={{sc|Bottom-Up Heapsort}}, a new variant of {{sc|Heapsort}} beating, on an average, {{sc|Quicksort}} (if {{mvar|n}} is not very small) |journal=Theoretical Computer Science |volume=118 |issue=1 |date=13 September 1993 |pages=81–98 |doi=10.1016/0304-3975(93)90364-y |doi-access=free |url=https://core.ac.uk/download/pdf/82350265.pdf}} Although this is a reprint of work first published in 1990 (at the Mathematical Foundations of Computer Science conference), the technique was published by Carlsson in 1987.&lt;ref name=Carlsson/>}}
+
+A 2008 re-evaluation of this algorithm showed it to be no faster than top-down heapsort for integer keys, presumably because modern [[branch prediction]] nullifies the cost of the predictable comparisons which bottom-up heapsort manages to avoid.&lt;ref name=Melhorn>{{cite book |last1=Mehlhorn |first1=Kurt |author1-link=Kurt Mehlhorn |first2=Peter |last2=Sanders |author2-link=Peter Sanders (computer scientist) |title=Algorithms and Data Structures: The Basic Toolbox |chapter=Priority Queues |publisher=Springer |year=2008 |page=142 |isbn=978-3-540-77977-3 |url=http://people.mpi-inf.mpg.de/~mehlhorn/Toolbox.html |chapter-url=http://people.mpi-inf.mpg.de/~mehlhorn/ftp/Toolbox/PriorityQueues.pdf#page=16}}&lt;/ref>
+
+A further refinement does a [[binary search]] in the upward search, and sorts in a worst case of {{math|(''n''+1)(log&lt;sub>2&lt;/sub>(''n''+1) + log&lt;sub>2&lt;/sub> log&lt;sub>2&lt;/sub>(''n''+1) + 1.82) + ''O''(log&lt;sub>2&lt;/sub>''n'')}} comparisons, approaching [[Comparison sort#Number of comparisons required to sort a list|the information-theoretic lower bound]] of {{math|''n'' log&lt;sub>2&lt;/sub>''n'' − 1.4427''n''}} comparisons.&lt;ref name=Carlsson>{{cite journal |first=Scante |last=Carlsson |title=A variant of heapsort with almost optimal number of comparisons |journal=Information Processing Letters |volume=24 |issue=4 |pages=247–250 |date=March 1987 |doi=10.1016/0020-0190(87)90142-6 |s2cid=28135103 |url=https://pdfs.semanticscholar.org/caec/6682ffd13c6367a8c51b566e2420246faca2.pdf |archive-url=https://web.archive.org/web/20161227055904/https://pdfs.semanticscholar.org/caec/6682ffd13c6367a8c51b566e2420246faca2.pdf |url-status=dead |archive-date=2016-12-27 }}&lt;/ref>
+
+A variant which uses two extra bits per internal node (''n''−1 bits total for an ''n''-element heap) to cache information about which child is greater (two bits are required to store three cases: left, right, and unknown)&lt;ref name=McDiarmid>{{Cite journal |title=Building heaps fast |last1=McDiarmid |first1=C. J. H. |last2=Reed |first2=B. A. |date=September 1989 |journal=Journal of Algorithms |volume=10 |issue=3 |pages=352–365 |doi=10.1016/0196-6774(89)90033-3 |url=http://cgm.cs.mcgill.ca/~breed/2016COMP610/BUILDINGHEAPSFAST.pdf}}&lt;/ref> uses less than {{math|''n'' log&lt;sub>2&lt;/sub>''n'' + 1.1''n''}} compares.&lt;ref>{{cite journal |title=The worst case complexity of McDiarmid and Reed's variant of {{sc|Bottom-Up Heapsort}} is less than ''n''&amp;nbsp;log&amp;nbsp;''n'' + 1.1''n'' |first=Ingo |last=Wegener |author-link=Ingo Wegener |journal=Information and Computation |volume=97 |issue=1 |pages=86–96 |date=March 1992 |doi=10.1016/0890-5401(92)90005-Z |doi-access=free}}&lt;/ref>
+
+=== Other variations ===
+*Ternary heapsort uses a [[ternary heap]] instead of a binary heap; that is, each element in the heap has three children. It is more complicated to program, but does a constant number of times fewer swap and comparison operations. This is because each sift-down step in a ternary heap requires three comparisons and one swap, whereas in a binary heap two comparisons and one swap are required. Two levels in a ternary heap cover 3&lt;sup>2&lt;/sup> = 9 elements, doing more work with the same number of comparisons as three levels in the binary heap, which only cover 2&lt;sup>3&lt;/sup> = 8.{{Citation needed|date=September 2014}} This is primarily of academic interest, or as a student exercise,&lt;ref>{{cite book
+ |title=Data Structures Using Pascal
+ |chapter=Chapter 8: Sorting
+ |first1=Aaron M. |last1=Tenenbaum
+ |first2=Moshe J. |last2=Augenstein
+ |year=1981
+ |page=405
+ |publisher=Prentice-Hall
+ |isbn=0-13-196501-8
+ |quote=&lt;!--Exercise 8. Define an almost complete ternary tree as a tree in which every node has at most three sons and such that the nodes can be numbered from 1 to n so that the sons of node[i] are node[3*i−l], node[3*i] and node[3*i+l]. Define a ternary heap as an almost complete ternary tree in which the content of each node is greater than or equal to the contents of all its descendants. -->Write a sorting routine similar to the heapsort except that it uses a ternary heap.
+}}&lt;/ref> as the additional complexity is not worth the minor savings, and bottom-up heapsort beats both.
+*Memory-optimized heapsort{{r|LaMarca99|p=87}} improves heapsort's [[locality of reference]] by increasing the number of children even more. This increases the number of comparisons, but because all children are stored consecutively in memory, reduces the number of [[cache line]]s accessed during heap traversal, a net performance improvement.
+*The standard implementation of Floyd's heap-construction algorithm causes a large number of [[cache miss]]es once the size of the data exceeds that of the [[CPU cache]].{{r|LaMarca99|p=87}} Better performance on large data sets can be obtained by merging in [[depth-first]] order, combining subheaps as soon as possible, rather than combining all subheaps on one level before proceeding to the one above.&lt;ref name=Bojesen00>{{cite journal |title=Performance Engineering Case Study: Heap Construction |first1=Jesper |last1=Bojesen |first2=Jyrki |last2=Katajainen |first3=Maz |last3=Spork |journal=ACM Journal of Experimental Algorithmics |date=2000 |volume=5 |pages=15–es |number=15 |doi=10.1145/351827.384257 |citeseerx=10.1.1.35.3248 |s2cid=30995934 |url=http://hjemmesider.diku.dk/~jyrki/Paper/katajain.ps |format=PostScript}} [https://www.semanticscholar.org/paper/Performance-Engineering-Case-Study-Heap-Bojesen-Katajainen/6f4ada5912c1da64e16453d67ec99c970173fb5b Alternate PDF source].&lt;/ref>&lt;ref>{{cite conference |chapter=In-place Heap Construction with Optimized Comparisons, Moves, and Cache Misses |first1=Jingsen |last1=Chen |first2=Stefan |last2=Edelkamp |first3=Amr |last3=Elmasry |first4=Jyrki |last4=Katajainen |title=Mathematical Foundations of Computer Science 2012 |series=Lecture Notes in Computer Science |doi=10.1007/978-3-642-32589-2_25 |conference=37th international conference on Mathematical Foundations of Computer Science |pages=259–270 |location=Bratislava, Slovakia |date=27–31 August 2012 |volume=7464 |isbn=978-3-642-32588-5 |s2cid=1462216 |chapter-url=https://pdfs.semanticscholar.org/9cc6/36d7998d58b3937ba0098e971710ff039612.pdf |archive-url=https://web.archive.org/web/20161229031307/https://pdfs.semanticscholar.org/9cc6/36d7998d58b3937ba0098e971710ff039612.pdf |url-status=dead |archive-date=29 December 2016 }} See particularly Fig. 3.&lt;/ref>
+*Out-of-place heapsort&lt;ref>{{cite conference
+ |title=QuickHeapsort, an efficient mix of classical sorting algorithms
+ |first1=Domenico |last1=Cantone
+ |first2=Gianluca |last2=Concotti
+ |conference=4th Italian Conference on Algorithms and Complexity
+ |series=Lecture Notes in Computer Science |volume=1767
+ |pages=150–162
+ |isbn=3-540-67159-5
+ |date=1–3 March 2000
+ |location=Rome
+ |url=https://archive.org/details/springer_10.1007-3-540-46521-9
+}}&lt;/ref>&lt;ref>{{cite journal
+ |title=QuickHeapsort, an efficient mix of classical sorting algorithms
+ |first1=Domenico |last1=Cantone
+ |first2=Gianluca |last2=Concotti
+ |journal=Theoretical Computer Science
+ |volume=285 |issue=1 |pages=25–42
+ |date=August 2002
+ |doi=10.1016/S0304-3975(01)00288-2 |doi-access=free
+ |zbl=1016.68042
+ |url=https://core.ac.uk/download/pdf/81957449.pdf
+}}&lt;/ref>{{r|MacKay05}} improves on bottom-up heapsort by eliminating the worst case, guaranteeing {{math|''n'' log&lt;sub>2&lt;/sub>''n'' + ''O''(''n'')}} comparisons. When the maximum is taken, rather than fill the vacated space with an unsorted data value, fill it with a {{math|−∞}} sentinel value, which never "bounces" back up. It turns out that this can be used as a primitive in an in-place (and non-recursive) "QuickHeapsort" algorithm.&lt;ref>{{cite journal
+ |title=QuickHeapsort: Modifications and improved analysis
+ |first1=Volker |last1=Diekert
+ |first2=Armin |last2=Weiß
+ |journal= Theory of Computing Systems
+ |volume=59 |issue=2 |pages=209–230
+ |date=August 2016
+ |doi=10.1007/s00224-015-9656-y &lt;!-- |doi=10.1007/978-3-642-38536-0_3 Conference version, published September 2012-->
+ |arxiv=1209.4214
+|s2cid=792585 }}&lt;/ref> First, you perform a quicksort-like partitioning pass, but reversing the order of the partitioned data in the array. Suppose ([[without loss of generality]]) that the smaller partition is the one greater than the pivot, which should go at the end of the array, but our reversed partitioning step places it at the beginning. Form a heap out of the smaller partition and do out-of-place heapsort on it, exchanging the extracted maxima with values from the end of the array. These are less than the pivot, meaning less than any value in the heap, so serve as {{math|−∞}} sentinel values. Once the heapsort is complete (and the pivot moved to just before the now-sorted end of the array), the order of the partitions has been reversed, and the larger partition at the beginning of the array may be sorted in the same way. (Because there is no non-[[tail recursion]], this also eliminates quicksort's {{math|''O''(log ''n'')}} stack usage.)
+*The [[smoothsort]] algorithm&lt;ref>{{Cite EWD|796a|Smoothsort – an alternative to sorting in situ}}&lt;/ref> is a variation of heapsort developed by [[Edsger W. Dijkstra]] in 1981. Like heapsort, smoothsort's upper bound is {{math|''O''(''n'' log ''n'')}}. The advantage of smoothsort is that it comes closer to {{math|''O''(''n'')}} time if the [[Adaptive sort|input is already sorted to some degree]], whereas heapsort averages {{math|''O''(''n'' log ''n'')}} regardless of the initial sorted state. Due to its complexity, smoothsort is rarely used.{{citation needed|date=November 2016}}
+*Levcopoulos and Petersson&lt;ref>{{cite book
+ | last1 = Levcopoulos | first1 = Christos
+ | last2 = Petersson | first2 = Ola
+ | chapter = Heapsort—Adapted for Presorted Files
+ | location = London, UK
+ | pages = 499–509
+ | publisher = Springer-Verlag
+ | series = Lecture Notes in Computer Science
+ | title = WADS '89: Proceedings of the Workshop on Algorithms and Data Structures
+ | volume = 382 | doi = 10.1007/3-540-51542-9_41
+ | year = 1989| isbn = 978-3-540-51542-5
+ }} {{Q|56049336}}.&lt;/ref> describe a variation of heapsort based on a heap of [[Cartesian tree]]s. First, a Cartesian tree is built from the input in {{math|''O''(''n'')}} time, and its root is placed in a 1-element binary heap. Then we repeatedly extract the minimum from the binary heap, output the tree's root element, and add its left and right children (if any) which are themselves Cartesian trees, to the binary heap.&lt;ref>{{cite web
+ |title=CartesianTreeSort.hh
+ |website=Archive of Interesting Code
+ |url=http://www.keithschwarz.com/interesting/code/?dir=cartesian-tree-sort
+ |first=Keith |last=Schwartz
+ |date=27 December 2010 |access-date=2019-03-05
+}}&lt;/ref> As they show, if the input is already nearly sorted, the Cartesian trees will be very unbalanced, with few nodes having left and right children, resulting in the binary heap remaining small, and allowing the algorithm to sort more quickly than {{math|''O''(''n'' log ''n'')}} for inputs that are already nearly sorted.
+* Several variants such as [[Weak heap#Weak-heap sort|weak heapsort]] require {{math|''n'' log&lt;sub>2&lt;/sub> ''n''+''O''(1)}} comparisons in the worst case, close to the theoretical minimum, using one extra bit of state per node. While this extra bit makes the algorithms not truly in-place, if space for it can be found inside the element, these algorithms are simple and efficient,{{r|Bojesen00|p=40}} but still slower than binary heaps if key comparisons are cheap enough (e.g. integer keys) that a constant factor does not matter.&lt;ref name=Kat2014-11-14P>{{cite conference |title=Seeking for the best priority queue: Lessons learnt |first=Jyrki |last=Katajainen |date=23 September 2013 |conference=Algorithm Engineering (Seminar 13391) |location=Dagstuhl |pages=19–20, 24 |url=http://hjemmesider.diku.dk/~jyrki/Myris/Kat2013-09-23P.html}}&lt;/ref>
+* Katajainen's "ultimate heapsort" requires no extra storage, performs {{math|''n'' log&lt;sub>2&lt;/sub> ''n''+''O''(1)}} comparisons, and a similar number of element moves.&lt;ref>{{cite conference |title=The Ultimate Heapsort |date=2–3 February 1998 |first=Jyrki |last=Katajainen |conference=Computing: the 4th Australasian Theory Symposium |url=http://hjemmesider.diku.dk/~jyrki/Myris/Kat1998C.html |journal=Australian Computer Science Communications |volume=20 |issue=3 |pages=87–96 |location=Perth }}&lt;/ref> It is, however, even more complex and not justified unless comparisons are very expensive.
+
+== Comparison with other sorts ==
+Heapsort primarily competes with [[quicksort]], another very efficient general purpose in-place unstable comparison-based sort algorithm.
+
+Heapsort's primary advantages are its simple, non-[[Recursion (computer science)|recursive]] code, minimal auxiliary storage requirement, and reliably good performance: its best and worst cases are within a small constant factor of each other, and of the [[Comparison sort#Number of comparisons required to sort a list|theoretical lower bound on comparison sorts]]. While it cannot do better than {{math|''O''(''n'' log ''n'')}} for pre-sorted inputs, it does not suffer from quicksort's {{math|''O''(''n''&lt;sup>2&lt;/sup>)}} worst case, either.
+
+Real-world quicksort implementations use a variety of [[heuristic]]s to avoid the worst case, but that makes their implementation far more complex, and implementations such as [[introsort]] and pattern-defeating quicksort&lt;ref>{{cite arXiv
+ |first=Orson R. L. |last=Peters
+ |title=Pattern-defeating Quicksort
+ |date=9 Jun 2021
+ |eprint=2106.05123 |class=cs.DS
+}}&lt;br/>{{cite web
+ |first=Orson R. L. |last=Peters
+ |url=https://github.com/orlp/pdqsort
+ |title=pdqsort
+ |website=Github
+ |access-date=2023-10-02
+}}&lt;/ref> use heapsort as a last-resort fallback if they detect degenerate behaviour.  Thus, their worst-case performance is slightly worse than if heapsort had been used from the beginning.
+
+Heapsort's primary disadvantages are its poor [[locality of reference]] and its inherently serial nature; the accesses to the implicit tree are widely scattered and mostly random, and there is no straightforward way to convert it to a [[parallel algorithm]].
+
+The worst-case performance guarantees make heapsort popular in [[real-time computing]], and systems concerned with maliciously chosen inputs&lt;ref>{{cite web
+ |work=Data Structures and Algorithms
+ |title=Comparing Quick and Heap Sorts
+ |type=Lecture notes
+ |first=John |last=Morris
+ |publisher=University of Western Australia&lt;!--Author and web pages relocated to Auckland since-->
+ |year=1998
+ |url=https://www.cs.auckland.ac.nz/software/AlgAnim/qsort3.html
+ |access-date=2021-02-12
+}}&lt;/ref> such as the Linux kernel.&lt;ref>https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/lib/sort.c#n205 Linux kernel source&lt;/ref>  The combination of small implementation and dependably [[Principle of good enough|"good enough"]] performance make it popular in [[embedded system]]s, and generally any application where sorting is not a [[Bottleneck (software)|performance bottleneck]].  {{abbr|E.g.|Exempli gratiā; for example}} heapsort is ideal for sorting a list of [[filename]]s for display, but a [[database management system]] would probably want a more aggressively optimized sorting algorithm.
+
+A well-implemented quicksort is usually 2–3 times faster than heapsort.&lt;ref name=LaMarca99>{{cite journal
+ |title=The Influence of Caches on the Performance of Sorting
+ |first1=Anthony |last1=LaMarca
+ |first2=Richard E. |last2=Ladner |author-link2=Richard E. Ladner
+ |journal=Journal of Algorithms |volume=31 |issue=1
+ |date=April 1999
+ |pages=66–104
+ |doi=10.1006/jagm.1998.0985
+ |citeseerx=10.1.1.456.3616 &lt;!--10.1.1.155.4400 is the 26-page conference version (Fig. 5c on p. 23) and 10.1.1.84.8929 is a shorter 10-page version (Fig. 2c) -->
+ |s2cid=206567217 |url=https://www.cs.auckland.ac.nz/~mcw/Teaching/refs/sorting/ladner-lamarca-cach-sorting.pdf
+}} See particularly figure 9c on p. 98.&lt;/ref>&lt;ref>{{cite web
+ |title=Sorting by generating the sorting permutation, and the effect of caching on sorting
+ |first=Arne |last=Maus
+ |author-link=:no:Arne Maus&lt;!--no en page yet-->
+ |date=14 May 2014
+ |url=https://www.researchgate.net/publication/228620592
+}} See Fig. 1 on p. 6.&lt;/ref> Although quicksort requires fewer comparisons, this is a minor factor. (Results claiming twice as many comparisons are measuring the top-down version; see {{section link||Bottom-up heapsort}}.) The main advantage of quicksort is its much better locality of reference: partitioning is a linear scan with good spatial locality, and the recursive subdivision has good temporal locality. With additional effort, quicksort can also be implemented in mostly [[branch-free code]],&lt;ref>{{cite journal
+ |title=BlockQuicksort: Avoiding Branch Mispredictions in Quicksort
+ |first1=Stefan |last1=Edelkamp
+ |first2=Armin |last2=Weiß |author-link2=Armin Weiss
+ |journal=Journal of Experimental Algorithmics
+ |volume=24 |article-number=1.4
+ |doi=10.1145/3274660
+ |date=30 January 2019
+ |arxiv=1604.06697
+ |url=https://drops.dagstuhl.de/storage/00lipics/lipics-vol057-esa2016/LIPIcs.ESA.2016.38/LIPIcs.ESA.2016.38.pdf
+}}&lt;/ref>&lt;ref>{{cite conference
+ |title=Simple and Fast BlockQuicksort using Lomuto’s Partitioning Scheme
+ |first1=Martin |last1=Aumüller  |first2=Nikolaj |last2=Hass
+ |conference=Twenty-First Workshop on Algorithm Engineering and Experiments (ALENEX)
+ |date=7–8 January 2019 |location=San Diego
+ |doi=10.1137/1.9781611975499.2 |doi-access=free
+ |arxiv=1810.12047
+ |url=https://epubs.siam.org/doi/pdf/10.1137/1.9781611975499.2
+}}&lt;/ref> and multiple CPUs can be used to sort subpartitions in parallel. Thus, quicksort is preferred when the additional performance justifies the implementation effort.
+
+The other major {{math|''O''(''n'' log ''n'')}} sorting algorithm is [[merge sort]], but that rarely competes directly with heapsort because it is not in-place. Merge sort's requirement for {{math|Ω(''n'')}} extra space (roughly half the size of the input&lt;!--Known techniques for reducing this by a small constant factor omitted for simplicity-->) is usually prohibitive except in the situations where merge sort has a clear advantage:
+* When a [[stable sort]] is required
+* When taking advantage of (partially) pre-sorted input
+* Sorting [[linked list]]s (in which case merge sort requires minimal extra space)
+* Parallel sorting; merge sort parallelizes even better than quicksort and can easily achieve close to [[linear speedup]]
+* [[External sorting]]; merge sort has excellent locality of reference
+
+== Example ==
+The examples sort the values { 6, 5, 3, 1, 8, 7, 2, 4 } in increasing order using both heap-construction algorithms.  The elements being compared are shown in a '''bold''' font.  There are typically two when sifting up, and three when sifting down, although there may be fewer when the top or bottom of the tree is reached.
+
+=== Heap construction (Williams' algorithm) ===
+[[File:Heapsort-example.gif|350px|thumb|right|An example of heapsort using Williams' heap-construction algorithm.]]
+{{Table alignment}}
+{| class="wikitable col2right"
+|-
+! Heap !! Unsorted !! Swap elements
+|-
+| 6 || 5, 3, 1, 8, 7, 2, 4 ||
+|-
+| '''6''', '''5''' || 3, 1, 8, 7, 2, 4 ||
+|-
+| '''6''', 5, '''3''' || 1, 8, 7, 2, 4 ||
+|-
+| 6, '''5''', 3, '''1''' || 8, 7, 2, 4 ||
+|-
+| 6, '''5''', 3, 1, '''8''' || 7, 2, 4 || 5 ↔ 8
+|-
+| '''6''', '''8''', 3, 1, 5 || 7, 2, 4 || 6 ↔ 8
+|-
+| '''8''', 6, 3, 1, 5 || 7, 2, 4 ||
+|-
+| 8, 6, '''3''', 1, 5, '''7''' || 2, 4 || 3 ↔ 7
+|-
+| '''8''', 6, '''7''', 1, 5, 3 || 2, 4 ||
+|-
+| 8, 6, '''7''', 1, 5, 3, '''2''' || 4 ||
+|-
+| 8, 6, 7, '''1''', 5, 3, 2, '''4''' || || 1 ↔ 4
+|-
+| 8, '''6''', 7, '''4''', 5, 3, 2, 1 || ||
+|}
+
+=== Heap construction (Floyd's algorithm) ===
+
+{| class="wikitable col2right"
+|-
+! Unsorted !! Heap !! Swap elements
+|-
+| 6, 5, 3, 1 || 8, 7, 2, 4 ||
+|-
+| 6, 5, 3 || '''1''', 8, 7, 2, '''4''' || 1 ↔ 4
+|-
+| 6, 5, 3 || 4, 8, 7, 2, '''1'''
+|-
+| 6, 5 || '''3''', 4, 8, '''7''', '''2''', 1 || 3 ↔ 7
+|-
+| 6, 5 || 7, 4, 8, '''3''', 2, 1 ||
+|-
+| 6 || '''5''', 7, '''4''', '''8''', 3, 2, 1 || 5 ↔ 8
+|-
+| 6 || 8, 7, 4, '''5''', 3, 2, 1 ||
+|-
+| || '''6''', '''8''', '''7''', 4, 5, 3, 2, 1 || 6 ↔ 8
+|-
+| || 8, '''6''', 7, '''4''', '''5''', 3, 2, 1 ||
+|}
+
+=== Heap extraction ===
+
+{| class="wikitable col2right"
+|-
+! Heap !! Sorted array !! Swap elements !! Details
+|-
+| '''8''', 6, 7, 4, 5, 3, 2, '''1''' ||  || 8 ↔ 1 || Add 8 to the sorted array by swapping it with 1
+|-
+| '''1''', '''6''', '''7''', 4, 5, 3, 2 || 8 || 1 ↔ 7 || Swap 1 and 7 as they are not in order in the heap
+|-
+| 7, 6, '''1''', 4, 5, '''3''', '''2''' || 8 || 1 ↔ 3|| Swap 1 and 3 as they are not in order in the heap
+|-
+| 7, 6, 3, 4, 5, '''1''', 2 || 8 || || 1 has no children; siftDown complete
+|-
+| '''7''', 6, 3, 4, 5, 1, '''2''' || 8 || 7 ↔ 2 || Add 7 to the sorted array by swapping it with 2
+|-
+| '''2''', '''6''', '''3''', 4, 5, 1 || 7, 8 || 2 ↔ 6 || Swap 2 and 6 as they are not in order in the heap
+|-
+| 6, '''2''', 3, '''4''', '''5''', 1 || 7, 8 || 2 ↔ 5 || Swap 2 and 5 as they are not in order in the heap
+|-
+| 6, 5, 3, 4, '''2''', 1 || 7, 8 || || 2 has no children; siftDown complete
+|-
+| '''6''', 5, 3, 4, 2, '''1''' || 7, 8 || 6 ↔ 1 || Add 6 to the sorted array by swapping it with 1
+|-
+| '''1''', '''5''', '''3''', 4, 2 || 6, 7, 8 || 1 ↔ 5 || Swap 1 and 5 as they are not in order in the heap
+|-
+| 5, '''1''', 3, '''4''', '''2''' || 6, 7, 8 || 1 ↔ 4 || Swap 1 and 4 as they are not in order in the heap
+|-
+| 5, 4, 3, '''1''', 2 || 6, 7, 8 || || 1 has no children; siftDown complete
+|-
+| '''5''', 4, 3, 1, '''2''' || 6, 7, 8 || 5 ↔ 2 || Add 5 to the sorted array by swapping it with 2
+|-
+| '''2''', '''4''', '''3''', 1 || 5, 6, 7, 8 || 2 ↔ 4 || Swap 2 and 4 as they are not in order in the heap
+|-
+| 4, '''2''', 3, '''1''' || 5, 6, 7, 8 || || 2 is greater than 1; siftDown complete
+|-
+| '''4''', 2, 3, '''1''' || 5, 6, 7, 8 || 4 ↔ 1 || Add 4 to the sorted array by swapping it with 1
+|-
+| '''1''', '''2''', '''3''' || 4, 5, 6, 7, 8 || 1 ↔ 3 || Swap 1 and 3 as they are not in order in the heap
+|-
+| 3, 2, '''1''' || 4, 5, 6, 7, 8 || || 1 has no children; siftDown complete
+|-
+| '''3''', 2, '''1''' || 4, 5, 6, 7, 8 || 1 ↔ 3 || Add 3 to the sorted array by swapping it with 1
+|-
+| '''1''', '''2''' || 3, 4, 5, 6, 7, 8 || 1 ↔ 2 || Swap 1 and 2 as they are not in order in the heap
+|-
+| 2, '''1''' || 3, 4, 5, 6, 7, 8 || || 1 has no children; siftDown complete
+|-
+| '''2''', '''1''' || 3, 4, 5, 6, 7, 8 || 2 ↔ 1 || Add 2 to the sorted array by swapping it with 1
+|-
+| 1 || 2, 3, 4, 5, 6, 7, 8 || || Add 1 to the sorted array
+|-
+|      || 1, 2, 3, 4, 5, 6, 7, 8 || || {{success|Completed}}
+|}
+
+== Notes ==
+{{reflist}}
+
+== References ==
+* {{Cite journal |first=J. W. J. |last=Williams |author-link=J. W. J. Williams |title=Algorithm 232 – Heapsort |year=1964 |journal=[[Communications of the ACM]] |volume=7 |issue=6 |pages=347–348 |doi=10.1145/512274.512284}}
+* {{Cite journal |first=Robert W. |last=Floyd |author-link=Robert W. Floyd |title=Algorithm 245 – Treesort 3 |year=1964 |journal=[[Communications of the ACM]] |volume=7 |issue=12 |page=701 |doi= 10.1145/355588.365103 |s2cid=52864987|doi-access=free }}
+* {{Cite journal |first=Svante |last=Carlsson |author-link=:sv:Svante Carlsson |title=Average-case results on heapsort |year=1987 |journal=[[BIT Numerical Mathematics]] |volume=27 |issue=1 |pages=2–17 |doi= 10.1007/bf01937350 |s2cid=31450060}}
+* {{Cite book |first=Donald |last=Knuth |author-link=Donald Knuth |title=[[The Art of Computer Programming]] |volume=3: Sorting and Searching |edition=3rd |publisher=Addison-Wesley |year=1997 |isbn=978-0-201-89685-5 |pages=144–155 |chapter=§5.2.3, Sorting by Selection }}
+* {{Cite book |last1=Cormen |first1=Thomas H. |author-link1=Thomas H. Cormen |last2=Leiserson |first2=Charles E. |author-link2=Charles E. Leiserson |last3=Rivest |first3=Ronald L. |author-link3=Ron Rivest |last4=Stein |first4=Clifford |author-link4=Clifford Stein |year=2001 |title=[[Introduction to Algorithms]] |edition=2nd |publisher=MIT Press and McGraw-Hill |isbn=0-262-03293-7}} Chapters 6 and 7 Respectively: Heapsort and Priority Queues
+* [http://www.cs.utexas.edu/users/EWD/ewd07xx/EWD796a.PDF A PDF of Dijkstra's original paper on Smoothsort]
+* [http://cis.stvincent.edu/html/tutorials/swd/heaps/heaps.html Heaps and Heapsort Tutorial] by David Carlson, St. Vincent College
+
+== External links ==
+{{wikibooks|Algorithm implementation|Sorting/Heapsort|Heapsort}}
+* {{webarchive |url=https://web.archive.org/web/20150306071556/http://www.sorting-algorithms.com/heap-sort |date=6 March 2015 |title=Animated Sorting Algorithms: Heap Sort}} – graphical demonstration
+* [https://web.archive.org/web/20130326084250/http://olli.informatik.uni-oldenburg.de/heapsort_SALA/english/start.html Courseware on Heapsort from Univ. Oldenburg] – With text, animations and interactive exercises
+* [https://xlinux.nist.gov/dads/HTML/heapSort.html NIST's Dictionary of Algorithms and Data Structures: Heapsort]
+* [http://www.codecodex.com/wiki/Heapsort Heapsort implemented in 12 languages] {{Webarchive|url=https://web.archive.org/web/20101228072445/http://www.codecodex.com/wiki/Heapsort |date=28 December 2010 }}
+* [http://www.azillionmonkeys.com/qed/sort.html Sorting revisited] by Paul Hsieh
+* [http://employees.oneonta.edu/zhangs/powerPointPlatform/index.php A PowerPoint presentation demonstrating how Heap sort works] that is for educators.
+* [http://opendatastructures.org/versions/edition-0.1e/ods-java/11_1_Comparison_Based_Sorti.html#SECTION001413000000000000000 Open Data Structures – Section 11.1.3 – Heap-Sort], [[Pat Morin]]
+
+{{sorting}}
+
+[[Category:Articles with example pseudocode]]
+[[Category:Comparison sorts]]
+[[Category:Heaps (data structures)]]
+</textarea><div class='editOptions'>
+<div id='wpSummaryLabel' class='mw-summary oo-ui-layout oo-ui-labelElement oo-ui-fieldLayout oo-ui-fieldLayout-align-top'><div class='oo-ui-fieldLayout-body'><span class='oo-ui-fieldLayout-header'><label for='wpSummary' class='oo-ui-labelElement-label'><span style="text-align: left;"><a href="/wiki/Help:Edit_summary" title="Help:Edit summary">Edit summary</a> <small>(Briefly describe your changes)</small></span></label></span><div class='oo-ui-fieldLayout-field'><div id='wpSummaryWidget' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-textInputWidget oo-ui-textInputWidget-type-text oo-ui-textInputWidget-php' data-ooui='{"_":"OO.ui.TextInputWidget","maxLength":500,"name":"wpSummary","inputId":"wpSummary","tabIndex":1,"title":"Enter a short summary","accessKey":"b","required":false}'><input type='text' tabindex='1' title='Enter a short summary [b]' accesskey='b' name='wpSummary' value='' id='wpSummary' maxlength='500' spellcheck='true' class='oo-ui-inputWidget-input' /><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator'></span></div></div></div></div><div class='editCheckboxes'><div class='oo-ui-layout oo-ui-horizontalLayout'></div></div>
+<div id="editpage-copywarn">By publishing changes, you agree to the <a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use" class="extiw" title="foundation:Special:MyLanguage/Policy:Terms of Use">Terms of Use</a>, and you irrevocably agree to release your contribution under the <a href="/wiki/Wikipedia:Text_of_the_Creative_Commons_Attribution-ShareAlike_4.0_International_License" title="Wikipedia:Text of the Creative Commons Attribution-ShareAlike 4.0 International License">CC BY-SA 4.0 License</a> and the <a href="/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License" title="Wikipedia:Text of the GNU Free Documentation License">GFDL</a>. You agree that a hyperlink or URL is sufficient attribution under the Creative Commons license.</div><div class='editButtons'>
+<span id='wpSaveWidget' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-buttonElement oo-ui-buttonElement-framed oo-ui-labelElement oo-ui-flaggedElement-progressive oo-ui-flaggedElement-primary oo-ui-buttonInputWidget' data-ooui='{"_":"OO.ui.ButtonInputWidget","useInputTag":true,"type":"submit","name":"wpSave","inputId":"wpSave","tabIndex":3,"title":"Publish your changes","accessKey":"s","label":"Publish changes","flags":["progressive","primary"]}'><input type='submit' tabindex='3' title='Publish your changes [s]' accesskey='s' name='wpSave' id='wpSave' value='Publish changes' class='oo-ui-inputWidget-input oo-ui-buttonElement-button' /></span>
+<span id='wpPreviewWidget' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-buttonElement oo-ui-buttonElement-framed oo-ui-labelElement oo-ui-buttonInputWidget' data-ooui='{"_":"OO.ui.ButtonInputWidget","useInputTag":true,"type":"submit","formNoValidate":true,"name":"wpPreview","inputId":"wpPreview","tabIndex":4,"title":"Preview your changes. Please use this before publishing.","accessKey":"p","label":"Show preview"}'><input type='submit' tabindex='4' title='Preview your changes. Please use this before publishing. [p]' accesskey='p' name='wpPreview' id='wpPreview' value='Show preview' formnovalidate='formnovalidate' class='oo-ui-inputWidget-input oo-ui-buttonElement-button' /></span>
+<span id='wpDiffWidget' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-buttonElement oo-ui-buttonElement-framed oo-ui-labelElement oo-ui-buttonInputWidget' data-ooui='{"_":"OO.ui.ButtonInputWidget","useInputTag":true,"type":"submit","formNoValidate":true,"name":"wpDiff","inputId":"wpDiff","tabIndex":5,"title":"Show the changes you made to the text","accessKey":"v","label":"Show changes"}'><input type='submit' tabindex='5' title='Show the changes you made to the text [v]' accesskey='v' name='wpDiff' id='wpDiff' value='Show changes' formnovalidate='formnovalidate' class='oo-ui-inputWidget-input oo-ui-buttonElement-button' /></span>
+	<span class='cancelLink'><span id='mw-editform-cancel' class='oo-ui-widget oo-ui-widget-enabled oo-ui-buttonElement oo-ui-buttonElement-frameless oo-ui-labelElement oo-ui-flaggedElement-destructive oo-ui-buttonWidget' data-ooui='{"_":"OO.ui.ButtonWidget","href":"\/wiki\/Heapsort","rel":["nofollow"],"framed":false,"label":{"html":"Cancel"},"flags":["destructive"],"tabIndex":5}'><a role='button' tabindex='5' href='/wiki/Heapsort' rel='nofollow' class='oo-ui-buttonElement-button'><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon oo-ui-image-destructive'></span><span class='oo-ui-labelElement-label'>Cancel</span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator oo-ui-image-destructive'></span></a></span></span>
+	<span class='editHelp'><a href="/wiki/Help:Cheatsheet" target="helpwindow">Editing help</a> (opens in new window)</span>
+</div><!-- editButtons -->
+<span id="templatesandbox-editform"><input id="wpTemplateSandboxTemplate" type="hidden" value="Heapsort" name="wpTemplateSandboxTemplate"><input id="wpTemplateSandboxPage" type="hidden" name="wpTemplateSandboxPage"></span>
+</div><!-- editOptions -->
+
+<input type="hidden" value="+\" name="wpEditToken">
+<div class="mw-editTools"><div id="editpage-specialchars" style="margin-top: 15px; border: 1px solid #aaaaaa; padding: 2px;" class="edittools-text">
+<p><b>Copy and paste:</b> – — ° ′ ″ ≈ ≠ ≤ ≥ ± − × ÷ ← → · § &#160;  <b>Cite your sources:</b> &lt;ref&gt;&lt;/ref&gt; 
+</p>
+<hr />
+<p><small>
+{{}} &#160; {{{}}} &#160; | &#160; [] &#160; [[]] &#160; [[Category:]] &#160; #REDIRECT [[]] &#160; &amp;nbsp; &#160; &lt;s&gt;&lt;/s&gt; &#160; &lt;sup&gt;&lt;/sup&gt; &#160; &lt;sub&gt;&lt;/sub&gt; &#160; &lt;code&gt;&lt;/code&gt; &#160; &lt;pre&gt;&lt;/pre&gt; &#160; &lt;blockquote&gt;&lt;/blockquote&gt; &#160; &lt;ref&gt;&lt;/ref&gt; &lt;ref name="" /&gt; &#160; {{Reflist}} &#160; &lt;references /&gt; &#160; &lt;includeonly&gt;&lt;/includeonly&gt; &#160; &lt;noinclude&gt;&lt;/noinclude&gt; &#160; {{DEFAULTSORT:}} &#160; &lt;nowiki&gt;&lt;/nowiki&gt; &#160; &lt;!-- --&gt; &#160; &lt;span class="plainlinks"&gt;&lt;/span&gt; 
+</small>
+</p>
+<hr />
+<p><small>
+<b>Symbols:</b> ~ | ¡ ¿ † ‡ ↔ ↑ ↓ • ¶ &#160; # ∞ &#160; ‹› «» &#160; ¤ ₳ ฿ ₵ ¢ ₡ ₢ $ ₫ ₯ € ₠ ₣ ƒ ₴ ₭ ₤ ℳ ₥ ₦ № ₧ ₰ £ ៛ ₨ ₪ ৳ ₮ ₩ ¥ &#160; ♠ ♣ ♥ ♦ &#160; 𝄫 ♭ ♮ ♯ 𝄪 &#160; © ® ™<br />
+<b>Latin:</b> A a Á á À à Â â Ä ä Ǎ ǎ Ă ă Ā ā Ã ã Å å Ą ą Æ æ Ǣ ǣ &#160; B b &#160; C c Ć ć Ċ ċ Ĉ ĉ Č č Ç ç &#160; D d Ď ď Đ đ Ḍ ḍ Ð ð &#160; E e É é È è Ė ė Ê ê Ë ë Ě ě Ĕ ĕ Ē ē Ẽ ẽ Ę ę Ẹ ẹ Ɛ ɛ Ǝ ǝ Ə ə &#160; F f &#160; G g Ġ ġ Ĝ ĝ Ğ ğ Ģ ģ &#160; H h Ĥ ĥ Ħ ħ Ḥ ḥ &#160; I i İ ı Í í Ì ì Î î Ï ï Ǐ ǐ Ĭ ĭ Ī ī Ĩ ĩ Į į Ị ị &#160; J j Ĵ ĵ &#160; K k Ķ ķ &#160; L l Ĺ ĺ Ŀ ŀ Ľ ľ Ļ ļ Ł ł Ḷ ḷ Ḹ ḹ &#160; M m Ṃ ṃ &#160; N n Ń ń Ň ň Ñ ñ Ņ ņ Ṇ ṇ Ŋ ŋ &#160; O o Ó ó Ò ò Ô ô Ö ö Ǒ ǒ Ŏ ŏ Ō ō Õ õ Ǫ ǫ Ọ ọ Ő ő Ø ø Œ œ &#160; Ɔ ɔ &#160; P p &#160; Q q &#160; R r Ŕ ŕ Ř ř Ŗ ŗ Ṛ ṛ Ṝ ṝ &#160; S s Ś ś Ŝ ŝ Š š Ş ş Ș ș Ṣ ṣ ß &#160; T t Ť ť Ţ ţ Ț ț Ṭ ṭ Þ þ &#160; U u Ú ú Ù ù Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ũ ũ Ů ů Ų ų Ụ ụ Ű ű Ǘ ǘ Ǜ ǜ Ǚ ǚ Ǖ ǖ &#160; V v &#160; W w Ŵ ŵ &#160; X x &#160; Y y Ý ý Ŷ ŷ Ÿ ÿ Ỹ ỹ Ȳ ȳ &#160; Z z Ź ź Ż ż Ž ž &#160; ß Ð ð Þ þ Ŋ ŋ Ə ə <br />
+<b>Greek:</b> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ &#160; Α α Β β Γ γ Δ δ &#160; Ε ε Ζ ζ Η η Θ θ &#160; Ι ι Κ κ Λ λ Μ μ &#160; Ν ν Ξ ξ Ο ο Π π &#160; Ρ ρ Σ σ ς Τ τ Υ υ &#160; Φ φ Χ χ Ψ ψ Ω ω &#160; {{Polytonic|}} <br />
+<b>Cyrillic:</b> А а Б б В в Г г &#160; Ґ ґ Ѓ ѓ Д д Ђ ђ &#160; Е е Ё ё Є є Ж ж &#160; З з Ѕ ѕ И и І і &#160; Ї ї Й й Ј ј К к &#160; Ќ ќ Л л Љ љ М м &#160; Н н Њ њ О о П п &#160; Р р С с Т т Ћ ћ &#160; У у Ў ў Ф ф Х х &#160; Ц ц Ч ч Џ џ Ш ш &#160; Щ щ Ъ ъ Ы ы Ь ь &#160; Э э Ю ю Я я &#160; ́ <br />
+<b>IPA:</b> t̪ d̪ ʈ ɖ ɟ ɡ ɢ ʡ ʔ &#160; ɸ β θ ð ʃ ʒ ɕ ʑ ʂ ʐ ç ʝ ɣ χ ʁ ħ ʕ ʜ ʢ ɦ &#160; ɱ ɳ ɲ ŋ ɴ &#160; ʋ ɹ ɻ ɰ &#160; ʙ ⱱ ʀ ɾ ɽ &#160; ɫ ɬ ɮ ɺ ɭ ʎ ʟ &#160; ɥ ʍ ɧ &#160; ʼ &#160; ɓ ɗ ʄ ɠ ʛ &#160; ʘ ǀ ǃ ǂ ǁ &#160; ɨ ʉ ɯ &#160; ɪ ʏ ʊ &#160; ø ɘ ɵ ɤ &#160; ə ɚ &#160; ɛ œ ɜ ɝ ɞ ʌ ɔ &#160; æ &#160; ɐ ɶ ɑ ɒ &#160; ʰ ʱ ʷ ʲ ˠ ˤ ⁿ ˡ &#160; ˈ ˌ ː ˑ ̪ &#160; {{IPA|}}
+</small>
+</p>
+</div></div><div class="wikibase-entity-usage"><div class="wikibase-entityusage-explanation"><p>Wikidata entities used in this page
+</p></div>
+<ul><li><a class="extiw wb-entity-link external" href="https://www.wikidata.org/wiki/Special:EntityPage/Q474095">heapsort</a>: Sitelink, Title, Description: en</li><li><a class="extiw wb-entity-link external" href="https://www.wikidata.org/wiki/Special:EntityPage/Q56049336">Heapsort—Adapted for presorted files</a>: Miscellaneous (e.g. aliases, entity existence), Label: en</li></ul></div>
+<div class="templatesUsed"><div class="mw-templatesUsedExplanation"><p><span id="templatesused">Pages transcluded onto the current version of this page<span class="posteditwindowhelplinks"> (<a href="/wiki/Help:Transclusion" title="Help:Transclusion">help</a>)</span>:</span>
+</p></div><ul>
+<li><a href="/wiki/Template:%27-" class="mw-redirect" title="Template:&#039;-">Template:&#039;-</a> (<a href="/w/index.php?title=Template:%27-&amp;action=edit" class="mw-redirect" title="Template:&#039;-">view source</a>) (extended confirmed protected)</li><li><a href="/wiki/Template:Abbr" title="Template:Abbr">Template:Abbr</a> (<a href="/w/index.php?title=Template:Abbr&amp;action=edit" title="Template:Abbr">view source</a>) (protected)</li><li><a href="/wiki/Template:Category_handler" title="Template:Category handler">Template:Category handler</a> (<a href="/w/index.php?title=Template:Category_handler&amp;action=edit" title="Template:Category handler">view source</a>) (protected)</li><li><a href="/wiki/Template:Citation_needed" title="Template:Citation needed">Template:Citation needed</a> (<a href="/w/index.php?title=Template:Citation_needed&amp;action=edit" title="Template:Citation needed">view source</a>) (protected)</li><li><a href="/wiki/Template:Cite_EWD" title="Template:Cite EWD">Template:Cite EWD</a> (<a href="/w/index.php?title=Template:Cite_EWD&amp;action=edit" title="Template:Cite EWD">edit</a>) </li><li><a href="/wiki/Template:Cite_EWD/forxx" title="Template:Cite EWD/forxx">Template:Cite EWD/forxx</a> (<a href="/w/index.php?title=Template:Cite_EWD/forxx&amp;action=edit" title="Template:Cite EWD/forxx">edit</a>) </li><li><a href="/wiki/Template:Cite_arXiv" title="Template:Cite arXiv">Template:Cite arXiv</a> (<a href="/w/index.php?title=Template:Cite_arXiv&amp;action=edit" title="Template:Cite arXiv">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Cite_book" title="Template:Cite book">Template:Cite book</a> (<a href="/w/index.php?title=Template:Cite_book&amp;action=edit" title="Template:Cite book">view source</a>) (protected)</li><li><a href="/wiki/Template:Cite_conference" title="Template:Cite conference">Template:Cite conference</a> (<a href="/w/index.php?title=Template:Cite_conference&amp;action=edit" title="Template:Cite conference">view source</a>) (protected)</li><li><a href="/wiki/Template:Cite_journal" title="Template:Cite journal">Template:Cite journal</a> (<a href="/w/index.php?title=Template:Cite_journal&amp;action=edit" title="Template:Cite journal">view source</a>) (protected)</li><li><a href="/wiki/Template:Cite_tech_report" title="Template:Cite tech report">Template:Cite tech report</a> (<a href="/w/index.php?title=Template:Cite_tech_report&amp;action=edit" title="Template:Cite tech report">view source</a>) (semi-protected)</li><li><a href="/wiki/Template:Cite_web" title="Template:Cite web">Template:Cite web</a> (<a href="/w/index.php?title=Template:Cite_web&amp;action=edit" title="Template:Cite web">view source</a>) (protected)</li><li><a href="/wiki/Template:Code" title="Template:Code">Template:Code</a> (<a href="/w/index.php?title=Template:Code&amp;action=edit" title="Template:Code">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:DMCA" class="mw-redirect" title="Template:DMCA">Template:DMCA</a> (<a href="/w/index.php?title=Template:DMCA&amp;action=edit" class="mw-redirect" title="Template:DMCA">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Dated_maintenance_category" title="Template:Dated maintenance category">Template:Dated maintenance category</a> (<a href="/w/index.php?title=Template:Dated_maintenance_category&amp;action=edit" title="Template:Dated maintenance category">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Dated_maintenance_category_(articles)" title="Template:Dated maintenance category (articles)">Template:Dated maintenance category (articles)</a> (<a href="/w/index.php?title=Template:Dated_maintenance_category_(articles)&amp;action=edit" title="Template:Dated maintenance category (articles)">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Delink" title="Template:Delink">Template:Delink</a> (<a href="/w/index.php?title=Template:Delink&amp;action=edit" title="Template:Delink">view source</a>) (protected)</li><li><a href="/wiki/Template:FULLROOTPAGENAME" title="Template:FULLROOTPAGENAME">Template:FULLROOTPAGENAME</a> (<a href="/w/index.php?title=Template:FULLROOTPAGENAME&amp;action=edit" title="Template:FULLROOTPAGENAME">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Fix" title="Template:Fix">Template:Fix</a> (<a href="/w/index.php?title=Template:Fix&amp;action=edit" title="Template:Fix">view source</a>) (protected)</li><li><a href="/wiki/Template:Fix/category" title="Template:Fix/category">Template:Fix/category</a> (<a href="/w/index.php?title=Template:Fix/category&amp;action=edit" title="Template:Fix/category">view source</a>) (protected)</li><li><a href="/wiki/Template:Floor" title="Template:Floor">Template:Floor</a> (<a href="/w/index.php?title=Template:Floor&amp;action=edit" title="Template:Floor">view source</a>) (semi-protected)</li><li><a href="/wiki/Template:Frac" class="mw-redirect" title="Template:Frac">Template:Frac</a> (<a href="/w/index.php?title=Template:Frac&amp;action=edit" class="mw-redirect" title="Template:Frac">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Fraction" title="Template:Fraction">Template:Fraction</a> (<a href="/w/index.php?title=Template:Fraction&amp;action=edit" title="Template:Fraction">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Fraction/styles.css" title="Template:Fraction/styles.css">Template:Fraction/styles.css</a> (<a href="/w/index.php?title=Template:Fraction/styles.css&amp;action=edit" title="Template:Fraction/styles.css">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Harvard_citation_no_brackets" title="Template:Harvard citation no brackets">Template:Harvard citation no brackets</a> (<a href="/w/index.php?title=Template:Harvard_citation_no_brackets&amp;action=edit" title="Template:Harvard citation no brackets">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Harvnb" class="mw-redirect" title="Template:Harvnb">Template:Harvnb</a> (<a href="/w/index.php?title=Template:Harvnb&amp;action=edit" class="mw-redirect" title="Template:Harvnb">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Hlist/styles.css" title="Template:Hlist/styles.css">Template:Hlist/styles.css</a> (<a href="/w/index.php?title=Template:Hlist/styles.css&amp;action=edit" title="Template:Hlist/styles.css">view source</a>) (protected)</li><li><a href="/wiki/Template:Infobox" title="Template:Infobox">Template:Infobox</a> (<a href="/w/index.php?title=Template:Infobox&amp;action=edit" title="Template:Infobox">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Infobox_Algorithm" class="mw-redirect" title="Template:Infobox Algorithm">Template:Infobox Algorithm</a> (<a href="/w/index.php?title=Template:Infobox_Algorithm&amp;action=edit" class="mw-redirect" title="Template:Infobox Algorithm">edit</a>) </li><li><a href="/wiki/Template:Infobox_algorithm" title="Template:Infobox algorithm">Template:Infobox algorithm</a> (<a href="/w/index.php?title=Template:Infobox_algorithm&amp;action=edit" title="Template:Infobox algorithm">view source</a>) (semi-protected)</li><li><a href="/wiki/Template:Main_other" title="Template:Main other">Template:Main other</a> (<a href="/w/index.php?title=Template:Main_other&amp;action=edit" title="Template:Main other">view source</a>) (protected)</li><li><a href="/wiki/Template:Math" title="Template:Math">Template:Math</a> (<a href="/w/index.php?title=Template:Math&amp;action=edit" title="Template:Math">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Mvar" title="Template:Mvar">Template:Mvar</a> (<a href="/w/index.php?title=Template:Mvar&amp;action=edit" title="Template:Mvar">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Navbox" title="Template:Navbox">Template:Navbox</a> (<a href="/w/index.php?title=Template:Navbox&amp;action=edit" title="Template:Navbox">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Ns_has_subpages" title="Template:Ns has subpages">Template:Ns has subpages</a> (<a href="/w/index.php?title=Template:Ns_has_subpages&amp;action=edit" title="Template:Ns has subpages">view source</a>) (protected)</li><li><a href="/wiki/Template:PAGENAMEBASE" title="Template:PAGENAMEBASE">Template:PAGENAMEBASE</a> (<a href="/w/index.php?title=Template:PAGENAMEBASE&amp;action=edit" title="Template:PAGENAMEBASE">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Pagetype" title="Template:Pagetype">Template:Pagetype</a> (<a href="/w/index.php?title=Template:Pagetype&amp;action=edit" title="Template:Pagetype">view source</a>) (protected)</li><li><a href="/wiki/Template:Plainlist/styles.css" title="Template:Plainlist/styles.css">Template:Plainlist/styles.css</a> (<a href="/w/index.php?title=Template:Plainlist/styles.css&amp;action=edit" title="Template:Plainlist/styles.css">view source</a>) (protected)</li><li><a href="/wiki/Template:Q" class="mw-redirect" title="Template:Q">Template:Q</a> (<a href="/w/index.php?title=Template:Q&amp;action=edit" class="mw-redirect" title="Template:Q">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:R" title="Template:R">Template:R</a> (<a href="/w/index.php?title=Template:R&amp;action=edit" title="Template:R">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:R/ref" title="Template:R/ref">Template:R/ref</a> (<a href="/w/index.php?title=Template:R/ref&amp;action=edit" title="Template:R/ref">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:R/superscript" title="Template:R/superscript">Template:R/superscript</a> (<a href="/w/index.php?title=Template:R/superscript&amp;action=edit" title="Template:R/superscript">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:R/where" title="Template:R/where">Template:R/where</a> (<a href="/w/index.php?title=Template:R/where&amp;action=edit" title="Template:R/where">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Reference_page" title="Template:Reference page">Template:Reference page</a> (<a href="/w/index.php?title=Template:Reference_page&amp;action=edit" title="Template:Reference page">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Reflist" title="Template:Reflist">Template:Reflist</a> (<a href="/w/index.php?title=Template:Reflist&amp;action=edit" title="Template:Reflist">view source</a>) (protected)</li><li><a href="/wiki/Template:Reflist/styles.css" title="Template:Reflist/styles.css">Template:Reflist/styles.css</a> (<a href="/w/index.php?title=Template:Reflist/styles.css&amp;action=edit" title="Template:Reflist/styles.css">view source</a>) (protected)</li><li><a href="/wiki/Template:Refn" title="Template:Refn">Template:Refn</a> (<a href="/w/index.php?title=Template:Refn&amp;action=edit" title="Template:Refn">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Rp" class="mw-redirect" title="Template:Rp">Template:Rp</a> (<a href="/w/index.php?title=Template:Rp&amp;action=edit" class="mw-redirect" title="Template:Rp">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:SDcat" title="Template:SDcat">Template:SDcat</a> (<a href="/w/index.php?title=Template:SDcat&amp;action=edit" title="Template:SDcat">view source</a>) (protected)</li><li><a href="/wiki/Template:Sc" class="mw-redirect" title="Template:Sc">Template:Sc</a> (<a href="/w/index.php?title=Template:Sc&amp;action=edit" class="mw-redirect" title="Template:Sc">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Section_link" title="Template:Section link">Template:Section link</a> (<a href="/w/index.php?title=Template:Section_link&amp;action=edit" title="Template:Section link">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:See_also" title="Template:See also">Template:See also</a> (<a href="/w/index.php?title=Template:See_also&amp;action=edit" title="Template:See also">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Short_description" title="Template:Short description">Template:Short description</a> (<a href="/w/index.php?title=Template:Short_description&amp;action=edit" title="Template:Short description">view source</a>) (protected)</li><li><a href="/wiki/Template:Short_description/lowercasecheck" title="Template:Short description/lowercasecheck">Template:Short description/lowercasecheck</a> (<a href="/w/index.php?title=Template:Short_description/lowercasecheck&amp;action=edit" title="Template:Short description/lowercasecheck">view source</a>) (protected)</li><li><a href="/wiki/Template:Side_box" title="Template:Side box">Template:Side box</a> (<a href="/w/index.php?title=Template:Side_box&amp;action=edit" title="Template:Side box">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Single%2Bspace" title="Template:Single+space">Template:Single+space</a> (<a href="/w/index.php?title=Template:Single%2Bspace&amp;action=edit" title="Template:Single+space">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Sister_project" title="Template:Sister project">Template:Sister project</a> (<a href="/w/index.php?title=Template:Sister_project&amp;action=edit" title="Template:Sister project">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Sister_project/styles.css" title="Template:Sister project/styles.css">Template:Sister project/styles.css</a> (<a href="/w/index.php?title=Template:Sister_project/styles.css&amp;action=edit" title="Template:Sister project/styles.css">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Smallcaps_all" title="Template:Smallcaps all">Template:Smallcaps all</a> (<a href="/w/index.php?title=Template:Smallcaps_all&amp;action=edit" title="Template:Smallcaps all">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Sorting" title="Template:Sorting">Template:Sorting</a> (<a href="/w/index.php?title=Template:Sorting&amp;action=edit" title="Template:Sorting">edit</a>) </li><li><a href="/wiki/Template:Sub" title="Template:Sub">Template:Sub</a> (<a href="/w/index.php?title=Template:Sub&amp;action=edit" title="Template:Sub">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Success" title="Template:Success">Template:Success</a> (<a href="/w/index.php?title=Template:Success&amp;action=edit" title="Template:Success">view source</a>) (semi-protected)</li><li><a href="/wiki/Template:Table_alignment" title="Template:Table alignment">Template:Table alignment</a> (<a href="/w/index.php?title=Template:Table_alignment&amp;action=edit" title="Template:Table alignment">view source</a>) (semi-protected)</li><li><a href="/wiki/Template:Table_alignment/tables.css" title="Template:Table alignment/tables.css">Template:Table alignment/tables.css</a> (<a href="/w/index.php?title=Template:Table_alignment/tables.css&amp;action=edit" title="Template:Table alignment/tables.css">view source</a>) (semi-protected)</li><li><a href="/wiki/Template:Template_other" title="Template:Template other">Template:Template other</a> (<a href="/w/index.php?title=Template:Template_other&amp;action=edit" title="Template:Template other">view source</a>) (protected)</li><li><a href="/wiki/Template:Trim" title="Template:Trim">Template:Trim</a> (<a href="/w/index.php?title=Template:Trim&amp;action=edit" title="Template:Trim">view source</a>) (protected)</li><li><a href="/wiki/Template:Use_dmy_dates" title="Template:Use dmy dates">Template:Use dmy dates</a> (<a href="/w/index.php?title=Template:Use_dmy_dates&amp;action=edit" title="Template:Use dmy dates">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Webarchive" title="Template:Webarchive">Template:Webarchive</a> (<a href="/w/index.php?title=Template:Webarchive&amp;action=edit" title="Template:Webarchive">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Wikibooks" title="Template:Wikibooks">Template:Wikibooks</a> (<a href="/w/index.php?title=Template:Wikibooks&amp;action=edit" title="Template:Wikibooks">view source</a>) (template editor protected)</li><li><a href="/wiki/Template:Wikidata_entity_link" title="Template:Wikidata entity link">Template:Wikidata entity link</a> (<a href="/w/index.php?title=Template:Wikidata_entity_link&amp;action=edit" title="Template:Wikidata entity link">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Arguments" title="Module:Arguments">Module:Arguments</a> (<a href="/w/index.php?title=Module:Arguments&amp;action=edit" title="Module:Arguments">view source</a>) (protected)</li><li><a href="/wiki/Module:Category_handler" title="Module:Category handler">Module:Category handler</a> (<a href="/w/index.php?title=Module:Category_handler&amp;action=edit" title="Module:Category handler">view source</a>) (protected)</li><li><a href="/wiki/Module:Category_handler/blacklist" title="Module:Category handler/blacklist">Module:Category handler/blacklist</a> (<a href="/w/index.php?title=Module:Category_handler/blacklist&amp;action=edit" title="Module:Category handler/blacklist">view source</a>) (protected)</li><li><a href="/wiki/Module:Category_handler/config" title="Module:Category handler/config">Module:Category handler/config</a> (<a href="/w/index.php?title=Module:Category_handler/config&amp;action=edit" title="Module:Category handler/config">view source</a>) (protected)</li><li><a href="/wiki/Module:Category_handler/data" title="Module:Category handler/data">Module:Category handler/data</a> (<a href="/w/index.php?title=Module:Category_handler/data&amp;action=edit" title="Module:Category handler/data">view source</a>) (protected)</li><li><a href="/wiki/Module:Category_handler/shared" title="Module:Category handler/shared">Module:Category handler/shared</a> (<a href="/w/index.php?title=Module:Category_handler/shared&amp;action=edit" title="Module:Category handler/shared">view source</a>) (protected)</li><li><a href="/wiki/Module:Check_for_unknown_parameters" title="Module:Check for unknown parameters">Module:Check for unknown parameters</a> (<a href="/w/index.php?title=Module:Check_for_unknown_parameters&amp;action=edit" title="Module:Check for unknown parameters">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1" title="Module:Citation/CS1">Module:Citation/CS1</a> (<a href="/w/index.php?title=Module:Citation/CS1&amp;action=edit" title="Module:Citation/CS1">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/COinS" title="Module:Citation/CS1/COinS">Module:Citation/CS1/COinS</a> (<a href="/w/index.php?title=Module:Citation/CS1/COinS&amp;action=edit" title="Module:Citation/CS1/COinS">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/Configuration" title="Module:Citation/CS1/Configuration">Module:Citation/CS1/Configuration</a> (<a href="/w/index.php?title=Module:Citation/CS1/Configuration&amp;action=edit" title="Module:Citation/CS1/Configuration">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/Date_validation" title="Module:Citation/CS1/Date validation">Module:Citation/CS1/Date validation</a> (<a href="/w/index.php?title=Module:Citation/CS1/Date_validation&amp;action=edit" title="Module:Citation/CS1/Date validation">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/Identifiers" title="Module:Citation/CS1/Identifiers">Module:Citation/CS1/Identifiers</a> (<a href="/w/index.php?title=Module:Citation/CS1/Identifiers&amp;action=edit" title="Module:Citation/CS1/Identifiers">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/Utilities" title="Module:Citation/CS1/Utilities">Module:Citation/CS1/Utilities</a> (<a href="/w/index.php?title=Module:Citation/CS1/Utilities&amp;action=edit" title="Module:Citation/CS1/Utilities">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/Whitelist" title="Module:Citation/CS1/Whitelist">Module:Citation/CS1/Whitelist</a> (<a href="/w/index.php?title=Module:Citation/CS1/Whitelist&amp;action=edit" title="Module:Citation/CS1/Whitelist">view source</a>) (protected)</li><li><a href="/wiki/Module:Citation/CS1/styles.css" title="Module:Citation/CS1/styles.css">Module:Citation/CS1/styles.css</a> (<a href="/w/index.php?title=Module:Citation/CS1/styles.css&amp;action=edit" title="Module:Citation/CS1/styles.css">view source</a>) (protected)</li><li><a href="/wiki/Module:DecodeEncode" title="Module:DecodeEncode">Module:DecodeEncode</a> (<a href="/w/index.php?title=Module:DecodeEncode&amp;action=edit" title="Module:DecodeEncode">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Delink" title="Module:Delink">Module:Delink</a> (<a href="/w/index.php?title=Module:Delink&amp;action=edit" title="Module:Delink">view source</a>) (protected)</li><li><a href="/wiki/Module:Disambiguation/templates" title="Module:Disambiguation/templates">Module:Disambiguation/templates</a> (<a href="/w/index.php?title=Module:Disambiguation/templates&amp;action=edit" title="Module:Disambiguation/templates">view source</a>) (protected)</li><li><a href="/wiki/Module:Footnotes" title="Module:Footnotes">Module:Footnotes</a> (<a href="/w/index.php?title=Module:Footnotes&amp;action=edit" title="Module:Footnotes">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Footnotes/anchor_id_list" title="Module:Footnotes/anchor id list">Module:Footnotes/anchor id list</a> (<a href="/w/index.php?title=Module:Footnotes/anchor_id_list&amp;action=edit" title="Module:Footnotes/anchor id list">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Footnotes/anchor_id_list/data" title="Module:Footnotes/anchor id list/data">Module:Footnotes/anchor id list/data</a> (<a href="/w/index.php?title=Module:Footnotes/anchor_id_list/data&amp;action=edit" title="Module:Footnotes/anchor id list/data">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Footnotes/whitelist" title="Module:Footnotes/whitelist">Module:Footnotes/whitelist</a> (<a href="/w/index.php?title=Module:Footnotes/whitelist&amp;action=edit" title="Module:Footnotes/whitelist">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Format_link" title="Module:Format link">Module:Format link</a> (<a href="/w/index.php?title=Module:Format_link&amp;action=edit" title="Module:Format link">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:GetParameters" title="Module:GetParameters">Module:GetParameters</a> (<a href="/w/index.php?title=Module:GetParameters&amp;action=edit" title="Module:GetParameters">view source</a>) (protected)</li><li><a href="/wiki/Module:Hatnote" title="Module:Hatnote">Module:Hatnote</a> (<a href="/w/index.php?title=Module:Hatnote&amp;action=edit" title="Module:Hatnote">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Hatnote/styles.css" title="Module:Hatnote/styles.css">Module:Hatnote/styles.css</a> (<a href="/w/index.php?title=Module:Hatnote/styles.css&amp;action=edit" title="Module:Hatnote/styles.css">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Hatnote_list" title="Module:Hatnote list">Module:Hatnote list</a> (<a href="/w/index.php?title=Module:Hatnote_list&amp;action=edit" title="Module:Hatnote list">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Infobox" title="Module:Infobox">Module:Infobox</a> (<a href="/w/index.php?title=Module:Infobox&amp;action=edit" title="Module:Infobox">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Infobox/styles.css" title="Module:Infobox/styles.css">Module:Infobox/styles.css</a> (<a href="/w/index.php?title=Module:Infobox/styles.css&amp;action=edit" title="Module:Infobox/styles.css">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:InfoboxImage" title="Module:InfoboxImage">Module:InfoboxImage</a> (<a href="/w/index.php?title=Module:InfoboxImage&amp;action=edit" title="Module:InfoboxImage">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Labelled_list_hatnote" title="Module:Labelled list hatnote">Module:Labelled list hatnote</a> (<a href="/w/index.php?title=Module:Labelled_list_hatnote&amp;action=edit" title="Module:Labelled list hatnote">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Namespace_detect/config" title="Module:Namespace detect/config">Module:Namespace detect/config</a> (<a href="/w/index.php?title=Module:Namespace_detect/config&amp;action=edit" title="Module:Namespace detect/config">view source</a>) (protected)</li><li><a href="/wiki/Module:Namespace_detect/data" title="Module:Namespace detect/data">Module:Namespace detect/data</a> (<a href="/w/index.php?title=Module:Namespace_detect/data&amp;action=edit" title="Module:Namespace detect/data">view source</a>) (protected)</li><li><a href="/wiki/Module:Navbar" title="Module:Navbar">Module:Navbar</a> (<a href="/w/index.php?title=Module:Navbar&amp;action=edit" title="Module:Navbar">view source</a>) (protected)</li><li><a href="/wiki/Module:Navbar/configuration" title="Module:Navbar/configuration">Module:Navbar/configuration</a> (<a href="/w/index.php?title=Module:Navbar/configuration&amp;action=edit" title="Module:Navbar/configuration">view source</a>) (protected)</li><li><a href="/wiki/Module:Navbar/styles.css" title="Module:Navbar/styles.css">Module:Navbar/styles.css</a> (<a href="/w/index.php?title=Module:Navbar/styles.css&amp;action=edit" title="Module:Navbar/styles.css">view source</a>) (protected)</li><li><a href="/wiki/Module:Navbox" title="Module:Navbox">Module:Navbox</a> (<a href="/w/index.php?title=Module:Navbox&amp;action=edit" title="Module:Navbox">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Navbox/configuration" title="Module:Navbox/configuration">Module:Navbox/configuration</a> (<a href="/w/index.php?title=Module:Navbox/configuration&amp;action=edit" title="Module:Navbox/configuration">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Navbox/styles.css" title="Module:Navbox/styles.css">Module:Navbox/styles.css</a> (<a href="/w/index.php?title=Module:Navbox/styles.css&amp;action=edit" title="Module:Navbox/styles.css">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Ns_has_subpages" title="Module:Ns has subpages">Module:Ns has subpages</a> (<a href="/w/index.php?title=Module:Ns_has_subpages&amp;action=edit" title="Module:Ns has subpages">view source</a>) (protected)</li><li><a href="/wiki/Module:Pagetype" title="Module:Pagetype">Module:Pagetype</a> (<a href="/w/index.php?title=Module:Pagetype&amp;action=edit" title="Module:Pagetype">view source</a>) (protected)</li><li><a href="/wiki/Module:Pagetype/config" title="Module:Pagetype/config">Module:Pagetype/config</a> (<a href="/w/index.php?title=Module:Pagetype/config&amp;action=edit" title="Module:Pagetype/config">view source</a>) (protected)</li><li><a href="/wiki/Module:Pagetype/disambiguation" class="mw-redirect" title="Module:Pagetype/disambiguation">Module:Pagetype/disambiguation</a> (<a href="/w/index.php?title=Module:Pagetype/disambiguation&amp;action=edit" class="mw-redirect" title="Module:Pagetype/disambiguation">view source</a>) (protected)</li><li><a href="/wiki/Module:Pagetype/rfd" title="Module:Pagetype/rfd">Module:Pagetype/rfd</a> (<a href="/w/index.php?title=Module:Pagetype/rfd&amp;action=edit" title="Module:Pagetype/rfd">view source</a>) (protected)</li><li><a href="/wiki/Module:Pagetype/setindex" title="Module:Pagetype/setindex">Module:Pagetype/setindex</a> (<a href="/w/index.php?title=Module:Pagetype/setindex&amp;action=edit" title="Module:Pagetype/setindex">view source</a>) (protected)</li><li><a href="/wiki/Module:Pagetype/softredirect" title="Module:Pagetype/softredirect">Module:Pagetype/softredirect</a> (<a href="/w/index.php?title=Module:Pagetype/softredirect&amp;action=edit" title="Module:Pagetype/softredirect">view source</a>) (protected)</li><li><a href="/wiki/Module:Plain_text" title="Module:Plain text">Module:Plain text</a> (<a href="/w/index.php?title=Module:Plain_text&amp;action=edit" title="Module:Plain text">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:SDcat" title="Module:SDcat">Module:SDcat</a> (<a href="/w/index.php?title=Module:SDcat&amp;action=edit" title="Module:SDcat">view source</a>) (protected)</li><li><a href="/wiki/Module:Section_link" title="Module:Section link">Module:Section link</a> (<a href="/w/index.php?title=Module:Section_link&amp;action=edit" title="Module:Section link">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Side_box" title="Module:Side box">Module:Side box</a> (<a href="/w/index.php?title=Module:Side_box&amp;action=edit" title="Module:Side box">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Side_box/styles.css" title="Module:Side box/styles.css">Module:Side box/styles.css</a> (<a href="/w/index.php?title=Module:Side_box/styles.css&amp;action=edit" title="Module:Side box/styles.css">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:String" title="Module:String">Module:String</a> (<a href="/w/index.php?title=Module:String&amp;action=edit" title="Module:String">view source</a>) (protected)</li><li><a href="/wiki/Module:String2" title="Module:String2">Module:String2</a> (<a href="/w/index.php?title=Module:String2&amp;action=edit" title="Module:String2">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:TableTools" title="Module:TableTools">Module:TableTools</a> (<a href="/w/index.php?title=Module:TableTools&amp;action=edit" title="Module:TableTools">view source</a>) (protected)</li><li><a href="/wiki/Module:Unsubst" title="Module:Unsubst">Module:Unsubst</a> (<a href="/w/index.php?title=Module:Unsubst&amp;action=edit" title="Module:Unsubst">view source</a>) (protected)</li><li><a href="/wiki/Module:Wd" title="Module:Wd">Module:Wd</a> (<a href="/w/index.php?title=Module:Wd&amp;action=edit" title="Module:Wd">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Wd/i18n" title="Module:Wd/i18n">Module:Wd/i18n</a> (<a href="/w/index.php?title=Module:Wd/i18n&amp;action=edit" title="Module:Wd/i18n">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Webarchive" title="Module:Webarchive">Module:Webarchive</a> (<a href="/w/index.php?title=Module:Webarchive&amp;action=edit" title="Module:Webarchive">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Webarchive/data" title="Module:Webarchive/data">Module:Webarchive/data</a> (<a href="/w/index.php?title=Module:Webarchive/data&amp;action=edit" title="Module:Webarchive/data">view source</a>) (template editor protected)</li><li><a href="/wiki/Module:Wikitext_Parsing" title="Module:Wikitext Parsing">Module:Wikitext Parsing</a> (<a href="/w/index.php?title=Module:Wikitext_Parsing&amp;action=edit" title="Module:Wikitext Parsing">view source</a>) (protected)</li><li><a href="/wiki/Module:Yesno" title="Module:Yesno">Module:Yesno</a> (<a href="/w/index.php?title=Module:Yesno&amp;action=edit" title="Module:Yesno">view source</a>) (protected)</li></ul></div><div class="hiddencats"><div class="mw-hiddenCategoriesExplanation"><p>This page is a member of 10 hidden categories<span class="posteditwindowhelplinks"> (<a href="/wiki/Help:Category#Hiding_categories" title="Help:Category">help</a>)</span>:
+</p></div><ul>
+<li><a href="/wiki/Category:All_articles_with_unsourced_statements" title="Category:All articles with unsourced statements">Category:All articles with unsourced statements</a></li>
+<li><a href="/wiki/Category:Articles_with_example_pseudocode" title="Category:Articles with example pseudocode">Category:Articles with example pseudocode</a></li>
+<li><a href="/wiki/Category:Articles_with_short_description" title="Category:Articles with short description">Category:Articles with short description</a></li>
+<li><a href="/wiki/Category:Articles_with_unsourced_statements_from_November_2016" title="Category:Articles with unsourced statements from November 2016">Category:Articles with unsourced statements from November 2016</a></li>
+<li><a href="/wiki/Category:Articles_with_unsourced_statements_from_September_2014" title="Category:Articles with unsourced statements from September 2014">Category:Articles with unsourced statements from September 2014</a></li>
+<li><a href="/wiki/Category:CS1:_long_volume_value" title="Category:CS1: long volume value">Category:CS1: long volume value</a></li>
+<li><a href="/wiki/Category:CS1_interwiki-linked_names" title="Category:CS1 interwiki-linked names">Category:CS1 interwiki-linked names</a></li>
+<li><a href="/wiki/Category:Short_description_is_different_from_Wikidata" title="Category:Short description is different from Wikidata">Category:Short description is different from Wikidata</a></li>
+<li><a href="/wiki/Category:Use_dmy_dates_from_March_2022" title="Category:Use dmy dates from March 2022">Category:Use dmy dates from March 2022</a></li>
+<li><a href="/wiki/Category:Webarchive_template_wayback_links" title="Category:Webarchive template wayback links">Category:Webarchive template wayback links</a></li>
+</ul></div><div class="limitreport"></div><input id="mw-edit-mode" type="hidden" value="text" name="mode"><input type="hidden" value="1" name="wpUltimateParam">
+</form>
+<!--esi <esi:include src="/esitest-fa8a495983347898/content" /> --><noscript><img src="https://login.wikimedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" width="1" height="1" style="border: none; position: absolute;"></noscript>
+<div class="printfooter" data-nosnippet="">Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/wiki/Heapsort">https://en.wikipedia.org/wiki/Heapsort</a>"</div></div>
+					<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>
+				</div>
+			</main>
+			
+		</div>
+		<div class="mw-footer-container">
+			
+<footer id="footer" class="mw-footer" >
+	<ul id="footer-info">
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Privacy_policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Wikipedia:About">About Wikipedia</a></li>
+	<li id="footer-places-disclaimers"><a href="/wiki/Wikipedia:General_disclaimer">Disclaimers</a></li>
+	<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+	<li id="footer-places-wm-codeofconduct"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Universal_Code_of_Conduct">Code of Conduct</a></li>
+	<li id="footer-places-developers"><a href="https://developer.wikimedia.org">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/en.wikipedia.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Cookie_statement">Cookie statement</a></li>
+	<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Heapsort&amp;action=edit&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/" class="cdx-button cdx-button--fake-button cdx-button--size-large cdx-button--fake-button--enabled"><img src="/static/images/footer/wikimedia-button.svg" width="84" height="29" alt="Wikimedia Foundation" loading="lazy"></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/" class="cdx-button cdx-button--fake-button cdx-button--size-large cdx-button--fake-button--enabled"><img src="/w/resources/assets/poweredby_mediawiki.svg" alt="Powered by MediaWiki" width="88" height="31" loading="lazy"></a></li>
+</ul>
+
+</footer>
+
+		</div>
+	</div> 
+</div> 
+<div class="vector-settings" id="p-dock-bottom">
+	<ul></ul>
+</div><script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgHostname":"mw-web.eqiad.main-67876799fc-thsp4","wgBackendResponseTime":491});});</script>
+</body>
+</html>
