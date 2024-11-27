@@ -1004,151 +1004,251 @@ The heap is an <a href="https://en.wikipedia.org/wiki/Implicit_data_structure" t
 								return steps;
 							}
 
-							// QuickSort (with step-by-step tracking)
+							// QuickSort with Median of Three
 							function quickSort(arr) {
 								let comparisons = 0;
 								let swaps = 0;
 								let steps = [];
 
-								function partition(arr, low, high) {
-									let pivot = arr[high];
-									let i = low - 1;
+								// Helper function to choose the median of three as the pivot
+								function medianOfThree(arr, low, high) {
+									let mid = Math.floor((low + high) / 2);
+									let a = arr[low];
+									let b = arr[mid];
+									let c = arr[high];
 
+									// Sort a, b, c to find the median
+									if (a > b) [a, b] = [b, a];
+									if (b > c) [b, c] = [c, b];
+									if (a > b) [a, b] = [b, a];
+
+									return b;  // Return the median value
+								}
+
+								// Partition the array
+								function partition(arr, low, high) {
+									// Choose the pivot using median of three
+									let pivot = medianOfThree(arr, low, high);
+									let i = low;
+
+									// Move the pivot to the end temporarily
+									const pivotIndex = arr.indexOf(pivot);
+									[arr[pivotIndex], arr[high]] = [arr[high], arr[pivotIndex]];  // Move pivot to the end
+
+									// Partition the array around the pivot
 									for (let j = low; j < high; j++) {
 										comparisons++;
 										if (arr[j] < pivot) {
+											[arr[i], arr[j]] = [arr[j], arr[i]];  // Swap smaller element to the left
 											i++;
-											[arr[i], arr[j]] = [arr[j], arr[i]];
 											swaps++;
 										}
 									}
-									[arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+
+									// Now place the pivot in its correct position by swapping with the first larger element
+									[arr[i], arr[high]] = [arr[high], arr[i]];  // Swap pivot with the first larger element
 									swaps++;
 
-									return i + 1;
+									return i;  // Return the index of the pivot
 								}
 
+								// Recursive quicksort function
 								function sort(arr, low, high) {
 									if (low < high) {
-										let pi = partition(arr, low, high);
-										steps.push({ iteration: steps.length + 1, array: [...arr], comparisons, swaps });
-										sort(arr, low, pi - 1);
-										sort(arr, pi + 1, high);
+										let pi = partition(arr, low, high);  // Get the partition index
+										steps.push({
+											iteration: steps.length + 1,
+											currentArray: [...arr],  // Store the current array state
+											pivot: arr[pi],  // The pivot element
+											comparisons: comparisons,
+											swaps: swaps,
+											recursionDepth: Math.floor(Math.log2(high - low + 1))
+										});
+
+										// Recursively sort the left and right partitions
+										sort(arr, low, pi - 1);  // Left partition
+										sort(arr, pi + 1, high); // Right partition
 									}
 								}
 
+								// Start the quicksort process
 								sort(arr, 0, arr.length - 1);
-								return steps;
+
+								// Return the result with the total comparisons, swaps, and steps
+								return {
+									algorithm: 'quickSort',
+									steps,
+									totalComparisons: comparisons,
+									totalSwaps: swaps,
+									treeHeight: Math.ceil(Math.log2(arr.length))
+								};
 							}
 
+							// MergeSort (with step-by-step tracking)
 							function mergeSort(arr) {
 								let comparisons = 0;
 								let swaps = 0;
-								let recursiveCalls = 0;
-								let recursionDepth = 0;
-								let steps = [];
+								let executionCount = 0;
+								let maxDepth = 0; // Maximum recursion depth (tree height)
+								let steps = [];   // Steps to track the process
 
 								// Helper function to merge two halves
-								function merge(left, right) {
-									let merged = [];
-									let leftIndex = 0;
-									let rightIndex = 0;
+								function merge(E, left, mid, right) {
+									let n1 = mid - left + 1;
+									let n2 = right - mid;
 
-									while (leftIndex < left.length && rightIndex < right.length) {
-										comparisons++;
-										if (left[leftIndex] < right[rightIndex]) {
-											merged.push(left[leftIndex]);
-											leftIndex++;
-										} else {
-											merged.push(right[rightIndex]);
-											rightIndex++;
-										}
+									let L = new Array(n1);
+									let R = new Array(n2);
+
+									// Copy data to temporary arrays
+									for (let i = 0; i < n1; i++) {
+										L[i] = E[left + i];
 									}
 
-									// Append remaining elements if any
-									merged = merged.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+									for (let i = 0; i < n2; i++) {
+										R[i] = E[mid + 1 + i];
+									}
 
-									swaps += merged.length - left.length - right.length; // Swaps count for each merge
-									return merged;
+									let i = 0, j = 0, k = left;
+
+									// Merge the temporary arrays back into E[]
+									while (i < n1 && j < n2) {
+										comparisons++;
+										if (L[i] <= R[j]) {
+											E[k] = L[i];
+											i++;
+										} else {
+											E[k] = R[j];
+											j++;
+										}
+										k++;
+									}
+
+									// Copy the remaining elements of L[], if any
+									while (i < n1) {
+										E[k] = L[i];
+										i++;
+										k++;
+									}
+
+									// Copy the remaining elements of R[], if any
+									while (j < n2) {
+										E[k] = R[j];
+										j++;
+										k++;
+									}
+
+									// Track number of swaps (this isn't strictly swaps but counts the size of the array merged)
+									swaps += n1 + n2 - (right - left + 1);
 								}
 
 								// Main recursive merge sort function
-								function sort(arr, depth = 0) {
-									if (arr.length <= 1) {
-										return arr;
+								function sort(E, left, right, depth = 0) {
+									if (left < right) {
+										executionCount++; // Increase execution count on each merge
+
+										// Update maxDepth before recursion, track the deepest level of recursion
+										maxDepth = Math.max(maxDepth, depth);
+
+										// Fix splitting for uneven arrays by adjusting mid
+										let mid = Math.floor((left + right) / 2);
+
+										// Check for uneven arrays and adjust mid if needed
+										if ((right - left + 1) % 2 !== 0) {
+											mid -= 1;  // This ensures the left half gets the smaller part when the array length is odd
+										}
+
+										// Log the current iteration step (Focusing on the current portion of the array being sorted)
+										steps.push({
+											iteration: executionCount,
+											currentArray: E.slice(left, right + 1), // Show the current array slice
+											left: left,
+											right: right,
+											mid: mid,
+											comparisons: comparisons,
+											swaps: swaps,
+											recursionDepth: depth,
+										});
+
+										// Recursively sort the left half, increase depth by 1
+										sort(E, left, mid, depth + 1);
+
+										// Recursively sort the right half, increase depth by 1
+										sort(E, mid + 1, right, depth + 1);
+
+										// Merge the sorted halves
+										merge(E, left, mid, right);
 									}
-
-									// Track the maximum recursion depth
-									recursionDepth = Math.max(recursionDepth, depth);
-
-									let middle = Math.floor(arr.length / 2);
-
-									// Split the array into two halves
-									let left = arr.slice(0, middle);
-									let right = arr.slice(middle);
-
-									// Recursively sort both halves
-									left = sort(left, depth + 1);
-									right = sort(right, depth + 1);
-
-									// Merge the sorted halves
-									let result = merge(left, right);
-
-									// Store the step (including current comparisons, swaps, and the array after each merge)
-									steps.push({
-										iteration: steps.length + 1,
-										array: [...result],
-										comparisons,
-										swaps,
-										recursionDepth,
-									});
-
-									return result;
 								}
 
 								// Start the sorting process
-								let sortedArray = sort(arr);
-
-								// Display the number of recursive calls and recursion depth
-								console.log(`Recursive calls (excluding the main call): ${recursiveCalls}`);
-								console.log(`Recursion tree height: ${recursionDepth}`);
-								console.log(`Sorted Array: ${sortedArray}`);
+								sort(arr, 0, arr.length - 1, 0);  // Pass initial depth as 0 to start from the top level
 
 								// Return the steps for step-by-step display
-								return steps;
+								return {
+									algorithm: 'mergeSort',
+									steps,
+									totalExecutions: executionCount,
+									treeHeight: maxDepth + 1,  // Add 1 to maxDepth to account for the initial level
+								};
 							}
 
-							// Example: Test case with the given array
-							let inputArray = [1, 2, 8, 17, 4, 0, 15, 14, 12, 10, 6, 13, 5, 3, 7];
-							let result = mergeSort(inputArray);
-
-							// Output each iteration
-							result.forEach(step => {
-								console.log(`Iteration ${step.iteration}: Array: [${step.array.join(', ')}], Comparisons: ${step.comparisons}, Swaps: ${step.swaps}, Recursion Depth: ${step.recursionDepth}`);
-							});
-
-
-
-
-							// Show the result step-by-step
+							// Function to display the results step-by-step
 							function showResult(result) {
 								const stepsContainer = document.getElementById('stepsContainer');
 								stepsContainer.innerHTML = '';
 
-								result.forEach(step => {
-									const stepElement = document.createElement('div');
-									stepElement.innerHTML = `
-        <strong>Iteration ${step.iteration}</strong>:<br>
-        Array: [${step.array.join(', ')}]<br>
-        Comparisons: ${step.comparisons}<br>
-        Swaps: ${step.swaps}<br><br>
-      `;
-									stepsContainer.appendChild(stepElement);
-								});
+								// Handling the different sorting algorithms
+								if (result.algorithm === 'mergeSort') {
+									result.steps.forEach(step => {
+										const stepElement = document.createElement('div');
+										stepElement.innerHTML = `
+                <strong>Iteration ${step.iteration}</strong>: Merging [${step.currentArray.join(', ')}]<br><br>
+            `;
+										stepsContainer.appendChild(stepElement);
+									});
+								}
+								else if (result.algorithm === 'quickSort') {
+									result.steps.forEach(step => {
+										const stepElement = document.createElement('div');
+										stepElement.innerHTML = `
+            <strong>Iteration ${step.iteration}</strong>: Partitioning around pivot [${step.currentArray.join(', ')}]<br>
+            <strong>Pivot:</strong> ${step.pivot}<br>
+            <strong>Comparisons:</strong> ${step.comparisons}<br>
+            <strong>Swaps:</strong> ${step.swaps}<br>
+            <strong>Recursion Depth:</strong> ${step.recursionDepth}<br><br>
+        `;
+										stepsContainer.appendChild(stepElement);
+									});
+								}
+								else if (result.algorithm === 'heapSort') {
+									result.steps.forEach(step => {
+										const stepElement = document.createElement('div');
+										stepElement.innerHTML = `
+                <strong>Iteration ${step.iteration}</strong>: Heapifying [${step.currentArray.join(', ')}]<br>
+                Comparisons: ${step.comparisons}<br>
+                Swaps: ${step.swaps}<br><br>
+            `;
+										stepsContainer.appendChild(stepElement);
+									});
+								}
+
+								// Show total comparisons, swaps, and tree height for all algorithms
+								const totalSummaryElement = document.createElement('div');
+								totalSummaryElement.innerHTML = `
+        <strong>Total comparisons:</strong> ${result.totalComparisons}<br>
+        <strong>Total swaps:</strong> ${result.totalSwaps}<br>
+        <strong>Tree height:</strong> ${result.treeHeight}<br>
+    `;
+								stepsContainer.appendChild(totalSummaryElement);
 
 								document.getElementById('algorithmResult').style.display = 'block';
 								document.getElementById('errorMessage').style.display = 'none';
 							}
+
+
+
+
 
 							// Function to show error message
 							function showError(message) {
