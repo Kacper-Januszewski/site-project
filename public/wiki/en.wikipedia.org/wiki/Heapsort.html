@@ -866,7 +866,73 @@ The heap is an <a href="https://en.wikipedia.org/wiki/Implicit_data_structure" t
 
 
 <!--						START CODE						-->
+						<div class="mw-parser-output">
+							<h2>Interpolation</h2>
+							<form id="InterpolationCalcForm">
+								<label for="inputArray">Enter numbers (comma separated):</label>
+								<input type="text" id="InterpolationinputArray" name="inputArray" placeholder="e.g., 1, 5, 2, 10, 9, 2, 6" required>
+								<button type="submit">Print array</button>
+							</form>
+						</div>
+						<script>
+							document.getElementById('InterpolationCalcForm').addEventListener('submit', function(event){
+								event.preventDefault();
 
+								const input = document.getElementById('InterpolationinputArray').value.trim();
+
+								if (!input) {
+									showError("Please enter a valid list of numbers");
+									return;
+								}
+
+								const arr = input.split(',').map(num => num.trim()).map(Number);
+
+								// Validate the array (check for non-numeric values)
+								if (arr.some(isNaN)) {
+									showError("Please enter a valid list of numbers.");
+									return;
+								}
+
+								let results;
+								let x;
+								x = 1;
+								results = interpolationSearch(arr, x);
+
+								showResults(results);
+							});
+
+							function interpolationSearch(arr, x){
+								let results;
+								results = [];
+								let m;
+								m = arr[0] + ((x - arr[0]) * ((arr.length-1) - 1) / (1));
+								results.push(1);
+								results.push(2);
+
+								return results;
+							}
+
+							function showResults(results) {
+								const stepsContainer = document.getElementById('stepsContainer');
+								stepsContainer.innerHTML = '';
+
+								// Handling the different sorting algorithms
+									results.steps.forEach(step => {
+										const stepElement = document.createElement('div');
+										stepElement.innerHTML = `<strong>1</strong>`;
+									});
+
+								// Show total comparisons, swaps, and tree height for all algorithms
+								const totalSummaryElement = document.createElement('div');
+								totalSummaryElement.innerHTML = `
+        <strong>Total comparisons:</strong> ${result.totalComparisons}<br>
+    `;
+								stepsContainer.appendChild(totalSummaryElement);
+
+								document.getElementById('algorithmResult').style.display = 'block';
+								document.getElementById('errorMessage').style.display = 'none';
+							}
+						</script>
 
 						<!-- Calculator Section with Algorithm Dropdown and Array Input -->
 						<div id="algorithmCalculator" class="mw-parser-output">

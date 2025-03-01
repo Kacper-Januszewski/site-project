@@ -12,7 +12,7 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        'card-gray': '#D9D9D9',
+        'card-blue': '#6B67FF',
         'button-gray': '#B7B7B7',
         'copyright-gray': '#8C8C8C',
       },
