@@ -18,7 +18,7 @@ const HeroMarquee: React.FC<MarqueeProps> = ({text}) => {
         const rowWidth = row.getBoundingClientRect().width;
         marqueeRef.current.style.width = `${rowWidth * 2}px`
 
-        const baseSpeed = 20;
+        const baseSpeed = 5;
         const duration = rowWidth / baseSpeed;
 
         gsap.set(marqueeRef.current, { x: 0 });
