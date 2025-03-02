@@ -41,7 +41,7 @@ const HeroMarquee: React.FC<MarqueeProps> = ({text}) => {
                             {[...Array(5)].map((_, index) => (
                                 <div
                                     key={index}
-                                    className="cb-tagreel-item relative leading-[0.75] text-[3.75vw] px-[7px] flex-none uppercase"
+                                    className="cb-tagreel-item relative leading-[0.75] md:text-[3.75vw] px-[7px] flex-none uppercase"
                                 > {/* px 58px */}
                                     <span className="relative inline-block">{text}</span>
                                 </div>
