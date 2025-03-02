@@ -8,32 +8,34 @@ const Row = () => {
     useEffect(() => {
         if (!marqueeRef.current) return;
 
-        const row = marqueeRef.current;
-        let row_width = row.scrollWidth; // Full width of content
-        let duration = 5; // Speed of animation
+        const row = marqueeRef.current.firstElementChild; // Select one `.cb-tagreel-row`
+        if (!row) return;
 
-        gsap.set(row, { x: 0 });
+        const rowWidth = row.getBoundingClientRect().width; // Use this to avoid padding issues
+        marqueeRef.current.style.width = `${rowWidth * 2}px`; // Set container width to double
 
-        gsap.to(row, {
-            x: -row_width / 2, // Move only half since we're doubling content
+        gsap.set(marqueeRef.current, { x: 0 });
+
+        gsap.to(marqueeRef.current, {
+            x: -rowWidth, // Move exactly one full row width
             ease: "none",
-            duration: duration,
+            duration: 20,
             repeat: -1
         });
     }, []);
 
     return (
         <section className="relative cb-tagreel block overflow-hidden">
-            <div className="cb-tagreel-content py-[200px]">
-                <div className="cb-tagreel-items flex whitespace-nowrap" role="marquee" ref={marqueeRef}>
+            <div className="cb-tagreel-content">
+                <div className="cb-tagreel-items flex whitespace-nowrap w-max" role="marquee" ref={marqueeRef}>
                     {/* Items - Original */}
                     {[...Array(2)].map((_, i) => (
-                        <div key={i} className="cb-tagreel-row flex">
-                            {["Design", "Development", "Marketing", "Branding", "Consulting"].map((text, index) => (
+                        <div key={i} className="cb-tagreel-row flex w-max">
+                            {["Works", "Works", "Works", "Works", "Works", "Works", "Works", "Works", "Works", "Works"].map((text, index) => (
                                 <div
                                     key={index}
-                                    className="cb-tagreel-item relative leading-normal text-[3.75vw] flex-none px-[58px] uppercase"
-                                >
+                                    className="cb-tagreel-item relative leading-[0.75] text-[3.75vw] flex-none uppercase"
+                                > {/* px 58px */}
                                     <span className="relative inline-block">{text}</span>
                                 </div>
                             ))}
