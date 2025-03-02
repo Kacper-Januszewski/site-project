@@ -14,7 +14,7 @@ module.exports = withMT({
       colors: {
         'card-blue': '#6B67FF',
         'button-gray': '#B7B7B7',
-        'copyright-gray': '#8C8C8C',
+        'copyright-gray': '#616161',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

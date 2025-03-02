@@ -1,26 +1,90 @@
 'use client'
 import React from 'react';
+import gsap from 'gsap';
+import { useEffect, useRef } from "react";
 import HeroButton from '../hero_button';
 
 interface HeroCardProps{
     buttons: {id: number}[];
 }
+
 const HeroCard: React.FC<HeroCardProps> = ({buttons}) => {
+    const textContainer = useRef<HTMLDivElement | null>(null);
+
+    useEffect( () => {
+        if (!textContainer.current) return;
+
+        gsap.to(textContainer.current, {
+            x: '-100%',
+            duration: 10,
+            repeat: -1,
+            ease: 'linear',
+        });
+
+        return () => {
+            gsap.killTweensOf(textContainer.current);
+        }
+        }, [])
+
     return (
         <>
             <div className="relative bg-card-blue px-16 py-24 rounded-3xl flex justify-evenly items-center md:rounded-2xl md:px-16 md:py-32 overflow-hidden">
-                <div className="absolute inset-[-1] top-[-100px] text-black text-7xl font-thin italic  leading-[0.75] whitespace-nowrap">
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
-                    works works works works works works works works works <br/>
+                <div className="absolute inset-[0] top-[-50px] text-black text-7xl font-thin italic  leading-[0.75] whitespace-nowrap">
+                    <div className="translate-x-[0px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-45px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-85px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-20px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-70px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-135px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-105px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-35px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-95px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-60px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
+                    <div className="translate-x-[-15px]">
+                        <span>works </span>
+                        <span>works </span>
+                        <span>works </span>
+                    </div>
                 </div>
 
                 <div className="relative flex flex-col gap-y-8 md:gap-y-10">

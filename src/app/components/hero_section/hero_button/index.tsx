@@ -32,13 +32,13 @@ const HeroButton: React.FC<ButtonProps> = ({id}) => {
     }, [id]);
 
     if(!item){
-        return <p className="min-w-44 max-w-44 bg-white rounded m-0.5 px-12 py-1 md:m-1 md:mx-4 md:px-20 md:py-1 md:text-2xl md:min-w-46 md:max-w-46 md:whitespace-nowrap md:flex md:justify-center">Loading...</p>;
+        return <p className="min-w-44 max-w-44 bg-white rounded m-0.5 px-12 py-1 md:m-1 md:mx-4 md:px-20 md:py-1 md:text-2xl md:min-w-46 md:max-w-46 md:whitespace-nowrap md:flex md:justify-center md:hover:scale-110 duration-300 ease-in-out shadow-[0px_4px_6.7px_1px_rgba(0,0,0,0.35)">Loading...</p>;
     }
 
     return (
         <>
             <a href={item.url}>
-                <Button className="min-w-44 max-w-44 bg-white rounded m-0.5 px-12 py-1 md:m-1 md:mx-4 md:px-20 md:py-1 md:text-2xl md:min-w-46 md:max-w-46 md:whitespace-nowrap md:flex md:justify-center">{item.title}</Button>
+                <Button className="min-w-44 max-w-44 bg-white rounded m-0.5 px-12 py-1 md:m-1 md:mx-4 md:px-20 md:py-1 md:text-2xl md:min-w-46 md:max-w-46 md:whitespace-nowrap md:flex md:justify-center md:hover:scale-110 duration-300 ease-in-out shadow-[0px_4px_6.7px_1px_rgba(0,0,0,0.35)]">{item.title}</Button>
             </a>
         </>
     );
