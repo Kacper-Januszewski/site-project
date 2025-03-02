@@ -10,14 +10,14 @@ const Hero = () => {
                     {id: 1},
                     {id: 2},
                     {id: 3},
-                ]}
+                ]} text_pass="works "
             />
             <HeroCard
                 buttons={[
                     {id: 4},
                     {id: 5},
                     {id: 6},
-                ]}
+                ]} text_pass="contact "
             />
             </div>
         </>

@@ -3,12 +3,14 @@ import React from 'react';
 import gsap from 'gsap';
 import { useEffect, useRef } from "react";
 import HeroButton from '../hero_button';
+import HeroMarquee from "@/app/components/hero_section/hero_marquee";
 
 interface HeroCardProps{
     buttons: {id: number}[];
+    text_pass: string;
 }
 
-const HeroCard: React.FC<HeroCardProps> = ({buttons}) => {
+const HeroCard: React.FC<HeroCardProps> = ({buttons, text_pass}) => {
     const textContainer = useRef<HTMLDivElement | null>(null);
 
     useEffect( () => {
@@ -31,59 +33,37 @@ const HeroCard: React.FC<HeroCardProps> = ({buttons}) => {
             <div className="relative bg-card-blue px-16 py-24 rounded-3xl flex justify-evenly items-center md:rounded-2xl md:px-16 md:py-32 overflow-hidden">
                 <div className="absolute inset-[0] top-[-50px] text-black text-7xl font-thin italic  leading-[0.75] whitespace-nowrap">
                     <div className="translate-x-[0px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-45px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-85px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-20px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-70px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-135px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-105px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-35px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-95px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-60px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                     <div className="translate-x-[-15px]">
-                        <span>works </span>
-                        <span>works </span>
-                        <span>works </span>
+                        <HeroMarquee text={text_pass}/>
                     </div>
                 </div>
 
