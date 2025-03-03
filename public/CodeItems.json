@@ -3,9 +3,9 @@
     "bootstrap": [
       {
         "id": 1,
-        "title": "Github",
+        "title": "Repositories",
         "description": "My github profile",
-        "url": "https://github.com/Kacper-Januszewski"
+        "url": "https://github.com/Kacper-Januszewski?tab=repositories"
       },
       {
         "id": 2,
@@ -29,7 +29,7 @@
         "id": 5,
         "title": "Github",
         "body": "My github repositories",
-        "url": "https://github.com/Kacper-Januszewski?tab=repositories"
+        "url": "https://github.com/Kacper-Januszewski"
       },
       {
         "id": 6,
