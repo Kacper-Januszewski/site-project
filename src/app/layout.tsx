@@ -7,6 +7,9 @@ import { ThemeProvider } from "@material-tailwind/react";
 // ⬇️ Added import for dark mode handling
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
+// ⬇️ Import the scrolling background canvas
+import BackgroundCanvas from "./components/BackgroundCanvas";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,9 +25,12 @@ export default function RootLayout({
     return (
         //this throws an error
         // <ThemeProvider>
-        <html lang="en" suppressHydrationWarning> {/* ⬅️ Added suppressHydrationWarning */}
+        <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
-        {/* ⬇️ Added NextThemesProvider so dark mode works */}
+        {/* ⬇️ BackgroundCanvas sits behind everything */}
+        <BackgroundCanvas />
+
+        {/* ⬇️ NextThemesProvider so dark mode works */}
         <NextThemesProvider attribute="class" defaultTheme="light" enableSystem={false}>
             {children}
         </NextThemesProvider>

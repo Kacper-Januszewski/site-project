@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 html, body {
-    @apply bg-white;
     scroll-behavior: smooth;
-    font-family: Inter sans-serif;
+    font-family: Inter, sans-serif;
 }
