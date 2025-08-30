@@ -6,6 +6,16 @@ const inter = Inter({
     weight: ["400", "600", "700", "900"], // add bold/heavy weights like canvas
 });
 
+const projects = [
+    { title: "Portfolio Website", tags: ["Next.js", "TypeScript"], description: "My personal portfolio.", link: "https://github.com/Kacper-Januszewski/site-project" },
+    { title: "Home Dashboard", tags: ["Svelte", "JavaScript"], description: "Weather and stats dashboard for home", link: "https://github.com/Kacper-Januszewski/Home-Dashboard" },
+    { title: "Password Manager", tags: ["C++"], description: "A simple password manager", link: "https://github.com/Kacper-Januszewski/Password_Manager" },
+    //{ title: "Weather Dashboard", tags: ["React", "API"], description: "Weather info in real time.", link: "https://github.com/Kacper-Januszewski/Subi" },
+    //{ title: "Task Manager", tags: ["Next.js", "Prisma"], description: "Fullstack productivity app.", link: "https://github.com/Kacper-Januszewski/Subi" },
+    //{ title: "Landing Page", tags: ["HTML", "CSS"], description: "Simple responsive marketing page.", link: "https://github.com/Kacper-Januszewski/Subi" },
+];
+
+
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Sun, Moon, ExternalLink, ChevronDown } from "lucide-react";
@@ -201,7 +211,7 @@ export default function PortfolioExperimental() {
                     className="font-bold tracking-tight text-lg bg-gradient-to-r from-blue-400 to-fuchsia-500 bg-clip-text text-transparent select-none"
                     draggable={false}
                 >
-                    Kacper
+                    JDev
                 </a>
                 <nav
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex gap-1 text-sm select-none"
@@ -254,7 +264,7 @@ export default function PortfolioExperimental() {
                     className="mt-6 text-lg md:text-2xl text-center max-w-2xl opacity-80 select-none"
                     draggable={false}
                 >
-                    A portfolio as an experience.
+                    Driven by design. Powered by code.
                 </motion.p>
                 <div className="mt-10 flex items-center gap-3" draggable={false}>
                     <CTA href="#work" label="View Work" theme={theme} />
@@ -266,8 +276,7 @@ export default function PortfolioExperimental() {
                 <div className="max-w-4xl text-center select-none" draggable={false}>
                     <h2 className="text-4xl font-bold mb-6">About Me</h2>
                     <p className="text-lg opacity-80">
-                        Developer, designer (sort of), explorer of the digital frontier. This section could feature a vertical
-                        timeline or rotating fact panels.
+                        Developer, designer (sort of), explorer of the digital frontier. I break, experiment, and sometimes even get it right. Progress, for me, is built one small discovery at a time.
                     </p>
                 </div>
             </Section>
@@ -277,9 +286,17 @@ export default function PortfolioExperimental() {
                     Selected Work
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 w-full max-w-6xl" draggable={false}>
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <ProjectCard key={i} title={`Project ${i}`} tags={["Next.js", "TypeScript"]} theme={theme} />
+                    {projects.map((p, i) => (
+                        <ProjectCard
+                            key={i}
+                            title={p.title}
+                            tags={p.tags}
+                            description={p.description}
+                            link={p.link}
+                            theme={theme}
+                        />
                     ))}
+
                 </div>
             </Section>
 
@@ -294,21 +311,27 @@ export default function PortfolioExperimental() {
                     <p className="opacity-80 text-center">Open to freelance & collaborations.</p>
                     <div className="flex gap-4">
                         <a
-                            href="https://github.com"
+                            href="https://github.com/Kacper-Januszewski"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:scale-110 transition-transform duration-150 ease-linear focus:outline-none focus:ring-2 focus:ring-fuchsia-400 rounded-full"
                             draggable={false}
                         >
                             <Github className="w-6 h-6" />
                         </a>
                         <a
-                            href="https://www.linkedin.com"
+                            href="https://www.linkedin.com/in/kacper-januszewski/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:scale-110 transition-transform duration-150 ease-linear focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-full"
                             draggable={false}
                         >
                             <Linkedin className="w-6 h-6" />
                         </a>
                         <a
-                            href="mailto:you@example.com"
+                            href="mailto:januszewskidev@gmail.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="hover:scale-110 transition-transform duration-150 ease-linear focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-full"
                             draggable={false}
                         >
@@ -421,41 +444,66 @@ function CTAGhost({ href, label, theme }: { href: string; label: string; theme: 
     );
 }
 
-function ProjectCard({ title, tags, theme }: { title: string; tags: string[]; theme: "light" | "dark" }) {
+function ProjectCard({
+                         title,
+                         tags,
+                         description,
+                         theme,
+                         link,
+                     }: {
+    title: string;
+    tags: string[];
+    description: string;
+    theme: "light" | "dark";
+    link: string;
+}) {
     const borderDark =
         "bg-[conic-gradient(from_180deg_at_50%_50%,#67e8f9_0%,#60a5fa_25%,#a78bfa_50%,#f472b6_75%,#67e8f9_100%)]";
     const borderLight =
         "bg-[conic-gradient(from_180deg_at_50%_50%,#ffe0b2_0%,#f8bbd0_25%,#b3e5fc_50%,#c8e6c9_75%,#ffe0b2_100%)]";
 
     return (
-        <div className="group relative rounded-2xl p-[1px] transition-colors duration-200 ease-linear select-none">
+        <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative rounded-2xl p-[1px] block select-none"
+        >
+            {/* gradient border */}
             <div
-                className={`absolute inset-0 rounded-2xl ${
-                    theme === "dark" ? borderDark : borderLight
-                } opacity-30 blur-sm group-hover:opacity-60 transition-opacity duration-150 ease-linear`}
+                className={`absolute inset-0 rounded-2xl opacity-30 blur-sm group-hover:opacity-60 transition-opacity duration-150 ease-linear
+          ${theme === "dark" ? borderDark : borderLight}`}
             />
+
+            {/* card body */}
             <div
-                className={`relative rounded-2xl border p-5 group-hover:translate-y-[-2px] transition-all duration-150 ease-linear ${
-                    theme === "dark"
-                        ? "border-white/10 bg-black/60 backdrop-blur hover:bg-black/70"
-                        : "border-black/10 bg-white/70 backdrop-blur hover:bg-black/5"
-                }`}
+                className={`
+          relative rounded-2xl border p-5 group-hover:translate-y-[-2px] transition-all duration-150 ease-linear
+          backdrop-blur
+          ${theme === "dark"
+                    ? "border-white/10 bg-black/60 hover:bg-black/70"
+                    : "border-black/10 bg-white/70 hover:bg-black/5"}
+        `}
             >
                 <h3 className="font-semibold mb-2 select-none">{title}</h3>
-                <p className="text-sm opacity-70 mb-4 select-none">Short description of this cool thing.</p>
+                <p className="text-sm opacity-70 mb-4 select-none">{description}</p>
                 <div className="flex flex-wrap gap-2 select-none">
                     {tags.map((t) => (
                         <span
                             key={t}
-                            className={`text-xs px-2 py-1 rounded-full ${
-                                theme === "dark" ? "border border-white/15 bg-white/5" : "border border-black/10 bg-black/5"
-                            }`}
+                            className={`
+    text-xs px-2 py-1 rounded-full border transition-colors duration-300 ease-linear
+    ${theme === "dark"
+                                ? "border-white/15 bg-white/5"
+                                : "border-black/10 bg-black/5"}
+  `}
                         >
-              {t}
-            </span>
+  {t}
+</span>
+
                     ))}
                 </div>
             </div>
-        </div>
+        </a>
     );
 }
