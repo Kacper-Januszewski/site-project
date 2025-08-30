@@ -330,8 +330,6 @@ export default function PortfolioExperimental() {
                         </a>
                         <a
                             href="mailto:januszewskidev@gmail.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="hover:scale-110 transition-transform duration-150 ease-linear focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-full"
                             draggable={false}
                         >
