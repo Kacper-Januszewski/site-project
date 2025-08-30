@@ -188,14 +188,18 @@ export default function PortfolioExperimental() {
                         initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 6 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 text-gray-500 dark:text-gray-400 z-50"
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                        className="fixed bottom-6 inset-x-0 flex justify-center text-gray-500 dark:text-gray-400 z-50"
                         draggable={false}
                     >
-                        <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+                        <motion.div
+                            animate={{ y: [0, -6, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                        >
                             <ChevronDown className="w-6 h-6" />
                         </motion.div>
                     </motion.div>
+
                 )}
             </AnimatePresence>
 
@@ -251,7 +255,7 @@ export default function PortfolioExperimental() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="text-6xl md:text-8xl font-extrabold tracking-tight leading-[0.9] text-center select-none"
+                    className="text-6xl md:text-8xl font-extrabold tracking-tight leading-snug md:leading-[1.1] text-center select-none"
                     draggable={false}
                 >
                     Beyond Ordinary.
@@ -275,7 +279,7 @@ export default function PortfolioExperimental() {
             <Section id="about" watermark="ABOUT">
                 <div className="max-w-4xl text-center select-none" draggable={false}>
                     <h2 className="text-4xl font-bold mb-6">About Me</h2>
-                    <p className="text-lg opacity-80">
+                    <p className="text-lg opacity-80 text-justify md:text-center">
                         Developer, designer (sort of), explorer of the digital frontier. I break, experiment, and sometimes even get it right. Progress, for me, is built one small discovery at a time.
                     </p>
                 </div>
@@ -302,9 +306,13 @@ export default function PortfolioExperimental() {
 
             <Section id="contact" watermark="CONTACT">
                 <div
-                    className={`${
-                        theme === "dark" ? "bg-black/50 border-white/10" : "bg-white/50 border-black/10"
-                    } rounded-3xl p-10 border backdrop-blur shadow-xl flex flex-col items-center gap-6 w-[min(90%,680px)] transition-colors duration-200 ease-linear select-none`}
+                    className={`${theme === 'dark'
+                        ? 'bg-black/50 border-white/10'
+                        : 'bg-white/50 border-black/10'} 
+    rounded-3xl p-10 border backdrop-blur shadow-xl 
+    flex flex-col items-center text-center gap-6 
+    w-[min(90%,680px)] mx-auto
+    transition-colors duration-200 ease-linear select-none`}
                     draggable={false}
                 >
                     <h2 className="text-3xl font-bold">Let&apos;s Connect</h2>
