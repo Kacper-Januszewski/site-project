@@ -1,4 +1,10 @@
 "use client";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+    subsets: ["latin"],
+    weight: ["400", "600", "700", "900"], // add bold/heavy weights like canvas
+});
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +21,9 @@ export default function PortfolioExperimental() {
     const [atBottom, setAtBottom] = useState(false);
     const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
     const [usingKeyboard, setUsingKeyboard] = useState(false);
+
+    // height (in vh) of the whole document so the background spans the full page
+    const [bgHeightVh, setBgHeightVh] = useState(400);
 
     useEffect(() => {
         if (typeof document === "undefined") return;
@@ -36,7 +45,7 @@ export default function PortfolioExperimental() {
         };
     }, []);
 
-    // Scroll progress
+    // Scroll progress + hint
     useEffect(() => {
         const onScroll = () => {
             const h = document.documentElement;
@@ -63,7 +72,7 @@ export default function PortfolioExperimental() {
         { id: "contact", label: "Contact", watermark: "CONTACT" },
     ];
 
-    // Active section highlight
+    // Active section highlight (only nav links)
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -83,71 +92,63 @@ export default function PortfolioExperimental() {
         return () => observer.disconnect();
     }, []);
 
-    const [bgHeight, setBgHeight] = useState("100vh");
+    // === Band background ===
 
+    // Colors (same vibe as before)
+    const darkBands = ["#000000", "#000814", "#001d3d", "#370617", "#6a040f"];
+    const lightBands = ["#ffffff", "#e0f7fa", "#b3e5fc", "#ffcdd2", "#f8bbd0"];
+    const bands = theme === "dark" ? darkBands : lightBands;
+
+    // Controls:
+    // edgeVh = how much the very top & very bottom colors persist (shorter → only a hint at edges)
+    // blendVh = how wide the crossfade is between adjacent colors (bigger → smoother)
+    const edgeVh = 9;   // shorten top & bottom presence
+    const blendVh = 80;  // very smooth transitions
+
+    // compute/track total document height in vh so the gradient lines up with the page
     useEffect(() => {
-        const updateHeight = () => {
-            setBgHeight(`${document.documentElement.scrollHeight}px`);
+        const calc = () => {
+            const vh = (document.documentElement.scrollHeight / window.innerHeight) * 100;
+            setBgHeightVh(Math.max(100, Math.ceil(vh)));
         };
-        updateHeight();
-        window.addEventListener("resize", updateHeight);
-        return () => window.removeEventListener("resize", updateHeight);
+        // calc on load + small delay for fonts/images + on resize
+        calc();
+        const t = setTimeout(calc, 50);
+        const t2 = setTimeout(calc, 300);
+        window.addEventListener("resize", calc);
+        return () => {
+            clearTimeout(t);
+            clearTimeout(t2);
+            window.removeEventListener("resize", calc);
+        };
     }, []);
 
-
-// ----- Banded background (like the canvas) -----
-    const seg = 80;   // section height
-    const blend = 200; // smoother transitionss
-
-    const darkColors = ["#000000", "#000814", "#001d3d", "#370617", "#6a040f"];
-    const lightColors = ["#ffffff", "#e0f7fa", "#b3e5fc", "#ffcdd2", "#f8bbd0"];
-
-    const makeBanded = (colors: string[]) => {
-        const stops: string[] = [];
-        for (let i = 0; i < colors.length; i++) {
-            const start = i * seg;
-            const col = colors[i];
-            stops.push(`${col} ${start}vh`, `${col} ${start + (seg - blend)}vh`);
-            const next = colors[i + 1];
-            if (next) {
-                stops.push(`${next} ${start + seg}vh`);
-            } else {
-                stops.push(`${col} ${colors.length * seg}vh`);
-            }
-        }
-        return `linear-gradient(to bottom, ${stops.join(",")})`;
-    };
-
-    const bandedDark = makeBanded(darkColors);
-    const bandedLight = makeBanded(lightColors);
-    const bgHeightVh =
-        (theme === "dark" ? darkColors.length : lightColors.length) * seg;
-
-// -----------------------------------------------
+    // build a super-smooth banded gradient
+    const backgroundImage = buildBandedGradient(bands, bgHeightVh, { edgeVh, blendVh });
 
     return (
-        // IMPORTANT: no `overflow-hidden` here, or the tall background gets clipped
         <div
-            className={`relative min-h-screen transition-colors duration-200 ease-linear ${
+            className={`relative min-h-screen overflow-hidden transition-colors duration-200 ease-linear ${inter.className} ${
                 theme === "dark" ? "text-gray-100" : "text-gray-900"
             } ${usingKeyboard ? "using-keyboard" : ""}`}
             draggable={false}
         >
-            {/* Banded background behind everything */}
+
+            {/* Banded background */}
             <div
-                className="absolute top-0 left-0 w-full -z-20 transition-colors duration-200 ease-linear"
+                className="pointer-events-none absolute left-0 top-0 w-full -z-20"
                 style={{
                     height: `${bgHeightVh}vh`,
-                    backgroundImage: theme === "dark" ? bandedDark : bandedLight,
-                    backgroundRepeat: "no-repeat",
+                    backgroundImage,
                     backgroundAttachment: "scroll",
+                    backgroundRepeat: "no-repeat",
                     backgroundSize: "100% 100%",
                 }}
+                aria-hidden
+                draggable={false}
             />
 
-
-
-            {/* Subtle crosshair texture spanning the full background height  */}
+            {/* Subtle grid overlay, scaled to full document height so it rides the bands */}
             <svg
                 className="pointer-events-none absolute top-0 left-0 -z-10 w-full opacity-[0.08] dark:opacity-[0.12] transition-colors duration-200 ease-linear"
                 style={{ height: `${bgHeightVh}vh` }}
@@ -162,7 +163,7 @@ export default function PortfolioExperimental() {
                 <rect width="100%" height="100%" fill="url(#crosshairGrid)" />
             </svg>
 
-            {/* Top progress bar */}
+            {/* Progress bar */}
             <div className="fixed top-0 left-0 right-0 z-[60] h-[4px] bg-transparent" draggable={false}>
                 <div
                     className="h-full rounded-full bg-gradient-to-r from-fuchsia-500 via-blue-500 to-cyan-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]"
@@ -170,6 +171,7 @@ export default function PortfolioExperimental() {
                 />
             </div>
 
+            {/* Scroll hint */}
             <AnimatePresence>
                 {showScrollHint && !atBottom && (
                     <motion.div
@@ -187,6 +189,7 @@ export default function PortfolioExperimental() {
                 )}
             </AnimatePresence>
 
+            {/* Header */}
             <header
                 className={`fixed top-0 w-full z-50 flex items-center justify-between px-6 py-3 backdrop-blur border-b transition-colors duration-200 ease-linear ${
                     theme === "dark" ? "bg-black/40 border-white/10" : "bg-white/40 border-black/10"
@@ -232,16 +235,18 @@ export default function PortfolioExperimental() {
                 </button>
             </header>
 
+            {/* Sections */}
             <Section id="home" watermark="HOME">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="text-6xl md:text-8xl font-extrabold text-center select-none"
+                    className="text-6xl md:text-8xl font-extrabold tracking-tight leading-[0.9] text-center select-none"
                     draggable={false}
                 >
                     Beyond Ordinary.
                 </motion.h1>
+
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -316,9 +321,65 @@ export default function PortfolioExperimental() {
     );
 }
 
+/* ---------------- helpers ---------------- */
+
+function buildBandedGradient(
+    colors: string[],
+    totalVh: number,
+    opts: { edgeVh: number; blendVh: number }
+) {
+    const { edgeVh, blendVh } = opts;
+    const n = colors.length;
+    if (n <= 1) return colors[0] ?? "transparent";
+
+    const usable = Math.max(0, totalVh - 2 * edgeVh);
+    const gaps = n - 1;
+    const seg = usable / gaps;
+
+    // keep blend comfortably below segment size to avoid "flat" takeover
+    const blend = Math.min(blendVh, Math.max(6, seg * 0.9));
+
+    const stops: string[] = [];
+
+    // Top: short presence of first color
+    const firstFlatEnd = Math.max(0, edgeVh - blend / 2);
+    stops.push(`${colors[0]} 0vh`, `${colors[0]} ${firstFlatEnd}vh`);
+
+    // Middle transitions
+    for (let i = 0; i < gaps; i++) {
+        const a = colors[i];
+        const b = colors[i + 1];
+        const center = edgeVh + i * seg;
+
+        const aEnd = clampVh(center - blend / 2, 0, totalVh);
+        const bStart = clampVh(center + blend / 2, 0, totalVh);
+
+        // keep the previous color until aEnd
+        stops.push(`${a} ${aEnd}vh`);
+        // then fade into the next color by bStart
+        stops.push(`${b} ${bStart}vh`);
+    }
+
+    // Bottom: short presence of last color
+    const lastStart = clampVh(totalVh - (edgeVh - blend / 2), 0, totalVh);
+    stops.push(`${colors[n - 1]} ${lastStart}vh`, `${colors[n - 1]} ${totalVh}vh`);
+
+    return `linear-gradient(to bottom, ${stops.join(", ")})`;
+}
+
+function clampVh(v: number, min: number, max: number) {
+    return Math.max(min, Math.min(max, v));
+}
+
+/* -------------- presentational bits -------------- */
+
 function Section({ id, watermark, children }: { id: string; watermark: string; children: React.ReactNode }) {
     return (
-        <section id={id} className="relative h-screen flex flex-col items-center justify-center transition-colors duration-200 ease-linear select-none" draggable={false}>
+        <section
+            id={id}
+            className="relative h-screen flex flex-col items-center justify-center transition-colors duration-200 ease-linear select-none"
+            draggable={false}
+        >
             <motion.div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center">
                 <div className="text-[14vw] font-black tracking-tighter opacity-[0.05] dark:opacity-[0.04] leading-none transition-colors duration-200 ease-linear">
                     <span style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}>{watermark}</span>

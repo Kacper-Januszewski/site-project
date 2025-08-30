@@ -1,3 +1,4 @@
+// tailwind.config.js
 const config = {
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -6,21 +7,24 @@ const config = {
   ],
   theme: {
     extend: {
-      backgroundSize: {
-        '300%': '300%',
-      },
-      keyframes: {
-        gradient: {
-          '0%, 100%': { 'background-position': '0% 50%' },
-          '50%': { 'background-position': '100% 50%' },
-        },
-      },
-      animation: {
-        gradient: 'gradient 15s ease infinite',
+      // (optional) explicitly pin the default system stack
+      fontFamily: {
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "Noto Sans",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+        ],
       },
     },
   },
   plugins: [],
 };
-
 export default config;

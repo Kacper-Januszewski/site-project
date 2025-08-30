@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth rendering like canvas */
 html, body {
     scroll-behavior: smooth;
-    font-family: Inter, sans-serif;
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
