@@ -51,17 +51,49 @@ export default function PDFPage() {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
+                let errorData;
+                try {
+                    errorData = await response.json();
+                } catch {
+                    errorData = { error: `Server Error (${response.status})` };
+                }
                 console.error("Server Error Details:", errorData);
                 throw new Error(errorData.details || errorData.error || 'Failed to send message');
             }
 
-            const data = await response.json();
-            setMessages(prev => [...prev, { role: 'model', text: data.text }]);
+            // Stream reading logic
+            if (!response.body) throw new Error("No response body");
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            // Add an empty model message to start filling
+            setMessages(prev => [...prev, { role: 'model', text: '' }]);
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                setMessages(prev => {
+                    const lastMsg = prev[prev.length - 1];
+                    // Create new array with updated last message
+                    const newMessages = prev.slice(0, -1);
+                    return [...newMessages, { ...lastMsg, text: lastMsg.text + chunk }];
+                });
+            }
+
         } catch (error: any) {
             console.error("Chat Error:", error);
             const errorMessage = error.message || "Sorry, I encountered an error.";
-            setMessages(prev => [...prev, { role: 'model', text: errorMessage }]);
+            // Check if the last message is empty model message (failed mid-stream or start), if so update it, else append error
+            setMessages(prev => {
+                const lastMsg = prev[prev.length - 1];
+                if (lastMsg.role === 'model' && lastMsg.text === '') {
+                    return [...prev.slice(0, -1), { role: 'model', text: errorMessage }];
+                }
+                return [...prev, { role: 'model', text: errorMessage }];
+            });
         } finally {
             setIsLoading(false);
         }

@@ -1,35 +1,24 @@
-
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
+
+// Allow the function to run for up to 60 seconds (Vercel Hobby limit might be 10s or 60s depending on region/plan, but this helps if allowed)
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
     try {
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
             console.error("GEMINI_API_KEY is missing from environment variables");
-            return NextResponse.json(
-                { error: "GEMINI_API_KEY is not set on server" },
-                { status: 401 }
-            );
+            return new Response(JSON.stringify({ error: "GEMINI_API_KEY is not set on server" }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
         const ai = new GoogleGenAI({ apiKey });
 
         const data = await req.json();
         const { message, history } = data;
-
-        // Convert history format if needed, though simpler generation might strictly use 'contents'
-        // The new SDK uses 'models.generateContent'.
-        // We'll construct a prompt that includes history if possible, or just send the message for now
-        // to match the user's snippet simplicity, but let's try to keep the chat history if we can.
-
-        // For 'generateContent', we can pass a list of contents.
-        // History from frontend is: { role: 'user'|'model', parts: [{ text: string }] }
-        // New SDK expects 'contents': Array of Content objects.
-        // Let's try to map it.
-
-        // However, the user provided a snippet using "ai.models.generateContent".
-        // Let's map our history to the format it expects or just append previous messages.
 
         // Simple mapping:
         // Explicitly type the array to avoid "implicitly has type 'any[]'" error
@@ -47,24 +36,43 @@ export async function POST(req: Request) {
         });
 
         // Use 'gemini-3-flash-preview' as requested by the user.
-        const response = await ai.models.generateContent({
+        // Use 'generateContentStream' for streaming
+        const streamResult = await ai.models.generateContentStream({
             model: "gemini-3-flash-preview",
             contents: contents, // Pass full conversation history
         });
 
-        const text = response.text; // formatting might be different in new SDK, user snippet used 'response.text' directly/property? 
-        // User snippet: console.log(response.text);
+        // Create a ReadableStream from the Gemini stream
+        const encoder = new TextEncoder();
+        const readableStream = new ReadableStream({
+            async start(controller) {
+                try {
+                    // streamResult is the AsyncGenerator
+                    for await (const chunk of streamResult) {
+                        const chunkText = chunk.text; // Access as property, not function
+                        if (chunkText) {
+                            controller.enqueue(encoder.encode(chunkText));
+                        }
+                    }
+                    controller.close();
+                } catch (error) {
+                    controller.error(error);
+                }
+            },
+        });
 
-        return NextResponse.json({ text });
+        return new Response(readableStream, {
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        });
 
     } catch (error: any) {
         console.error("Error generating content:", error);
-        return NextResponse.json(
-            {
-                error: "Failed to generate content",
-                details: error.message || String(error)
-            },
-            { status: 500 }
-        );
+        return new Response(JSON.stringify({
+            error: "Failed to generate content",
+            details: error.message || String(error)
+        }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
