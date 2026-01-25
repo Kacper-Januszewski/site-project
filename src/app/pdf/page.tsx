@@ -45,13 +45,18 @@ export default function PDFPage() {
                 body: JSON.stringify({ message: userMessage, history })
             });
 
-            if (!response.ok) throw new Error('Failed to send message');
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Server Error Details:", errorData);
+                throw new Error(errorData.details || errorData.error || 'Failed to send message');
+            }
 
             const data = await response.json();
             setMessages(prev => [...prev, { role: 'model', text: data.text }]);
-        } catch (error) {
-            console.error(error);
-            setMessages(prev => [...prev, { role: 'model', text: "Sorry, I encountered an error." }]);
+        } catch (error: any) {
+            console.error("Chat Error:", error);
+            const errorMessage = error.message || "Sorry, I encountered an error.";
+            setMessages(prev => [...prev, { role: 'model', text: errorMessage }]);
         } finally {
             setIsLoading(false);
         }
