@@ -1,5 +1,5 @@
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -13,22 +13,49 @@ export async function POST(req: Request) {
             );
         }
 
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const ai = new GoogleGenAI({ apiKey });
 
         const data = await req.json();
         const { message, history } = data;
 
-        // Construct chat history if provided, otherwise start new chat
-        const chat = model.startChat({
-            history: history || [],
+        // Convert history format if needed, though simpler generation might strictly use 'contents'
+        // The new SDK uses 'models.generateContent'.
+        // We'll construct a prompt that includes history if possible, or just send the message for now
+        // to match the user's snippet simplicity, but let's try to keep the chat history if we can.
+
+        // For 'generateContent', we can pass a list of contents.
+        // History from frontend is: { role: 'user'|'model', parts: [{ text: string }] }
+        // New SDK expects 'contents': Array of Content objects.
+        // Let's try to map it.
+
+        // However, the user provided a snippet using "ai.models.generateContent".
+        // Let's map our history to the format it expects or just append previous messages.
+
+        // Simple mapping:
+        let contents = [];
+        if (history && Array.isArray(history)) {
+            contents = history.map((msg: any) => ({
+                role: msg.role,
+                parts: msg.parts
+            }));
+        }
+        // Add current message
+        contents.push({
+            role: "user",
+            parts: [{ text: message }]
         });
 
-        const result = await chat.sendMessage(message);
-        const response = await result.response;
-        const text = response.text();
+        // Use 'gemini-3-flash-preview' as requested by the user.
+        const response = await ai.models.generateContent({
+            model: "gemini-3-flash-preview",
+            contents: contents, // Pass full conversation history
+        });
+
+        const text = response.text; // formatting might be different in new SDK, user snippet used 'response.text' directly/property? 
+        // User snippet: console.log(response.text);
 
         return NextResponse.json({ text });
+
     } catch (error: any) {
         console.error("Error generating content:", error);
         return NextResponse.json(
