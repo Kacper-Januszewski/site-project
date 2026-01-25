@@ -1,10 +1,67 @@
 "use client";
 
-import React, { useState } from 'react';
-import { MessageSquare, X, Send } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
+
+type Message = {
+    role: 'user' | 'model';
+    text: string;
+};
 
 export default function PDFPage() {
     const [isOpen, setIsOpen] = useState(true);
+    const [messages, setMessages] = useState<Message[]>([
+        { role: 'model', text: 'Hi! How can I help with this document?' }
+    ]);
+    const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, isOpen]);
+
+    const handleSend = async () => {
+        if (!input.trim() || isLoading) return;
+
+        const userMessage = input.trim();
+        setInput('');
+        setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+        setIsLoading(true);
+
+        try {
+            const history = messages.map(m => ({
+                role: m.role,
+                parts: [{ text: m.text }]
+            }));
+
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage, history })
+            });
+
+            if (!response.ok) throw new Error('Failed to send message');
+
+            const data = await response.json();
+            setMessages(prev => [...prev, { role: 'model', text: data.text }]);
+        } catch (error) {
+            console.error(error);
+            setMessages(prev => [...prev, { role: 'model', text: "Sorry, I encountered an error." }]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleSend();
+        }
+    };
 
     return (
         <div className="relative w-full h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
@@ -21,9 +78,9 @@ export default function PDFPage() {
                 <div
                     className={`
               pointer-events-auto transition-all duration-500 ease-in-out
-              ${isOpen ? 'w-80 h-96 opacity-100 translate-y-0' : 'w-12 h-12 opacity-100 translate-y-0 rounded-full'}
+              ${isOpen ? 'w-80 h-96 opacity-100 translate-y-0' : 'w-auto h-auto opacity-80 translate-y-0'}
               flex flex-col
-              ${isOpen ? '' : 'items-center justify-center cursor-pointer bg-black text-white rounded-full'} 
+              ${isOpen ? '' : 'items-center justify-center cursor-pointer'} 
             `}
                     onClick={() => !isOpen && setIsOpen(true)}
                 >
@@ -41,11 +98,27 @@ export default function PDFPage() {
                             </div>
 
                             {/* Chat Body - Straight text */}
-                            <div className="flex-1 p-4 flex flex-col justify-end text-right">
-                                <div className="space-y-3">
-                                    <div className="self-end text-black dark:text-white font-medium text-sm p-1 max-w-[90%] ml-auto">
-                                        Hi! How can I help with this document?
-                                    </div>
+                            <div className="flex-1 p-4 flex flex-col overflow-y-auto no-scrollbar mask-gradient">
+                                <div className="space-y-3 flex flex-col justify-end min-h-full">
+                                    {messages.map((msg, idx) => (
+                                        <div
+                                            key={idx}
+                                            className={`
+                                                text-sm p-1 max-w-[90%] font-medium
+                                                ${msg.role === 'user'
+                                                    ? 'self-end text-right text-black dark:text-white'
+                                                    : 'self-start text-left text-gray-700 dark:text-gray-300'}
+                                            `}
+                                        >
+                                            {msg.text}
+                                        </div>
+                                    ))}
+                                    {isLoading && (
+                                        <div className="self-start text-gray-400 text-xs animate-pulse">
+                                            Thinking...
+                                        </div>
+                                    )}
+                                    <div ref={messagesEndRef} />
                                 </div>
                             </div>
 
@@ -55,16 +128,24 @@ export default function PDFPage() {
                                     <input
                                         type="text"
                                         placeholder="Type here..."
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        onKeyDown={handleKeyDown}
                                         className="w-full bg-transparent text-black dark:text-white placeholder-gray-500 border-none px-0 py-2 text-sm focus:outline-none focus:ring-0"
                                     />
-                                    <button className="absolute right-0 top-1/2 -translate-y-1/2 text-black dark:text-white p-1 hover:opacity-70 transition-opacity">
-                                        <Send size={16} />
+                                    <button
+                                        onClick={handleSend}
+                                        disabled={isLoading}
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 text-black dark:text-white p-1 hover:opacity-70 transition-opacity disabled:opacity-30"
+                                    >
+                                        {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                                     </button>
                                 </div>
                             </div>
                         </>
                     ) : (
-                        <MessageSquare className="text-white w-5 h-5" />
+                        // 10px dot
+                        <div className="w-[10px] h-[10px] bg-gray-500 rounded-full hover:bg-gray-700 transition-colors cursor-pointer"></div>
                     )}
 
                 </div>
