@@ -1,0 +1,3 @@
+function calculateHeightInModal(modal, elementSelector){
+    return modal.find('div.modal-body').height() - modal.find(elementSelector).height();
+}

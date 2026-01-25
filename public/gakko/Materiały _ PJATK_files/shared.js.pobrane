@@ -1,0 +1,33 @@
+﻿function arrayToDictionary(array){
+    return Object.keys(array).map(function(key) {
+        return [key, array[key]];
+    }).sort(function(first, second) {
+        if (first[1] < second[1]) {
+            return -1;
+        }
+        if (second[1] < first[1]) {
+            return 1;
+        }
+        return 0;
+    });
+}
+
+function getProperty (theObject, path, separator) {
+    try {
+        separator = separator || '.';
+
+        return path
+            .replace('[', separator).replace(']','')
+            .split(separator)
+            .reduce(
+                function (obj, property) {
+                    return obj[property];
+                }, theObject);
+    } catch (err) {
+        return null;
+    }
+}
+
+function getNameForIndex(razor, index) {
+    return razor.replace(/\[.*]/i, `[${index}]`);
+}

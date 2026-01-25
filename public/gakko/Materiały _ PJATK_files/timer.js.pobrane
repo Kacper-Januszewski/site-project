@@ -1,0 +1,57 @@
+﻿function countdownTimer(
+	endDateTime,   // Końcowa data i godzina podana w Warszawskiej strefie czasowej
+	elementId, // ID elementu HTML, w którym ma być wyświetlany timer
+	language,  // Język: 'pl' - polski, 'en' - angielski,
+	daysIndividually = true, // Jeżeli czas do końca będzie większy niż 1 dzień to czy ma wyświetlać się również czas
+	onTimerEnd = null // Funkcja anonimowa wywoływana po zakończeniu czasu
+) {
+	const element = document.getElementById(elementId);
+	const endTime = new Date(endDateTime).getTime();
+
+	let currentDateTime;
+
+	$.getJSON('https://worldtimeapi.org/api/timezone/Europe/Warsaw')
+		.done(function(data) {
+			currentDateTime = new Date(data.datetime.split('+')[0]).getTime();
+		})
+		.fail(function() {
+			$.get('/server-data/current-datetime', function(data) {
+				currentDateTime = new Date(data).getTime();
+			});
+		});
+
+	const timerUpdateInterval = setInterval(() => {
+		currentDateTime += 1000;
+		const remainingTime = endTime - currentDateTime;
+
+		if (remainingTime <= 0) {
+			clearInterval(timerUpdateInterval);
+			element.textContent = "00:00:00";
+			if (onTimerEnd && typeof onTimerEnd === 'function') {
+				onTimerEnd();
+			}
+			return;
+		}
+
+		const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+		const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+		const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+		let timerText = '';
+		if (days > 0 && daysIndividually) {
+			if (language === 'pl') {
+				timerText = days + (days === 1 ? ' dzień' : ' dni');
+			} else if (language === 'en') {
+				timerText = days + (days === 1 ? ' day' : ' days');
+			}
+		} else {
+			timerText += !daysIndividually && days > 0 ? days.toString().padStart(2, '0') + ':' : '';
+			timerText += hours.toString().padStart(2, '0') + ':';
+			timerText += minutes.toString().padStart(2, '0') + ':';
+			timerText += seconds.toString().padStart(2, '0');
+		}
+
+		element.textContent = timerText;
+	}, 1000);
+}
