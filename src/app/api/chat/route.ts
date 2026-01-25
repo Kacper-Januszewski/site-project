@@ -32,7 +32,8 @@ export async function POST(req: Request) {
         // Let's map our history to the format it expects or just append previous messages.
 
         // Simple mapping:
-        let contents = [];
+        // Explicitly type the array to avoid "implicitly has type 'any[]'" error
+        let contents: { role: string; parts: { text: string }[] }[] = [];
         if (history && Array.isArray(history)) {
             contents = history.map((msg: any) => ({
                 role: msg.role,
