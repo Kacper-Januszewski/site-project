@@ -134,7 +134,7 @@ export default function PDFPage() {
                             <div className="p-4 flex justify-end items-center">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
-                                    className="text-[#2eadf0] hover:text-[#2eadf0]/80 transition-colors"
+                                    className="text-[#808080] hover:text-[#808080]/80 transition-colors"
                                 >
                                     <X size={20} />
                                 </button>
@@ -149,28 +149,28 @@ export default function PDFPage() {
                                             className={`
                                                 text-sm p-1 max-w-[90%] font-medium
                                                 ${msg.role === 'user'
-                                                    ? 'self-end text-right text-[#2eadf0]'
-                                                    : 'self-start text-left text-[#2eadf0]'}
+                                                    ? 'self-end text-right text-[#808080]'
+                                                    : 'self-start text-left text-[#808080]'}
                                             `}
                                         >
                                             <ReactMarkdown
                                                 components={{
                                                     code({ node, inline, className, children, ...props }: any) {
                                                         return !inline ? (
-                                                            <div className="bg-gray-800 text-[#2eadf0] p-2 rounded-md my-2 overflow-x-auto text-xs">
+                                                            <div className="bg-gray-800 text-[#808080] p-2 rounded-md my-2 overflow-x-auto text-xs">
                                                                 <code className={className} {...props}>
                                                                     {children}
                                                                 </code>
                                                             </div>
                                                         ) : (
-                                                            <code className="bg-[#2eadf0]/10 px-1 rounded text-[#2eadf0]" {...props}>
+                                                            <code className="bg-[#808080]/10 px-1 rounded text-[#808080]" {...props}>
                                                                 {children}
                                                             </code>
                                                         )
                                                     },
-                                                    p: ({ children }) => <p className="text-[#2eadf0]">{children}</p>,
-                                                    li: ({ children }) => <li className="text-[#2eadf0]">{children}</li>,
-                                                    strong: ({ children }) => <strong className="text-[#2eadf0] font-bold">{children}</strong>
+                                                    p: ({ children }) => <p className="text-[#808080]">{children}</p>,
+                                                    li: ({ children }) => <li className="text-[#808080]">{children}</li>,
+                                                    strong: ({ children }) => <strong className="text-[#808080] font-bold">{children}</strong>
                                                 }}
                                             >
                                                 {msg.text}
@@ -178,7 +178,7 @@ export default function PDFPage() {
                                         </div>
                                     ))}
                                     {isLoading && (
-                                        <div className="self-start text-[#2eadf0]/70 text-xs animate-pulse">
+                                        <div className="self-start text-[#808080]/70 text-xs animate-pulse">
                                             Thinking...
                                         </div>
                                     )}
@@ -189,19 +189,19 @@ export default function PDFPage() {
 
                             {/* Input Area - Straight text */}
                             <div className="p-4">
-                                <div className="flex gap-2 relative border-b border-[#2eadf0]/30">
+                                <div className="flex gap-2 relative border-b border-[#808080]/30">
                                     <input
                                         type="text"
                                         placeholder="Type here..."
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={handleKeyDown}
-                                        className="w-full bg-transparent text-[#2eadf0] placeholder-[#2eadf0]/50 border-none px-0 py-2 text-sm focus:outline-none focus:ring-0"
+                                        className="w-full bg-transparent text-[#808080] placeholder-[#808080]/50 border-none px-0 py-2 text-sm focus:outline-none focus:ring-0"
                                     />
                                     <button
                                         onClick={handleSend}
                                         disabled={isLoading}
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 text-[#2eadf0] p-1 hover:opacity-70 transition-opacity disabled:opacity-30"
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 text-[#808080] p-1 hover:opacity-70 transition-opacity disabled:opacity-30"
                                     >
                                         {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                                     </button>
@@ -210,7 +210,7 @@ export default function PDFPage() {
                         </>
                     ) : (
                         // 10px dot
-                        <div className="w-[10px] h-[10px] bg-[#2eadf0] rounded-full hover:bg-[#2eadf0]/80 transition-colors cursor-pointer"></div>
+                        <div className="w-[10px] h-[10px] bg-[#808080] rounded-full hover:bg-[#808080]/80 transition-colors cursor-pointer"></div>
                     )}
 
                 </div>
