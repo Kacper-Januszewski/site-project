@@ -34,7 +34,11 @@ export default function PDFPage() {
         setIsLoading(true);
 
         try {
-            const history = messages.map(m => ({
+            // Filter out the initial greeting if it's the first message, 
+            // because Gemini requires history to start with 'user' or be empty + 'user' prompt.
+            // Actually, we should just send meaningful history.
+            // If the first message is 'model', exclude it.
+            const validHistory = messages.filter((_, index) => index > 0).map(m => ({
                 role: m.role,
                 parts: [{ text: m.text }]
             }));
@@ -42,7 +46,8 @@ export default function PDFPage() {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMessage, history })
+                // If history is empty, that's fine. The 'message' (userMessage) starts the chat.
+                body: JSON.stringify({ message: userMessage, history: validHistory })
             });
 
             if (!response.ok) {
