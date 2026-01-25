@@ -40,6 +40,12 @@ export async function POST(req: Request) {
         const streamResult = await ai.models.generateContentStream({
             model: "gemini-3-flash-preview",
             contents: contents, // Pass full conversation history
+            config: {
+                temperature: 0.1,
+                systemInstruction: {
+                    parts: [{ text: "You are a direct, fact-based logic engine. You do not use greetings, pleasantries, or closing remarks. You output only the answer. If the answer is a code snippet, output only the code. Do not apologize. Do not say 'Here is the answer'. Be purely functional." }]
+                }
+            }
         });
 
         // Create a ReadableStream from the Gemini stream

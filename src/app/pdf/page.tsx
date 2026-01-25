@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 type Message = {
     role: 'user' | 'model';
@@ -152,7 +153,25 @@ export default function PDFPage() {
                                                     : 'self-start text-left text-gray-700 dark:text-gray-300'}
                                             `}
                                         >
-                                            {msg.text}
+                                            <ReactMarkdown
+                                                components={{
+                                                    code({ node, inline, className, children, ...props }: any) {
+                                                        return !inline ? (
+                                                            <div className="bg-gray-800 text-white p-2 rounded-md my-2 overflow-x-auto text-xs">
+                                                                <code className={className} {...props}>
+                                                                    {children}
+                                                                </code>
+                                                            </div>
+                                                        ) : (
+                                                            <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded text-red-500" {...props}>
+                                                                {children}
+                                                            </code>
+                                                        )
+                                                    }
+                                                }}
+                                            >
+                                                {msg.text}
+                                            </ReactMarkdown>
                                         </div>
                                     ))}
                                     {isLoading && (
@@ -163,6 +182,7 @@ export default function PDFPage() {
                                     <div ref={messagesEndRef} />
                                 </div>
                             </div>
+
 
                             {/* Input Area - Straight text */}
                             <div className="p-4">
