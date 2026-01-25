@@ -6,9 +6,10 @@ export async function POST(req: Request) {
     try {
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
+            console.error("GEMINI_API_KEY is missing from environment variables");
             return NextResponse.json(
-                { error: "GEMINI_API_KEY is not set" },
-                { status: 500 }
+                { error: "GEMINI_API_KEY is not set on server" },
+                { status: 401 }
             );
         }
 
@@ -28,10 +29,13 @@ export async function POST(req: Request) {
         const text = response.text();
 
         return NextResponse.json({ text });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error generating content:", error);
         return NextResponse.json(
-            { error: "Failed to generate content" },
+            {
+                error: "Failed to generate content",
+                details: error.message || String(error)
+            },
             { status: 500 }
         );
     }
