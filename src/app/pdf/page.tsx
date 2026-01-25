@@ -109,7 +109,7 @@ export default function PDFPage() {
 
                             {/* Chat Body - Straight text */}
                             <div className="flex-1 p-4 flex flex-col overflow-y-auto no-scrollbar mask-gradient">
-                                <div className="space-y-3 flex flex-col justify-end min-h-full">
+                                <div className="space-y-3 mt-auto">
                                     {messages.map((msg, idx) => (
                                         <div
                                             key={idx}
