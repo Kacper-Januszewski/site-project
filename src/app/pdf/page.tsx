@@ -183,11 +183,6 @@ export default function PDFPage() {
             reader.onloadend = () => {
                 const base64String = reader.result as string;
                 // remove data url prefix: "data:image/jpeg;base64,"
-                // Actually gemini inlineData needs raw base64 usually, BUT user code in route.ts expects passed 'img.data'
-                // The FileReader result includes the prefix. We need to split it if the backend needs just the base64.
-                // Looking at route.ts: parts.push({ inlineData: { mimeType: img.mimeType, data: img.data } })
-                // The node SDK usually expects raw base64 string without prefix.
-                // Let's strip the prefix.
                 const base64Data = base64String.split(',')[1];
 
                 setAttachments(prev => [...prev, { mimeType: file.type, data: base64Data }]);
@@ -195,6 +190,26 @@ export default function PDFPage() {
             reader.readAsDataURL(file);
         }
     };
+
+    const handlePaste = (e: React.ClipboardEvent) => {
+        const items = e.clipboardData.items;
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                const file = items[i].getAsFile();
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64String = reader.result as string;
+                        const base64Data = base64String.split(',')[1];
+                        setAttachments(prev => [...prev, { mimeType: file.type, data: base64Data }]);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    };
+
+
 
 
     return (
@@ -391,7 +406,9 @@ export default function PDFPage() {
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={handleKeyDown}
+                                        onPaste={handlePaste}
                                         spellCheck={false}
+
                                         className={`w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0 ${isDarkTheme ? 'placeholder-[#333333]/50' : 'placeholder-[#808080]/50'}`}
                                         style={{ color: themeColor }}
                                     />
