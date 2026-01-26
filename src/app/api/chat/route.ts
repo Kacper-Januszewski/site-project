@@ -56,14 +56,14 @@ export async function POST(req: Request) {
         const encoder = new TextEncoder();
         const readableStream = new ReadableStream({
             async start(controller) {
-                // Keep-Alive Loop: Send a space every 10 seconds to prevent 504 Timeout
+                // Keep-Alive Loop: Send a null byte every 3 seconds to prevent timeout without affecting text
                 const keepAliveInterval = setInterval(() => {
                     try {
-                        controller.enqueue(encoder.encode(" "));
+                        controller.enqueue(encoder.encode("\0"));
                     } catch (e) {
                         clearInterval(keepAliveInterval);
                     }
-                }, 10000);
+                }, 3000);
 
                 try {
                     const streamResult = await ai.models.generateContentStream({

@@ -145,13 +145,18 @@ export default function PDFPage() {
                 const { done, value } = await reader.read();
                 if (done) break;
 
-                const chunk = decoder.decode(value, { stream: true });
-                setMessages(prev => {
-                    const lastMsg = prev[prev.length - 1];
-                    // Create new array with updated last message
-                    const newMessages = prev.slice(0, -1);
-                    return [...newMessages, { ...lastMsg, text: lastMsg.text + chunk }];
-                });
+                // Decode and sanitize (remove keep-alive null bytes)
+                let chunk = decoder.decode(value, { stream: true });
+                chunk = chunk.replace(/\0/g, '');
+
+                if (chunk) {
+                    setMessages(prev => {
+                        const lastMsg = prev[prev.length - 1];
+                        // Create new array with updated last message
+                        const newMessages = prev.slice(0, -1);
+                        return [...newMessages, { ...lastMsg, text: lastMsg.text + chunk }];
+                    });
+                }
             }
 
         } catch (error: any) {
