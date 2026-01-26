@@ -13,7 +13,27 @@ type Message = {
     text: string;
 };
 
+// Custom minimal scrollbar styles
+const scrollbarStyles = `
+  .minimal-scrollbar::-webkit-scrollbar {
+    width: 6px;                 /* Slightly wider to allow interaction, but still minimal */
+  }
+  .minimal-scrollbar::-webkit-scrollbar-track {
+    background: transparent;    /* Track is invisible */
+  }
+  .minimal-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-radius: 20px;       /* Fully rounded */
+    border: 2px solid transparent; /* Creates padding around thumb effectively making it thinner */
+    background-clip: content-box;  /* Ensures border doesn't get colored */
+  }
+  .minimal-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-hover-color);
+  }
+`;
+
 export default function PDFPage() {
+
     const [isOpen, setIsOpen] = useState(false);
     const [isRightAligned, setIsRightAligned] = useState(true);
     const [isInvisible, setIsInvisible] = useState(false);
@@ -135,10 +155,15 @@ export default function PDFPage() {
 
             {/* Custom Code Overlay (Chat App) */}
             <div className={`absolute top-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end p-6 z-50 ${isRightAligned ? 'right-0 items-end' : 'left-0 items-start'}`}>
-
+                <style jsx global>{scrollbarStyles}</style>
                 <div
+                    style={{
+                        '--scrollbar-color': isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)',
+                        '--scrollbar-hover-color': isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'
+                    } as React.CSSProperties}
                     className={`
               pointer-events-auto transition-all duration-500 ease-in-out
+
               ${isOpen ? `w-80 h-96 ${isHardInvisible ? 'opacity-0' : isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
               flex flex-col
 
@@ -199,8 +224,9 @@ export default function PDFPage() {
 
 
                             {/* Chat Body - Straight text */}
-                            <div className="flex-1 p-4 flex flex-col overflow-y-auto no-scrollbar mask-gradient">
+                            <div className="flex-1 p-4 flex flex-col overflow-y-auto minimal-scrollbar mask-gradient">
                                 <div className="space-y-3 mt-auto">
+
                                     {messages.map((msg, idx) => (
                                         <div
                                             key={idx}
