@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, ArrowLeftRight } from 'lucide-react';
+
 import ReactMarkdown from 'react-markdown';
 
 type Message = {
@@ -11,6 +12,8 @@ type Message = {
 
 export default function PDFPage() {
     const [isOpen, setIsOpen] = useState(true);
+    const [isRightAligned, setIsRightAligned] = useState(true);
+
     const [messages, setMessages] = useState<Message[]>([
         { role: 'model', text: 'Hi! How can I help with this document?' }
     ]);
@@ -116,7 +119,7 @@ export default function PDFPage() {
             />
 
             {/* Custom Code Overlay (Chat App) */}
-            <div className="absolute top-0 right-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end items-end p-6 z-50">
+            <div className={`absolute top-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end p-6 z-50 ${isRightAligned ? 'right-0 items-end' : 'left-0 items-start'}`}>
 
                 <div
                     className={`
@@ -131,7 +134,14 @@ export default function PDFPage() {
                     {isOpen ? (
                         <>
                             {/* Header - Invisible, just X button */}
-                            <div className="p-4 flex justify-end items-center">
+                            <div className="p-4 flex justify-between items-center">
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); setIsRightAligned(!isRightAligned); }}
+                                    className="text-[#808080] hover:text-[#808080]/80 transition-colors"
+                                    title={isRightAligned ? "Move to Left" : "Move to Right"}
+                                >
+                                    <ArrowLeftRight size={16} />
+                                </button>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
                                     className="text-[#808080] hover:text-[#808080]/80 transition-colors"
