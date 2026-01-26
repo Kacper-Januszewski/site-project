@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost } from 'lucide-react';
+
 
 
 import ReactMarkdown from 'react-markdown';
@@ -12,9 +13,11 @@ type Message = {
 };
 
 export default function PDFPage() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [isRightAligned, setIsRightAligned] = useState(true);
     const [isInvisible, setIsInvisible] = useState(false);
+    const [isHardInvisible, setIsHardInvisible] = useState(false);
+
 
 
     const [messages, setMessages] = useState<Message[]>([
@@ -127,8 +130,9 @@ export default function PDFPage() {
                 <div
                     className={`
               pointer-events-auto transition-all duration-500 ease-in-out
-              ${isOpen ? `w-80 h-96 ${isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
+              ${isOpen ? `w-80 h-96 ${isHardInvisible ? 'opacity-0' : isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
               flex flex-col
+
 
               ${isOpen ? '' : 'items-center justify-center cursor-pointer'} 
             `}
@@ -150,11 +154,19 @@ export default function PDFPage() {
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setIsInvisible(!isInvisible); }}
                                         className="text-[#808080] hover:text-[#808080]/80 transition-colors"
-                                        title={isInvisible ? "Show Chat" : "Invisible Mode"}
+                                        title={isInvisible ? "Show Chat" : "Soft Invisible Mode"}
                                     >
                                         {isInvisible ? <EyeOff size={16} /> : <Eye size={16} />}
                                     </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setIsHardInvisible(!isHardInvisible); }}
+                                        className={`text-[#808080] hover:text-[#808080]/80 transition-colors ${isHardInvisible ? 'opacity-50' : ''}`}
+                                        title={isHardInvisible ? "Disable Hard Invisible" : "Enable Hard Invisible"}
+                                    >
+                                        <Ghost size={16} />
+                                    </button>
                                 </div>
+
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
                                     className="text-[#808080] hover:text-[#808080]/80 transition-colors"
