@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
 // Allow the function to run for up to 60 seconds (Vercel Hobby limit might be 10s or 60s depending on region/plan, but this helps if allowed)
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
     try {
