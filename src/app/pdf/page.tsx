@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost, Palette } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost, Palette, Paperclip, Image as ImageIcon } from 'lucide-react';
+
 
 
 
@@ -11,7 +12,10 @@ import ReactMarkdown from 'react-markdown';
 type Message = {
     role: 'user' | 'model';
     text: string;
+    hasImages?: boolean;
 };
+
+
 
 // Custom minimal scrollbar and selection styles
 const globalStyles = `
@@ -51,8 +55,11 @@ export default function PDFPage() {
     const [isHardInvisible, setIsHardInvisible] = useState(false);
     const [isDarkTheme, setIsDarkTheme] = useState(false);
     const [selectedModel, setSelectedModel] = useState<'gemini-3-flash-preview' | 'gemini-3-pro-preview'>('gemini-3-flash-preview');
+    const [attachments, setAttachments] = useState<{ data: string, mimeType: string }[]>([]);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Dynamic Theme Colors
+
 
     const themeColor = isDarkTheme ? '#333333' : '#808080';
     const textClass = isDarkTheme ? 'text-[#333333]' : 'text-[#808080]';
@@ -78,11 +85,16 @@ export default function PDFPage() {
     }, [messages, isOpen]);
 
     const handleSend = async () => {
-        if (!input.trim() || isLoading) return;
+        if ((!input.trim() && attachments.length === 0) || isLoading) return;
 
         const userMessage = input.trim();
+        const currentAttachments = [...attachments]; // Capture current attachments
+
         setInput('');
-        setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+        setAttachments([]); // Clear attachments immediately
+
+        // Add minimal 'hasImages' flag for UI instead of full image data to keep chat history clean in UI
+        setMessages(prev => [...prev, { role: 'user', text: userMessage, hasImages: currentAttachments.length > 0 }]);
         setIsLoading(true);
 
         try {
@@ -92,15 +104,21 @@ export default function PDFPage() {
             // If the first message is 'model', exclude it.
             const validHistory = messages.filter((_, index) => index > 0).map(m => ({
                 role: m.role,
-                parts: [{ text: m.text }]
+                parts: [{ text: m.text }] // For now, sending only text history to be safe/simple, or we can store image history
             }));
 
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 // If history is empty, that's fine. The 'message' (userMessage) starts the chat.
-                body: JSON.stringify({ message: userMessage, history: validHistory, model: selectedModel })
+                body: JSON.stringify({
+                    message: userMessage,
+                    history: validHistory,
+                    model: selectedModel,
+                    images: currentAttachments
+                })
             });
+
 
 
             if (!response.ok) {
@@ -157,6 +175,27 @@ export default function PDFPage() {
             handleSend();
         }
     };
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                // remove data url prefix: "data:image/jpeg;base64,"
+                // Actually gemini inlineData needs raw base64 usually, BUT user code in route.ts expects passed 'img.data'
+                // The FileReader result includes the prefix. We need to split it if the backend needs just the base64.
+                // Looking at route.ts: parts.push({ inlineData: { mimeType: img.mimeType, data: img.data } })
+                // The node SDK usually expects raw base64 string without prefix.
+                // Let's strip the prefix.
+                const base64Data = base64String.split(',')[1];
+
+                setAttachments(prev => [...prev, { mimeType: file.type, data: base64Data }]);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
 
     return (
         <div className="relative w-full h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
@@ -270,10 +309,17 @@ export default function PDFPage() {
                                                     : 'self-start text-left'}
                                             `}
                                             style={{ color: themeColor }}
-
                                         >
+                                            {msg.hasImages && (
+                                                <div className="flex gap-1 mb-1 justify-end">
+                                                    <div className="p-1 rounded bg-gray-200 dark:bg-gray-700" title="Image attached">
+                                                        <ImageIcon size={14} />
+                                                    </div>
+                                                </div>
+                                            )}
                                             <ReactMarkdown
                                                 components={{
+
                                                     code({ node, inline, className, children, ...props }: any) {
                                                         return !inline ? (
                                                             <div className={`p-2 rounded-md my-2 overflow-x-auto minimal-scrollbar text-xs`} style={{ backgroundColor: 'transparent', color: themeColor }}>
@@ -311,8 +357,36 @@ export default function PDFPage() {
                             {/* Input Area - Straight text */}
                             <div className="p-4">
                                 <div className="flex gap-2 relative border-b" style={{ borderColor: isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)' }}>
+                                    {/* Attachment Button */}
+                                    <button
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="p-1 self-center hover:opacity-70 transition-opacity"
+                                        style={{ color: themeColor }}
+                                        title="Attach Image"
+                                    >
+                                        <Paperclip size={16} />
+                                    </button>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleFileSelect}
+                                    />
+
+                                    {/* Pending Attachments Indicator */}
+                                    {attachments.length > 0 && (
+                                        <div className="self-center mr-1">
+                                            <div className="relative">
+                                                <ImageIcon size={16} style={{ color: themeColor }} />
+                                                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <input
                                         type="text"
+
                                         placeholder="Type here..."
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}

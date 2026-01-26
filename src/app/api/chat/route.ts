@@ -15,24 +15,52 @@ export async function POST(req: Request) {
             });
         }
 
-        const ai = new GoogleGenAI({ apiKey });
+        const ai = new GoogleGenAI({ apiKey, apiVersion: "v1alpha" });
 
         const data = await req.json();
-        const { message, history, model } = data;
+        const { message, history, model, images } = data; // Receive images array [ { data: base64, mimeType: string } ]
+
+        // Helper to format parts
+        const formatParts = (text: string, imgs: any[]) => {
+            const parts: any[] = [{ text }];
+            if (imgs && Array.isArray(imgs)) {
+                imgs.forEach(img => {
+                    parts.push({
+                        inlineData: {
+                            mimeType: img.mimeType,
+                            data: img.data
+                        },
+                        mediaResolution: {
+                            level: "media_resolution_high"
+                        }
+                    });
+                });
+            }
+            return parts;
+        };
+
 
         // Simple mapping:
-        // Explicitly type the array to avoid "implicitly has type 'any[]'" error
-        let contents: { role: string; parts: { text: string }[] }[] = [];
+        let contents: { role: string; parts: any[] }[] = [];
         if (history && Array.isArray(history)) {
+            // We assume history might now contain inlineData, but for simplicity 
+            // and saving context, we might strip images from history or keep them if efficient.
+            // For now, let's just pass text from history to save tokens unless user wants full multi-turn vision.
+            // The prompt implies we want to be able to "add" images.
+            // Let's assume history contains minimal text representations if we don't want to re-upload images.
+            // Actually, best practice for vision history is to retain the inlineData. 
+            // But we need to make sure the frontend sends it back correctly.
+            // Let's rely on frontend sending 'parts' correctly structured if it does.
             contents = history.map((msg: any) => ({
                 role: msg.role,
-                parts: msg.parts
+                parts: msg.parts // Pass through parts (text + images)
             }));
         }
-        // Add current message
+
+        // Add current message with potential images
         contents.push({
             role: "user",
-            parts: [{ text: message }]
+            parts: formatParts(message, images)
         });
 
         // Use the requested model or default to flash
@@ -43,9 +71,9 @@ export async function POST(req: Request) {
             model: selectedModel,
             contents: contents, // Pass full conversation history
             config: {
-                temperature: 0.1,
+                temperature: 1.0,
                 systemInstruction: {
-                    parts: [{ text: "You are a direct, fact-based logic engine. You do not use greetings, pleasantries, or closing remarks. You output only the answer. If the answer is a code snippet, output only the code. Do not apologize. Do not say 'Here is the answer'. Be purely functional." }]
+                    parts: [{ text: "You are a minimal assistant. Keep responses concise and to the point. Do not use pleasantries. Output only the answer." }]
                 }
             }
         });
