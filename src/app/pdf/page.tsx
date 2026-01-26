@@ -245,7 +245,11 @@ export default function PDFPage() {
                         </>
                     ) : (
                         // 10px dot
-                        <div className="w-[10px] h-[10px] bg-[#808080] rounded-full hover:bg-[#808080]/80 transition-colors cursor-pointer"></div>
+                        <div
+                            className="w-[10px] h-[10px] bg-[#808080] rounded-full hover:bg-[#808080]/80 transition-colors cursor-pointer"
+                            title="Click to Open, Right-Click to Switch Side"
+                            onContextMenu={(e) => { e.preventDefault(); setIsRightAligned(!isRightAligned); }}
+                        ></div>
                     )}
 
                 </div>
