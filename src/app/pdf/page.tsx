@@ -50,8 +50,10 @@ export default function PDFPage() {
     const [isInvisible, setIsInvisible] = useState(false);
     const [isHardInvisible, setIsHardInvisible] = useState(false);
     const [isDarkTheme, setIsDarkTheme] = useState(false);
+    const [selectedModel, setSelectedModel] = useState<'gemini-3-flash-preview' | 'gemini-3-pro-preview'>('gemini-3-flash-preview');
 
     // Dynamic Theme Colors
+
     const themeColor = isDarkTheme ? '#333333' : '#808080';
     const textClass = isDarkTheme ? 'text-[#333333]' : 'text-[#808080]';
     const borderClass = isDarkTheme ? 'border-[#333333]' : 'border-[#808080]';
@@ -97,8 +99,9 @@ export default function PDFPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 // If history is empty, that's fine. The 'message' (userMessage) starts the chat.
-                body: JSON.stringify({ message: userMessage, history: validHistory })
+                body: JSON.stringify({ message: userMessage, history: validHistory, model: selectedModel })
             });
+
 
             if (!response.ok) {
                 let errorData;
@@ -227,7 +230,21 @@ export default function PDFPage() {
                                     >
                                         <Palette size={16} />
                                     </button>
+
+                                    {/* Model Toggle (Text based) */}
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSelectedModel(prev => prev === 'gemini-3-flash-preview' ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview');
+                                        }}
+                                        className={`hover:opacity-80 transition-colors text-xs font-bold uppercase tracking-wider ml-1`}
+                                        style={{ color: themeColor }}
+                                        title={`Current Model: ${selectedModel}`}
+                                    >
+                                        {selectedModel === 'gemini-3-flash-preview' ? 'FLASH' : 'PRO'}
+                                    </button>
                                 </div>
+
 
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}

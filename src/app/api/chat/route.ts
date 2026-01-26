@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         const ai = new GoogleGenAI({ apiKey });
 
         const data = await req.json();
-        const { message, history } = data;
+        const { message, history, model } = data;
 
         // Simple mapping:
         // Explicitly type the array to avoid "implicitly has type 'any[]'" error
@@ -35,10 +35,12 @@ export async function POST(req: Request) {
             parts: [{ text: message }]
         });
 
-        // Use 'gemini-3-flash-preview' as requested by the user.
+        // Use the requested model or default to flash
+        const selectedModel = model || "gemini-3-flash-preview";
+
         // Use 'generateContentStream' for streaming
         const streamResult = await ai.models.generateContentStream({
-            model: "gemini-3-flash-preview",
+            model: selectedModel,
             contents: contents, // Pass full conversation history
             config: {
                 temperature: 0.1,
