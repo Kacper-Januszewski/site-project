@@ -162,8 +162,7 @@ export default function PDFPage() {
                         '--scrollbar-hover-color': isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'
                     } as React.CSSProperties}
                     className={`
-              pointer-events-auto transition-all duration-500 ease-in-out
-
+              pointer-events-auto transition-all duration-500 ease-in-out transform-gpu will-change-[opacity,transform]
               ${isOpen ? `w-80 h-96 ${isHardInvisible ? 'opacity-0' : isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
               flex flex-col
 
