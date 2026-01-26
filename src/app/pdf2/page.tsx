@@ -249,7 +249,7 @@ export default function PDFPage() {
         <div className="relative w-full h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
             {/* PDF Viewer - Full Screen */}
             <iframe
-                src="/document.pdf"
+                src="/document2.pdf"
                 className="w-full h-full border-none"
                 title="Document Viewer"
             />
