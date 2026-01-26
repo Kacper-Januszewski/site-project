@@ -243,7 +243,7 @@ export default function PDFPage() {
                                                 components={{
                                                     code({ node, inline, className, children, ...props }: any) {
                                                         return !inline ? (
-                                                            <div className={`p-2 rounded-md my-2 overflow-x-auto text-xs`} style={{ backgroundColor: isDarkTheme ? 'rgba(51, 51, 51, 0.05)' : '#1f2937', color: themeColor }}>
+                                                            <div className={`p-2 rounded-md my-2 overflow-x-auto minimal-scrollbar text-xs`} style={{ backgroundColor: isDarkTheme ? 'rgba(51, 51, 51, 0.05)' : '#1f2937', color: themeColor }}>
                                                                 <code className={className} {...props}>
                                                                     {children}
                                                                 </code>
