@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2, ArrowLeftRight } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff } from 'lucide-react';
+
 
 import ReactMarkdown from 'react-markdown';
 
@@ -13,6 +14,8 @@ type Message = {
 export default function PDFPage() {
     const [isOpen, setIsOpen] = useState(true);
     const [isRightAligned, setIsRightAligned] = useState(true);
+    const [isInvisible, setIsInvisible] = useState(false);
+
 
     const [messages, setMessages] = useState<Message[]>([
         { role: 'model', text: 'Hi! How can I help with this document?' }
@@ -124,8 +127,9 @@ export default function PDFPage() {
                 <div
                     className={`
               pointer-events-auto transition-all duration-500 ease-in-out
-              ${isOpen ? 'w-80 h-96 opacity-100 translate-y-0' : 'w-auto h-auto opacity-80 translate-y-0'}
+              ${isOpen ? `w-80 h-96 ${isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
               flex flex-col
+
               ${isOpen ? '' : 'items-center justify-center cursor-pointer'} 
             `}
                     onClick={() => !isOpen && setIsOpen(true)}
@@ -135,13 +139,22 @@ export default function PDFPage() {
                         <>
                             {/* Header - Invisible, just X button */}
                             <div className="p-4 flex justify-between items-center">
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); setIsRightAligned(!isRightAligned); }}
-                                    className="text-[#808080] hover:text-[#808080]/80 transition-colors"
-                                    title={isRightAligned ? "Move to Left" : "Move to Right"}
-                                >
-                                    <ArrowLeftRight size={16} />
-                                </button>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setIsRightAligned(!isRightAligned); }}
+                                        className="text-[#808080] hover:text-[#808080]/80 transition-colors"
+                                        title={isRightAligned ? "Move to Left" : "Move to Right"}
+                                    >
+                                        <ArrowLeftRight size={16} />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setIsInvisible(!isInvisible); }}
+                                        className="text-[#808080] hover:text-[#808080]/80 transition-colors"
+                                        title={isInvisible ? "Show Chat" : "Invisible Mode"}
+                                    >
+                                        {isInvisible ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
                                     className="text-[#808080] hover:text-[#808080]/80 transition-colors"
