@@ -258,9 +258,11 @@ export default function PDFPage() {
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={handleKeyDown}
-                                        className="w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0"
+                                        spellCheck={false}
+                                        className={`w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0 ${isDarkTheme ? 'placeholder-[#333333]/50' : 'placeholder-[#808080]/50'}`}
                                         style={{ color: themeColor }}
                                     />
+
                                     <button
                                         onClick={handleSend}
                                         disabled={isLoading}
