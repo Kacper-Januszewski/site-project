@@ -13,24 +13,35 @@ type Message = {
     text: string;
 };
 
-// Custom minimal scrollbar styles
-const scrollbarStyles = `
+// Custom minimal scrollbar and selection styles
+const globalStyles = `
   .minimal-scrollbar::-webkit-scrollbar {
-    width: 6px;                 /* Slightly wider to allow interaction, but still minimal */
+    width: 6px;
   }
   .minimal-scrollbar::-webkit-scrollbar-track {
-    background: transparent;    /* Track is invisible */
+    background: transparent;
   }
   .minimal-scrollbar::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-color);
-    border-radius: 20px;       /* Fully rounded */
-    border: 2px solid transparent; /* Creates padding around thumb effectively making it thinner */
-    background-clip: content-box;  /* Ensures border doesn't get colored */
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
   }
   .minimal-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: var(--scrollbar-hover-color);
   }
+  
+  /* Custom Text Selection */
+  ::selection {
+    background-color: var(--selection-bg);
+    color: inherit;
+  }
+  ::-moz-selection {
+    background-color: var(--selection-bg);
+    color: inherit;
+  }
 `;
+
 
 export default function PDFPage() {
 
@@ -155,13 +166,19 @@ export default function PDFPage() {
 
             {/* Custom Code Overlay (Chat App) */}
             <div className={`absolute top-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end p-6 z-50 ${isRightAligned ? 'right-0 items-end' : 'left-0 items-start'}`}>
-                <style jsx global>{scrollbarStyles}</style>
+                <style jsx global>{globalStyles}</style>
                 <div
                     style={{
                         '--scrollbar-color': isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)',
-                        '--scrollbar-hover-color': isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'
+                        '--scrollbar-hover-color': isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)',
+                        '--selection-bg': isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)',
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        perspective: '1000px',
+                        transform: 'translateZ(0)'
                     } as React.CSSProperties}
                     className={`
+
               pointer-events-auto transition-all duration-500 ease-in-out transform-gpu will-change-[opacity,transform]
               ${isOpen ? `w-80 h-96 ${isHardInvisible ? 'opacity-0' : isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
               flex flex-col
