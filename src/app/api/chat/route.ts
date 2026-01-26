@@ -56,6 +56,15 @@ export async function POST(req: Request) {
         const encoder = new TextEncoder();
         const readableStream = new ReadableStream({
             async start(controller) {
+                // Keep-Alive Loop: Send a space every 10 seconds to prevent 504 Timeout
+                const keepAliveInterval = setInterval(() => {
+                    try {
+                        controller.enqueue(encoder.encode(" "));
+                    } catch (e) {
+                        clearInterval(keepAliveInterval);
+                    }
+                }, 10000);
+
                 try {
                     const streamResult = await ai.models.generateContentStream({
                         model: selectedModel,
@@ -70,18 +79,24 @@ export async function POST(req: Request) {
                     });
 
                     for await (const chunk of streamResult) {
+                        // Clear keep-alive once we have data
+                        clearInterval(keepAliveInterval);
+
                         const chunkText = chunk.text;
                         if (chunkText) {
                             controller.enqueue(encoder.encode(chunkText));
                         }
                     }
+                    clearInterval(keepAliveInterval); // Ensure clear
                     controller.close();
                 } catch (error: any) {
+                    clearInterval(keepAliveInterval); // Ensure clear
                     console.error("Streaming/Generation Error:", error);
                     controller.error(error);
                 }
             },
         });
+
 
         return new Response(readableStream, {
             headers: { 'Content-Type': 'text/plain; charset=utf-8' },

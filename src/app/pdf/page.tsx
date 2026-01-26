@@ -392,10 +392,7 @@ export default function PDFPage() {
                                     {/* Pending Attachments Indicator */}
                                     {attachments.length > 0 && (
                                         <div className="self-center mr-1">
-                                            <div className="relative">
-                                                <ImageIcon size={16} style={{ color: themeColor }} />
-                                                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
-                                            </div>
+                                            <ImageIcon size={16} style={{ color: themeColor }} />
                                         </div>
                                     )}
 
