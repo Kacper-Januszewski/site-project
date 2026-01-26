@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost, Palette } from 'lucide-react';
+
 
 
 
@@ -17,6 +18,14 @@ export default function PDFPage() {
     const [isRightAligned, setIsRightAligned] = useState(true);
     const [isInvisible, setIsInvisible] = useState(false);
     const [isHardInvisible, setIsHardInvisible] = useState(false);
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+    // Dynamic Theme Colors
+    const themeColor = isDarkTheme ? '#333333' : '#808080';
+    const textClass = isDarkTheme ? 'text-[#333333]' : 'text-[#808080]';
+    const borderClass = isDarkTheme ? 'border-[#333333]' : 'border-[#808080]';
+    const bgClass = isDarkTheme ? 'bg-[#333333]' : 'bg-[#808080]';
+
 
 
 
@@ -146,34 +155,48 @@ export default function PDFPage() {
                                 <div className="flex gap-2">
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setIsRightAligned(!isRightAligned); }}
-                                        className="text-[#808080] hover:text-[#808080]/80 transition-colors"
+                                        className={`hover:opacity-80 transition-colors`}
+                                        style={{ color: themeColor }}
                                         title={isRightAligned ? "Move to Left" : "Move to Right"}
                                     >
                                         <ArrowLeftRight size={16} />
                                     </button>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setIsInvisible(!isInvisible); }}
-                                        className="text-[#808080] hover:text-[#808080]/80 transition-colors"
+                                        className={`hover:opacity-80 transition-colors`}
+                                        style={{ color: themeColor }}
                                         title={isInvisible ? "Show Chat" : "Soft Invisible Mode"}
                                     >
                                         {isInvisible ? <EyeOff size={16} /> : <Eye size={16} />}
                                     </button>
+
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setIsHardInvisible(!isHardInvisible); }}
                                         className={`text-[#808080] hover:text-[#808080]/80 transition-colors ${isHardInvisible ? 'opacity-50' : ''}`}
+                                        style={{ color: themeColor }}
                                         title={isHardInvisible ? "Disable Hard Invisible" : "Enable Hard Invisible"}
                                     >
                                         <Ghost size={16} />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setIsDarkTheme(!isDarkTheme); }}
+                                        className={`hover:opacity-80 transition-colors`}
+                                        style={{ color: themeColor }}
+                                        title={isDarkTheme ? "Switch to Light Gray" : "Switch to Dark Gray"}
+                                    >
+                                        <Palette size={16} />
                                     </button>
                                 </div>
 
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
-                                    className="text-[#808080] hover:text-[#808080]/80 transition-colors"
+                                    className={`hover:opacity-80 transition-colors`}
+                                    style={{ color: themeColor }}
                                 >
                                     <X size={20} />
                                 </button>
                             </div>
+
 
                             {/* Chat Body - Straight text */}
                             <div className="flex-1 p-4 flex flex-col overflow-y-auto no-scrollbar mask-gradient">
@@ -184,28 +207,31 @@ export default function PDFPage() {
                                             className={`
                                                 text-sm p-1 max-w-[90%] font-medium
                                                 ${msg.role === 'user'
-                                                    ? 'self-end text-right text-[#808080]'
-                                                    : 'self-start text-left text-[#808080]'}
+                                                    ? 'self-end text-right'
+                                                    : 'self-start text-left'}
                                             `}
+                                            style={{ color: themeColor }}
+
                                         >
                                             <ReactMarkdown
                                                 components={{
                                                     code({ node, inline, className, children, ...props }: any) {
                                                         return !inline ? (
-                                                            <div className="bg-gray-800 text-[#808080] p-2 rounded-md my-2 overflow-x-auto text-xs">
+                                                            <div className={`p-2 rounded-md my-2 overflow-x-auto text-xs`} style={{ backgroundColor: isDarkTheme ? 'rgba(51, 51, 51, 0.05)' : '#1f2937', color: themeColor }}>
                                                                 <code className={className} {...props}>
                                                                     {children}
                                                                 </code>
                                                             </div>
                                                         ) : (
-                                                            <code className="bg-[#808080]/10 px-1 rounded text-[#808080]" {...props}>
+                                                            <code className={`px-1 rounded`} style={{ backgroundColor: isDarkTheme ? 'rgba(51, 51, 51, 0.1)' : 'rgba(128, 128, 128, 0.1)', color: themeColor }} {...props}>
                                                                 {children}
                                                             </code>
                                                         )
                                                     },
-                                                    p: ({ children }) => <p className="text-[#808080]">{children}</p>,
-                                                    li: ({ children }) => <li className="text-[#808080]">{children}</li>,
-                                                    strong: ({ children }) => <strong className="text-[#808080] font-bold">{children}</strong>
+                                                    p: ({ children }) => <p style={{ color: themeColor }}>{children}</p>,
+                                                    li: ({ children }) => <li style={{ color: themeColor }}>{children}</li>,
+                                                    strong: ({ children }) => <strong style={{ color: themeColor }} className="font-bold">{children}</strong>
+
                                                 }}
                                             >
                                                 {msg.text}
@@ -213,10 +239,11 @@ export default function PDFPage() {
                                         </div>
                                     ))}
                                     {isLoading && (
-                                        <div className="self-start text-[#808080]/70 text-xs animate-pulse">
+                                        <div className="self-start text-xs animate-pulse" style={{ color: themeColor, opacity: 0.7 }}>
                                             Thinking...
                                         </div>
                                     )}
+
                                     <div ref={messagesEndRef} />
                                 </div>
                             </div>
@@ -224,19 +251,21 @@ export default function PDFPage() {
 
                             {/* Input Area - Straight text */}
                             <div className="p-4">
-                                <div className="flex gap-2 relative border-b border-[#808080]/30">
+                                <div className="flex gap-2 relative border-b" style={{ borderColor: isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)' }}>
                                     <input
                                         type="text"
                                         placeholder="Type here..."
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={handleKeyDown}
-                                        className="w-full bg-transparent text-[#808080] placeholder-[#808080]/50 border-none px-0 py-2 text-sm focus:outline-none focus:ring-0"
+                                        className="w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0"
+                                        style={{ color: themeColor }}
                                     />
                                     <button
                                         onClick={handleSend}
                                         disabled={isLoading}
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 text-[#808080] p-1 hover:opacity-70 transition-opacity disabled:opacity-30"
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 p-1 hover:opacity-70 transition-opacity disabled:opacity-30"
+                                        style={{ color: themeColor }}
                                     >
                                         {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                                     </button>
@@ -246,10 +275,12 @@ export default function PDFPage() {
                     ) : (
                         // 10px dot
                         <div
-                            className="w-[10px] h-[10px] bg-[#808080] rounded-full hover:bg-[#808080]/80 transition-colors cursor-pointer"
+                            className="w-[10px] h-[10px] rounded-full hover:opacity-80 transition-colors cursor-pointer"
+                            style={{ backgroundColor: themeColor }}
                             title="Click to Open, Right-Click to Switch Side"
                             onContextMenu={(e) => { e.preventDefault(); setIsRightAligned(!isRightAligned); }}
                         ></div>
+
                     )}
 
                 </div>
