@@ -360,7 +360,11 @@ export default function PDFPage() {
                                         >
                                             {msg.hasImages && (
                                                 <div className="flex gap-1 mb-1 justify-end">
-                                                    <div className="p-1 rounded bg-gray-200 dark:bg-gray-700" title="Image attached">
+                                                    <div
+                                                        className="p-1 rounded"
+                                                        style={{ backgroundColor: isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.2)' }}
+                                                        title="Image attached"
+                                                    >
                                                         <ImageIcon size={14} />
                                                     </div>
                                                 </div>
