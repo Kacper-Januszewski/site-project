@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost, Palette, Paperclip, Image as ImageIcon, Square } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, ArrowLeftRight, Eye, EyeOff, Ghost, Palette, Paperclip, Image as ImageIcon, Square, Moon } from 'lucide-react';
 
 
 
@@ -58,16 +58,28 @@ export default function PDFPage() {
 
     const [selectedModel, setSelectedModel] = useState<'gemini-3-flash-preview' | 'gemini-3-pro-preview'>('gemini-3-flash-preview');
     const [attachments, setAttachments] = useState<{ data: string, mimeType: string }[]>([]);
+    const [customColor, setCustomColor] = useState<string>('#0000ff');
+    const [isCustomColorActive, setIsCustomColorActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const colorInputRef = useRef<HTMLInputElement>(null);
     const abortControllerRef = useRef<AbortController | null>(null);
 
     // Dynamic Theme Colors
+    const hexToRgba = (hex: string, alpha: number) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
+    const themeColor = isCustomColorActive ? customColor : (isDarkTheme ? '#333333' : '#808080');
+    // We rely on style={{ color: themeColor }} mostly, but for some specific tailwind classes we might need overrides or just use style everywhere relevant.
+    // The original code used textClass/borderClass/bgClass but applied inline style color/borderColor on top often.
+    // We will stick to inline styles for the custom color integration as it's most reliable for dynamic user values.
 
 
 
-    const themeColor = isDarkTheme ? '#333333' : '#808080';
-    const textClass = isDarkTheme ? 'text-[#333333]' : 'text-[#808080]';
-    const borderClass = isDarkTheme ? 'border-[#333333]' : 'border-[#808080]';
+
     const bgClass = isDarkTheme ? 'bg-[#333333]' : 'bg-[#808080]';
 
 
@@ -259,9 +271,9 @@ export default function PDFPage() {
                 <style jsx global>{globalStyles}</style>
                 <div
                     style={{
-                        '--scrollbar-color': isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)',
-                        '--scrollbar-hover-color': isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)',
-                        '--selection-bg': isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)',
+                        '--scrollbar-color': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
+                        '--scrollbar-hover-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
+                        '--selection-bg': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         perspective: '1000px',
@@ -315,8 +327,36 @@ export default function PDFPage() {
                                         style={{ color: themeColor }}
                                         title={isDarkTheme ? "Switch to Light Gray" : "Switch to Dark Gray"}
                                     >
+                                        <Moon size={16} />
+                                    </button>
+
+                                    {/* Custom Color Picker */}
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsCustomColorActive(!isCustomColorActive);
+                                        }}
+                                        onContextMenu={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            colorInputRef.current?.click();
+                                        }}
+                                        className={`hover:opacity-80 transition-colors ${isCustomColorActive ? '' : 'opacity-50'}`}
+                                        style={{ color: themeColor }}
+                                        title="Left-Click: Toggle Custom Color / Right-Click: Pick Color"
+                                    >
                                         <Palette size={16} />
                                     </button>
+                                    <input
+                                        type="color"
+                                        ref={colorInputRef}
+                                        className="hidden"
+                                        value={customColor}
+                                        onChange={(e) => {
+                                            setCustomColor(e.target.value);
+                                            setIsCustomColorActive(true);
+                                        }}
+                                    />
 
                                     {/* Model Toggle (Text based) */}
                                     <button
@@ -362,7 +402,7 @@ export default function PDFPage() {
                                                 <div className="flex gap-1 mb-1 justify-end">
                                                     <div
                                                         className="p-1 rounded"
-                                                        style={{ backgroundColor: isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.2)' }}
+                                                        style={{ backgroundColor: isCustomColorActive ? hexToRgba(customColor, 0.1) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.2)') }}
                                                         title="Image attached"
                                                     >
                                                         <ImageIcon size={14} />
@@ -408,7 +448,7 @@ export default function PDFPage() {
 
                             {/* Input Area - Straight text */}
                             <div className="p-4">
-                                <div className="flex gap-2 relative border-b" style={{ borderColor: isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)' }}>
+                                <div className="flex gap-2 relative border-b" style={{ borderColor: isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)') }}>
                                     {/* Attachment Button */}
                                     <button
                                         onClick={() => fileInputRef.current?.click()}
