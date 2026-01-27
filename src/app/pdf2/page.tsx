@@ -45,6 +45,12 @@ const globalStyles = `
     background-color: var(--selection-bg);
     color: inherit;
   }
+  
+  /* Dynamic Placeholder */
+  .dynamic-placeholder::placeholder {
+    color: var(--placeholder-color);
+    opacity: 1; /* Reset opacity as we handle it in rgba */
+  }
 `;
 
 
@@ -274,6 +280,7 @@ export default function PDFPage() {
                         '--scrollbar-color': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
                         '--scrollbar-hover-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
                         '--selection-bg': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
+                        '--placeholder-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         perspective: '1000px',
@@ -487,7 +494,7 @@ export default function PDFPage() {
                                         onPaste={handlePaste}
                                         spellCheck={false}
 
-                                        className={`w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0 ${isDarkTheme ? 'placeholder-[#333333]/50' : 'placeholder-[#808080]/50'}`}
+                                        className={`w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0 dynamic-placeholder`}
                                         style={{ color: themeColor }}
                                     />
 
