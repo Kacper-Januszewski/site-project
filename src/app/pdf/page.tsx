@@ -322,7 +322,11 @@ export default function PDFPage() {
                                         <Ghost size={16} />
                                     </button>
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); setIsDarkTheme(!isDarkTheme); }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsCustomColorActive(false);
+                                            setIsDarkTheme(!isDarkTheme);
+                                        }}
                                         className={`hover:opacity-80 transition-colors`}
                                         style={{ color: themeColor }}
                                         title={isDarkTheme ? "Switch to Light Gray" : "Switch to Dark Gray"}
@@ -510,6 +514,7 @@ export default function PDFPage() {
                             onMouseDown={(e) => {
                                 if (e.button === 1) {
                                     e.preventDefault();
+                                    setIsCustomColorActive(false);
                                     setIsDarkTheme(!isDarkTheme);
                                 }
                             }}
