@@ -272,21 +272,22 @@ export default function PDFPage() {
                 title="Document Viewer"
             />
 
-            {/* Custom Code Overlay (Chat App) */}
-            <div className={`absolute top-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end p-6 z-50 ${isRightAligned ? 'right-0 items-end' : 'left-0 items-start'}`}>
-                <style jsx global>{globalStyles}</style>
-                <div
-                    style={{
-                        '--scrollbar-color': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
-                        '--scrollbar-hover-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
-                        '--selection-bg': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
-                        '--placeholder-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
-                        backfaceVisibility: 'hidden',
-                        WebkitBackfaceVisibility: 'hidden',
-                        perspective: '1000px',
-                        transform: 'translateZ(0)'
-                    } as React.CSSProperties}
-                    className={`
+            {/* Custom Code Overlay (Chat App) - Hidden/Commented Out */}
+            {false && (
+                <div className={`absolute top-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end p-6 z-50 ${isRightAligned ? 'right-0 items-end' : 'left-0 items-start'}`}>
+                    <style jsx global>{globalStyles}</style>
+                    <div
+                        style={{
+                            '--scrollbar-color': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
+                            '--scrollbar-hover-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
+                            '--selection-bg': isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)'),
+                            '--placeholder-color': isCustomColorActive ? hexToRgba(customColor, 0.5) : (isDarkTheme ? 'rgba(51, 51, 51, 0.5)' : 'rgba(128, 128, 128, 0.5)'),
+                            backfaceVisibility: 'hidden',
+                            WebkitBackfaceVisibility: 'hidden',
+                            perspective: '1000px',
+                            transform: 'translateZ(0)'
+                        } as React.CSSProperties}
+                        className={`
 
               pointer-events-auto transition-all duration-500 ease-in-out transform-gpu will-change-[opacity,transform]
               ${isOpen ? `w-80 h-96 ${isHardInvisible ? 'opacity-0' : isInvisible ? 'opacity-0 hover:opacity-100' : 'opacity-100'} translate-y-0` : 'w-auto h-auto opacity-80 translate-y-0'}
@@ -295,243 +296,244 @@ export default function PDFPage() {
 
               ${isOpen ? '' : 'items-center justify-center cursor-pointer'} 
             `}
-                    onClick={() => !isOpen && setIsOpen(true)}
-                >
+                        onClick={() => !isOpen && setIsOpen(true)}
+                    >
 
-                    {isOpen ? (
-                        <>
-                            {/* Header - Invisible, just X button */}
-                            <div className="p-4 flex justify-between items-center">
-                                <div className="flex gap-2">
+                        {isOpen ? (
+                            <>
+                                {/* Header - Invisible, just X button */}
+                                <div className="p-4 flex justify-between items-center">
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); setIsRightAligned(!isRightAligned); }}
+                                            className={`hover:opacity-80 transition-colors`}
+                                            style={{ color: themeColor }}
+                                            title={isRightAligned ? "Move to Left" : "Move to Right"}
+                                        >
+                                            <ArrowLeftRight size={16} />
+                                        </button>
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); setIsInvisible(!isInvisible); }}
+                                            className={`hover:opacity-80 transition-colors`}
+                                            style={{ color: themeColor }}
+                                            title={isInvisible ? "Show Chat" : "Soft Invisible Mode"}
+                                        >
+                                            {isInvisible ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        </button>
+
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); setIsHardInvisible(!isHardInvisible); }}
+                                            className={`text-[#808080] hover:text-[#808080]/80 transition-colors ${isHardInvisible ? 'opacity-50' : ''}`}
+                                            style={{ color: themeColor }}
+                                            title={isHardInvisible ? "Disable Hard Invisible" : "Enable Hard Invisible"}
+                                        >
+                                            <Ghost size={16} />
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setIsCustomColorActive(false);
+                                                setIsDarkTheme(!isDarkTheme);
+                                            }}
+                                            className={`hover:opacity-80 transition-colors`}
+                                            style={{ color: themeColor }}
+                                            title={isDarkTheme ? "Switch to Light Gray" : "Switch to Dark Gray"}
+                                        >
+                                            <Moon size={16} />
+                                        </button>
+
+                                        {/* Custom Color Picker */}
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setIsCustomColorActive(!isCustomColorActive);
+                                            }}
+                                            onContextMenu={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                colorInputRef.current?.click();
+                                            }}
+                                            className={`hover:opacity-80 transition-colors ${isCustomColorActive ? '' : 'opacity-50'}`}
+                                            style={{ color: themeColor }}
+                                            title="Left-Click: Toggle Custom Color / Right-Click: Pick Color"
+                                        >
+                                            <Palette size={16} />
+                                        </button>
+                                        <input
+                                            type="color"
+                                            ref={colorInputRef}
+                                            className="hidden"
+                                            value={customColor}
+                                            onChange={(e) => {
+                                                setCustomColor(e.target.value);
+                                                setIsCustomColorActive(true);
+                                            }}
+                                        />
+
+                                        {/* Model Toggle (Text based) */}
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedModel(prev => prev === 'gemini-3-flash-preview' ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview');
+                                            }}
+                                            className={`hover:opacity-80 transition-colors text-xs font-bold uppercase tracking-wider ml-1`}
+                                            style={{ color: themeColor }}
+                                            title={`Current Model: ${selectedModel}`}
+                                        >
+                                            {selectedModel === 'gemini-3-flash-preview' ? 'FLASH' : 'PRO'}
+                                        </button>
+                                    </div>
+
+
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); setIsRightAligned(!isRightAligned); }}
+                                        onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
                                         className={`hover:opacity-80 transition-colors`}
                                         style={{ color: themeColor }}
-                                        title={isRightAligned ? "Move to Left" : "Move to Right"}
                                     >
-                                        <ArrowLeftRight size={16} />
-                                    </button>
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); setIsInvisible(!isInvisible); }}
-                                        className={`hover:opacity-80 transition-colors`}
-                                        style={{ color: themeColor }}
-                                        title={isInvisible ? "Show Chat" : "Soft Invisible Mode"}
-                                    >
-                                        {isInvisible ? <EyeOff size={16} /> : <Eye size={16} />}
-                                    </button>
-
-                                    <button
-                                        onClick={(e) => { e.stopPropagation(); setIsHardInvisible(!isHardInvisible); }}
-                                        className={`text-[#808080] hover:text-[#808080]/80 transition-colors ${isHardInvisible ? 'opacity-50' : ''}`}
-                                        style={{ color: themeColor }}
-                                        title={isHardInvisible ? "Disable Hard Invisible" : "Enable Hard Invisible"}
-                                    >
-                                        <Ghost size={16} />
-                                    </button>
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setIsCustomColorActive(false);
-                                            setIsDarkTheme(!isDarkTheme);
-                                        }}
-                                        className={`hover:opacity-80 transition-colors`}
-                                        style={{ color: themeColor }}
-                                        title={isDarkTheme ? "Switch to Light Gray" : "Switch to Dark Gray"}
-                                    >
-                                        <Moon size={16} />
-                                    </button>
-
-                                    {/* Custom Color Picker */}
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setIsCustomColorActive(!isCustomColorActive);
-                                        }}
-                                        onContextMenu={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            colorInputRef.current?.click();
-                                        }}
-                                        className={`hover:opacity-80 transition-colors ${isCustomColorActive ? '' : 'opacity-50'}`}
-                                        style={{ color: themeColor }}
-                                        title="Left-Click: Toggle Custom Color / Right-Click: Pick Color"
-                                    >
-                                        <Palette size={16} />
-                                    </button>
-                                    <input
-                                        type="color"
-                                        ref={colorInputRef}
-                                        className="hidden"
-                                        value={customColor}
-                                        onChange={(e) => {
-                                            setCustomColor(e.target.value);
-                                            setIsCustomColorActive(true);
-                                        }}
-                                    />
-
-                                    {/* Model Toggle (Text based) */}
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setSelectedModel(prev => prev === 'gemini-3-flash-preview' ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview');
-                                        }}
-                                        className={`hover:opacity-80 transition-colors text-xs font-bold uppercase tracking-wider ml-1`}
-                                        style={{ color: themeColor }}
-                                        title={`Current Model: ${selectedModel}`}
-                                    >
-                                        {selectedModel === 'gemini-3-flash-preview' ? 'FLASH' : 'PRO'}
+                                        <X size={20} />
                                     </button>
                                 </div>
 
 
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
-                                    className={`hover:opacity-80 transition-colors`}
-                                    style={{ color: themeColor }}
-                                >
-                                    <X size={20} />
-                                </button>
-                            </div>
+                                {/* Chat Body - Straight text */}
+                                <div className="flex-1 p-4 flex flex-col overflow-y-auto minimal-scrollbar mask-gradient">
+                                    <div className="space-y-3 mt-auto">
 
-
-                            {/* Chat Body - Straight text */}
-                            <div className="flex-1 p-4 flex flex-col overflow-y-auto minimal-scrollbar mask-gradient">
-                                <div className="space-y-3 mt-auto">
-
-                                    {messages.map((msg, idx) => (
-                                        <div
-                                            key={idx}
-                                            className={`
+                                        {messages.map((msg, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={`
                                                 text-sm p-1 max-w-[90%] font-medium
                                                 ${msg.role === 'user'
-                                                    ? 'self-end text-right'
-                                                    : 'self-start text-left'}
+                                                        ? 'self-end text-right'
+                                                        : 'self-start text-left'}
                                             `}
-                                            style={{ color: themeColor }}
-                                        >
-                                            {msg.hasImages && (
-                                                <div className="flex gap-1 mb-1 justify-end">
-                                                    <div
-                                                        className="p-1 rounded"
-                                                        style={{ backgroundColor: isCustomColorActive ? hexToRgba(customColor, 0.1) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.2)') }}
-                                                        title="Image attached"
-                                                    >
-                                                        <ImageIcon size={14} />
+                                                style={{ color: themeColor }}
+                                            >
+                                                {msg.hasImages && (
+                                                    <div className="flex gap-1 mb-1 justify-end">
+                                                        <div
+                                                            className="p-1 rounded"
+                                                            style={{ backgroundColor: isCustomColorActive ? hexToRgba(customColor, 0.1) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.2)') }}
+                                                            title="Image attached"
+                                                        >
+                                                            <ImageIcon size={14} />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
-                                            <ReactMarkdown
-                                                components={{
+                                                )}
+                                                <ReactMarkdown
+                                                    components={{
 
-                                                    code({ node, inline, className, children, ...props }: any) {
-                                                        return !inline ? (
-                                                            <div className={`p-2 rounded-md my-2 overflow-x-auto minimal-scrollbar text-xs`} style={{ backgroundColor: 'transparent', color: themeColor }}>
-                                                                <code className={className} {...props}>
+                                                        code({ node, inline, className, children, ...props }: any) {
+                                                            return !inline ? (
+                                                                <div className={`p-2 rounded-md my-2 overflow-x-auto minimal-scrollbar text-xs`} style={{ backgroundColor: 'transparent', color: themeColor }}>
+                                                                    <code className={className} {...props}>
+                                                                        {children}
+                                                                    </code>
+                                                                </div>
+                                                            ) : (
+                                                                <code className={`px-1 rounded`} style={{ backgroundColor: 'transparent', color: themeColor }} {...props}>
                                                                     {children}
                                                                 </code>
-                                                            </div>
-                                                        ) : (
-                                                            <code className={`px-1 rounded`} style={{ backgroundColor: 'transparent', color: themeColor }} {...props}>
-                                                                {children}
-                                                            </code>
-                                                        )
-                                                    },
-                                                    p: ({ children }) => <p style={{ color: themeColor }}>{children}</p>,
-                                                    li: ({ children }) => <li style={{ color: themeColor }}>{children}</li>,
-                                                    strong: ({ children }) => <strong style={{ color: themeColor }} className="font-bold">{children}</strong>
+                                                            )
+                                                        },
+                                                        p: ({ children }) => <p style={{ color: themeColor }}>{children}</p>,
+                                                        li: ({ children }) => <li style={{ color: themeColor }}>{children}</li>,
+                                                        strong: ({ children }) => <strong style={{ color: themeColor }} className="font-bold">{children}</strong>
 
-                                                }}
-                                            >
-                                                {msg.text}
-                                            </ReactMarkdown>
-                                        </div>
-                                    ))}
-                                    {isLoading && (
-                                        <div className="self-start text-xs animate-pulse" style={{ color: themeColor, opacity: 0.7 }}>
-                                            Thinking...
-                                        </div>
-                                    )}
+                                                    }}
+                                                >
+                                                    {msg.text}
+                                                </ReactMarkdown>
+                                            </div>
+                                        ))}
+                                        {isLoading && (
+                                            <div className="self-start text-xs animate-pulse" style={{ color: themeColor, opacity: 0.7 }}>
+                                                Thinking...
+                                            </div>
+                                        )}
 
-                                    <div ref={messagesEndRef} />
+                                        <div ref={messagesEndRef} />
+                                    </div>
                                 </div>
-                            </div>
 
 
-                            {/* Input Area - Straight text */}
-                            <div className="p-4">
-                                <div className="flex gap-2 relative border-b" style={{ borderColor: isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)') }}>
-                                    {/* Attachment Button */}
-                                    <button
-                                        onClick={() => fileInputRef.current?.click()}
-                                        className="p-1 self-center hover:opacity-70 transition-opacity"
-                                        style={{ color: themeColor }}
-                                        title="Attach Image"
-                                    >
-                                        <Paperclip size={16} />
-                                    </button>
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        className="hidden"
-                                        accept="image/*"
-                                        onChange={handleFileSelect}
-                                    />
+                                {/* Input Area - Straight text */}
+                                <div className="p-4">
+                                    <div className="flex gap-2 relative border-b" style={{ borderColor: isCustomColorActive ? hexToRgba(customColor, 0.3) : (isDarkTheme ? 'rgba(51, 51, 51, 0.3)' : 'rgba(128, 128, 128, 0.3)') }}>
+                                        {/* Attachment Button */}
+                                        <button
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="p-1 self-center hover:opacity-70 transition-opacity"
+                                            style={{ color: themeColor }}
+                                            title="Attach Image"
+                                        >
+                                            <Paperclip size={16} />
+                                        </button>
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            className="hidden"
+                                            accept="image/*"
+                                            onChange={handleFileSelect}
+                                        />
 
-                                    {/* Pending Attachments Indicator */}
-                                    {attachments.length > 0 && (
-                                        <div className="self-center mr-1">
-                                            <ImageIcon size={16} style={{ color: themeColor }} />
-                                        </div>
-                                    )}
+                                        {/* Pending Attachments Indicator */}
+                                        {attachments.length > 0 && (
+                                            <div className="self-center mr-1">
+                                                <ImageIcon size={16} style={{ color: themeColor }} />
+                                            </div>
+                                        )}
 
-                                    <input
-                                        type="text"
+                                        <input
+                                            type="text"
 
-                                        placeholder="Type here..."
-                                        value={input}
-                                        onChange={(e) => setInput(e.target.value)}
-                                        onKeyDown={handleKeyDown}
-                                        onPaste={handlePaste}
-                                        spellCheck={false}
+                                            placeholder="Type here..."
+                                            value={input}
+                                            onChange={(e) => setInput(e.target.value)}
+                                            onKeyDown={handleKeyDown}
+                                            onPaste={handlePaste}
+                                            spellCheck={false}
 
-                                        className={`w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0 dynamic-placeholder`}
-                                        style={{ color: themeColor }}
-                                    />
+                                            className={`w-full bg-transparent border-none px-0 py-2 text-sm focus:outline-none focus:ring-0 dynamic-placeholder`}
+                                            style={{ color: themeColor }}
+                                        />
 
 
-                                    <button
-                                        onClick={isLoading ? handleStop : handleSend}
-                                        disabled={false} // Always clickable now
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 p-1 hover:opacity-70 transition-opacity"
-                                        style={{ color: themeColor }}
-                                    >
-                                        {isLoading ? <Square size={16} fill={isDarkTheme ? "#333333" : "#808080"} /> : <Send size={16} />}
-                                    </button>
+                                        <button
+                                            onClick={isLoading ? handleStop : handleSend}
+                                            disabled={false} // Always clickable now
+                                            className="absolute right-0 top-1/2 -translate-y-1/2 p-1 hover:opacity-70 transition-opacity"
+                                            style={{ color: themeColor }}
+                                        >
+                                            {isLoading ? <Square size={16} fill={isDarkTheme ? "#333333" : "#808080"} /> : <Send size={16} />}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </>
-                    ) : (
-                        // 10px dot
-                        <div
-                            className="w-[10px] h-[10px] rounded-full hover:opacity-80 transition-colors cursor-pointer"
-                            style={{ backgroundColor: themeColor }}
-                            title="Click to Open, Right-Click to Switch Side, Middle-Click to Switch Theme"
-                            onContextMenu={(e) => { e.preventDefault(); setIsRightAligned(!isRightAligned); }}
-                            onMouseDown={(e) => {
-                                if (e.button === 1) {
-                                    e.preventDefault();
-                                    setIsCustomColorActive(false);
-                                    setIsDarkTheme(!isDarkTheme);
-                                }
-                            }}
-                        ></div>
+                            </>
+                        ) : (
+                            // 10px dot
+                            <div
+                                className="w-[10px] h-[10px] rounded-full hover:opacity-80 transition-colors cursor-pointer"
+                                style={{ backgroundColor: themeColor }}
+                                title="Click to Open, Right-Click to Switch Side, Middle-Click to Switch Theme"
+                                onContextMenu={(e) => { e.preventDefault(); setIsRightAligned(!isRightAligned); }}
+                                onMouseDown={(e) => {
+                                    if (e.button === 1) {
+                                        e.preventDefault();
+                                        setIsCustomColorActive(false);
+                                        setIsDarkTheme(!isDarkTheme);
+                                    }
+                                }}
+                            ></div>
 
 
-                    )}
+                        )}
 
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
