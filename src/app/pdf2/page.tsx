@@ -273,7 +273,7 @@ export default function PDFPage() {
             />
 
             {/* Custom Code Overlay (Chat App) - Hidden/Commented Out */}
-            {false && (
+            {true && (
                 <div className={`absolute top-0 h-full w-full pointer-events-none sticky-overlay-container flex flex-col justify-end p-6 z-50 ${isRightAligned ? 'right-0 items-end' : 'left-0 items-start'}`}>
                     <style jsx global>{globalStyles}</style>
                     <div
